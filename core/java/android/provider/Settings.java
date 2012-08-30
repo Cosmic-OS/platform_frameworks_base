@@ -6611,6 +6611,13 @@ public final class Settings {
         public static final String SRGB_ENABLED = "srgb_enabled";
 
         /**
+         * Add or remove software navigation bar
+         *
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_VISIBLE = "navigation_bar_visible";
+
+        /**
          * This are the settings to be backed up.
          *
          * NOTE: Settings are backed up and restored in the order they appear
