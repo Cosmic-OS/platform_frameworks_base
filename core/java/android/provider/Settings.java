@@ -6494,7 +6494,14 @@ public final class Settings {
          * Has this pairable device been paired or upgraded from a previously paired system.
          * @hide
          */
+
         public static final String DEVICE_PAIRED = "device_paired";
+
+         /**
+         * Whether to display the ADB notification.
+         * @hide
+         */
+        public static final String ADB_NOTIFY = "adb_notify";
 
         /**
          * Force authorize Substratum (or equivalent) frontend calling packages by Masquerade
