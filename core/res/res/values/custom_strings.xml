@@ -36,6 +36,11 @@
     <string name="global_action_search">Search</string>
     <string name="global_action_voicesearch">Voice Search</string>
 
+    <!-- ADB over network -->
+    <string name="adb_net_active_notification_title">ADB over network enabled</string>
+    <string name="adb_both_active_notification_title">ADB over USB &amp; network enabled</string>
+    <string name="adb_active_generic_notification_message">Touch to disable debugging.</string>
+
     <!-- AOKP custom system animations -->
     <string name="animation_fade">Fade</string>
     <string name="animation_slide_right">Slide in right</string>

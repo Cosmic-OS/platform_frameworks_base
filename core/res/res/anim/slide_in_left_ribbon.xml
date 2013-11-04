@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
+<<<<<<< HEAD:core/res/res/anim/slide_in_left_ribbon.xml
 ** Copyright 2009, The Android Open Source Project
 ** Copyright 2013, The Android Open Kang Project
+=======
+** Copyright 2006, The Android Open Source Project
+>>>>>>> 3e975f9... ADB over network [1/3]:core/res/res/values/du_strings.xml
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
