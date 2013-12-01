@@ -5060,8 +5060,13 @@ public final class Settings {
          */
         public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
 
-        /** End of Cosmic-OS system settings**/
+        /**
+         * Whether to mute annoying notifications
+         * @hide
+         */
+        public static final String MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD = "mute_annoying_notifications_threshold";
 
+        /** End of Cosmic-OS system settings**/
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
