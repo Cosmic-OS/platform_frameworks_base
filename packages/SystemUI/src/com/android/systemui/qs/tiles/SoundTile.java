@@ -138,6 +138,6 @@ public class SoundTile extends QSTile<QSTile.State> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.OWL_TILE;
+        return MetricsEvent.COS_TILE;
     }
 }

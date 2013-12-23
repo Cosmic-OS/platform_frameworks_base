@@ -34,7 +34,7 @@ public class RebootTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.OWL_TILE;
+        return MetricsEvent.COS_TILE;
     }
 
     @Override
