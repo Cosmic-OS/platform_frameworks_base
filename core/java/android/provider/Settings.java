@@ -5750,7 +5750,6 @@ public final class Settings {
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL =
                 "lockscreen_quick_unlock_control";
 
-
         /**
          * Toast animations
          *
@@ -5812,6 +5811,12 @@ public final class Settings {
          * @hide
          */
         public static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
+
+        /**
+         * Force expanded notifications on all apps that support it.
+         * @hide
+         */
+        public static final String FORCE_EXPANDED_NOTIFICATIONS = "force_expanded_notifications";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
