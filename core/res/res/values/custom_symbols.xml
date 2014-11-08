@@ -17,8 +17,18 @@
 -->
 <resources>
 
-    <!-- Package Manager -->
-    <java-symbol type="array" name="config_disabledComponents" />
-	<java-symbol type="array" name="config_forceEnabledComponents" />
+  <!-- Package Manager -->
+  <java-symbol type="array" name="config_disabledComponents" />
+  <java-symbol type="array" name="config_forceEnabledComponents" />
   
+  <!-- Config Power Menu -->
+  <java-symbol type="array" name="shutdown_reboot_actions" />
+  <java-symbol type="array" name="shutdown_reboot_options" />
+  <java-symbol type="string" name="global_actions" />
+  <java-symbol type="string" name="global_action_reboot" />
+  <java-symbol type="string" name="reboot_progress" />
+  <java-symbol type="string" name="reboot_to_recovery_title" />
+  <java-symbol type="string" name="reboot_recovery_progress" />
+  <java-symbol type="string" name="reboot_system" />
+
 </resources>
