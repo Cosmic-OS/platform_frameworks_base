@@ -4540,17 +4540,23 @@ public final class Settings {
         public static final String QS_COLUMNS_LANDSCAPE = "qs_columns_landscape";
 
         /**
+         * Whether to display qs tile titles in the qs panel
+         * @hide
+         */
+        public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
+
+        /** Whether to allow one finger quick settings expansion on the right side of the statusbar.
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
          * the setting value. See an example above.
          */
-
-        /**
-         * Whether to display qs tile titles in the qs panel
-         * @hide
-         */
-        public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

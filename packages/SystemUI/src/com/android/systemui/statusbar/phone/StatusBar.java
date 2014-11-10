@@ -1751,6 +1751,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_TITLE_VISIBILITY),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -1758,6 +1761,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.EDGE_GESTURE_Y_DEAD_ZONE))) {
                 setEdgeGestureDeadZone();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN))) {
+                setStatusBarWindowViewOptions();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_PORTRAIT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_LANDSCAPE)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_COLUMNS_PORTRAIT)) ||
@@ -1769,6 +1774,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         public void update() {
             setEdgeGestureDeadZone();
+            setStatusBarWindowViewOptions();
             updateQsPanelResources();
         }
     }
@@ -1782,9 +1788,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-    /*private void doXXX() {
-        
-    }*/
+    private void setStatusBarWindowViewOptions() {
+        if (mStatusBarWindow != null) {
+            mStatusBarWindow.setStatusBarWindowViewOptions();
+        }
+    }
 
     private void updateQsPanelResources() {
         if (mQSPanel != null) {
