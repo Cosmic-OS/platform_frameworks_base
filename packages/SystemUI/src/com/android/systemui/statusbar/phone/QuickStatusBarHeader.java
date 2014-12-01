@@ -130,10 +130,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         mDateTimeTranslation = getResources().getDimension(R.dimen.qs_date_time_translation);
         mClock = findViewById(R.id.clock);
         mClock.setOnClickListener(this);
-        mClock.setOnLongClickListener(this);
         mDate = findViewById(R.id.date);
         mDate.setOnClickListener(this);
-        mDate.setOnLongClickListener(this);
 
         mShowFullAlarm = getResources().getBoolean(R.bool.quick_settings_show_full_alarm);
 
@@ -393,29 +391,11 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
                 true /* dismissShade */);
     }
 
-    private void startClockLongClickActivity() {
-        mActivityStarter.startActivity(new Intent(AlarmClock.ACTION_SET_ALARM),
-                true /* dismissShade */);
-    }
-
     private void startDateActivity() {
         Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
         builder.appendPath("time");
         ContentUris.appendId(builder, System.currentTimeMillis());
         Intent intent = new Intent(Intent.ACTION_VIEW).setData(builder.build());
-        mActivityStarter.startActivity(intent, true /* dismissShade */);
-    }
-
-    private void startDateLongClickActivity() {
-        Intent intent = new Intent(Intent.ACTION_INSERT);
-            intent.setData(Events.CONTENT_URI);
-        mActivityStarter.startActivity(intent, true /* dismissShade */);
-    }
-
-    private void startUserLongClickActivity() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setClassName("com.android.settings",
-            "com.android.settings.Settings$UserSettingsActivity");
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
