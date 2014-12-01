@@ -4977,6 +4977,13 @@ public final class Settings {
          * @hide
          */
         public static final String SCREENRECORD_QUALITY_MODE = "screenrecord_quality_mode";
+        
+        /**
+         * Whether to wake the display when plugging or unplugging the charger
+         *
+         * @hide
+         */
+        public static final String WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
 
         /** End of Cosmic-OS system settings**/
 
