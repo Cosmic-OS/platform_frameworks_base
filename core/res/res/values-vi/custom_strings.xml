@@ -31,4 +31,36 @@
     <string name="accessibility_quick_settings_live_display_changed_day">LiveDisplay đã đổi sang chế độ ban ngày.</string>
     <string name="accessibility_quick_settings_live_display_changed_night">LiveDisplay đã đổi sang chế độ ban đêm.</string>
     <string name="accessibility_quick_settings_live_display_changed_outdoor">LiveDisplay đã đổi sang chế độ ngoài trời.</string>
+	
+	<string name="reboot_to_recovery_title" translatable="false">Phục hồi</string>
+    <string name="reboot_to_recovery_message" translatable="false">Khởi động vào chế độ phục hồi</string>
+    <string name="reboot_to_bootloader_title" translatable="false">Bootloader</string>
+    <string name="reboot_to_bootloader_message" translatable="false">Khởi động vào bootloader</string>
+    <string name="reboot_title">Khởi động lại</string>
+    <string name="reboot_message">Đang khởi động hệ thống</string>
+
+    <!-- Font service -->
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_accessFontManager">Địa chỉ quản lí font</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_accessFontManager">Cho phép ứng dụng truy cập trình quản lý phông chữ.</string>
+    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+    <string name="fontservice_incompatible_font">Gói phông chữ bạn đã cài đặt không tương thích do thiếu phông chữ DOM trên các tệp của họ. Vui lòng liên hệ với nhà phát triển gói để được hỗ trợ.</string>
+
+     <!-- AOKP custom system animations -->
+    <string name="animation_fade">Phai màu</string>
+    <string name="animation_slide_right">Trượt sang phải</string>
+    <string name="animation_slide_left">Trượt sang trái</string>
+    <string name="animation_slide_right_no_fade">Trượt sang phải (Không phai)</string>
+    <string name="animation_slide_left_no_fade">Trượt sang trái (Không phai)</string>
+    <string name="animation_slide_up">Trượt ở phía dưới</string>
+    <string name="animation_slide_down">Trượt trên cùng</string>
+    <string name="animation_default">Mặc định</string>
+    <string name="animation_translucent">Trong suốt</string>
+    <string name="animation_grow_shrink">Phát triển trong (Hàng đầu)</string>
+    <string name="animation_grow_shrink_center">Phát triển tại (Trung tâm)</string>
+    <string name="animation_grow_shrink_bottom">Phát triển trong (Dưới cùng)</string>
+    <string name="animation_grow_shrink_left">Lớn lên (Trái)</string>
+    <string name="animation_grow_shrink_right">Lớn lên (Phải)</string>
+    <string name="action_null">Trống</string>
 </resources>
