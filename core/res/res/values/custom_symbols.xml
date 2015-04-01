@@ -126,4 +126,6 @@
   <!-- Show battery percent only when battery is low -->
   <java-symbol type="integer" name="config_batteryPercentLowOnlyLevel" />
 
+  <!-- Automatic brightness enhancements -->
+  <java-symbol type="integer" name="config_autoBrightnessBrighteningLightFastDebounce"/>
 </resources>

@@ -77,4 +77,6 @@
     <!-- Battery level for when "show battery percent only on low battery" is enabled -->
     <integer name="config_batteryPercentLowOnlyLevel">20</integer>
 
+    <!-- Automatic brightness enhancements -->
+    <integer name="config_autoBrightnessBrighteningLightFastDebounce">500</integer>
 </resources>
