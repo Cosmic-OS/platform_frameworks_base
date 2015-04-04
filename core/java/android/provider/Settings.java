@@ -3946,6 +3946,12 @@ public final class Settings {
          * the setting value. See an example above.
          */
 
+	/**
+         * show the membar in recents
+         *  @hide
+         */
+        public static final String SYSTEMUI_RECENTS_MEM_DISPLAY = "systemui_recents_mem_display";
+
         /**
          * Whether to show statusbar clock in the keyguard
          * @hide
