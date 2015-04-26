@@ -60,4 +60,11 @@
          values/config.xml) and must be truncated.
          [CHAR LIMIT=4] -->
     <string name="status_bar_notification_info_overflow" translatable="false">\u221E</string>
+
+    <!-- Ambient Display QS tile -->
+    <string name="accessibility_quick_settings_ambient_display_off">Ambient Display off</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Ambient Display on</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient Display turned off</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient Display turned on</string>
+    <string name="quick_settings_ambient_display_label">Ambient Display</string>
 </resources>
