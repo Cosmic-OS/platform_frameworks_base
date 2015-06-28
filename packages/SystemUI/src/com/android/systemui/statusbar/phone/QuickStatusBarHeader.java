@@ -382,6 +382,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         } else if (v == mSettingsButton) {
             startSettingsLongClickActivity();
         }
+        vibrateheader(20);
         return false;
     }
 
