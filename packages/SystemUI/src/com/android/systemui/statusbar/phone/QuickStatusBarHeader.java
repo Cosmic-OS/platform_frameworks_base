@@ -137,6 +137,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         mAlarmStatus.setOnClickListener(this);
 
         mMultiUserSwitch = (MultiUserSwitch) findViewById(R.id.multi_user_switch);
+        mMultiUserSwitch.setOnLongClickListener(this);
         mMultiUserAvatar = (ImageView) mMultiUserSwitch.findViewById(R.id.multi_user_avatar);
 
         // RenderThread is doing more harm than good when touching the header (to expand quick
@@ -379,6 +380,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             startClockLongClickActivity();
         } else if (v == mDate) {
             startDateLongClickActivity();
+        } else if (v == mMultiUserSwitch) {
+            startUserLongClickActivity();
         }
         return false;
     }
@@ -407,6 +410,13 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     private void startDateLongClickActivity() {
         Intent intent = new Intent(Intent.ACTION_INSERT);
             intent.setData(Events.CONTENT_URI);
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
+    }
+
+    private void startUserLongClickActivity() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setClassName("com.android.settings",
+            "com.android.settings.Settings$UserSettingsActivity");
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
