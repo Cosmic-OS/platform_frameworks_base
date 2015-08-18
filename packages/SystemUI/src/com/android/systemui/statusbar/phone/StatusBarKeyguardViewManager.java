@@ -284,6 +284,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         mOccluded = occluded;
         mPhoneStatusBar.updateMediaMetaData(false, animate && !occluded);
         mStatusBarWindowManager.setKeyguardOccluded(occluded);
+        mPhoneStatusBar.getVisualizer().setOccluded(occluded);
         reset();
         if (animate && !occluded) {
             mPhoneStatusBar.animateKeyguardUnoccluding();
