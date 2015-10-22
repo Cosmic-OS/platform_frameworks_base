@@ -23,7 +23,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -36,14 +35,9 @@ import android.text.style.RelativeSizeSpan;
 import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.view.Display;
-import android.view.View;
 import android.widget.TextView;
 
 import com.android.systemui.DemoMode;
-import com.android.systemui.R;
-import com.android.systemui.statusbar.phone.StatusBarIconController;
-import com.android.systemui.tuner.TunerService;
-import com.android.systemui.tuner.TunerService.Tunable;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -53,9 +47,7 @@ import java.util.TimeZone;
 /**
  * Digital clock for the status bar.
  */
-public class Clock extends TextView implements DemoMode, Tunable {
-
-    public static final String CLOCK_SECONDS = "clock_seconds";
+public class Clock extends TextView implements DemoMode {
 
     private boolean mAttached;
     private Calendar mCalendar;
@@ -65,11 +57,11 @@ public class Clock extends TextView implements DemoMode, Tunable {
     private Locale mLocale;
     private boolean mScreenOn = true;
 
-    private static final int AM_PM_STYLE_NORMAL  = 0;
-    private static final int AM_PM_STYLE_SMALL   = 1;
-    private static final int AM_PM_STYLE_GONE    = 2;
+    public static final int AM_PM_STYLE_NORMAL  = 0;
+    public static final int AM_PM_STYLE_SMALL   = 1;
+    public static final int AM_PM_STYLE_GONE    = 2;
 
-    private final int mAmPmStyle;
+    private int mAmPmStyle = AM_PM_STYLE_GONE;
     private boolean mShowSeconds;
     private Handler mSecondsHandler;
 
@@ -83,15 +75,6 @@ public class Clock extends TextView implements DemoMode, Tunable {
 
     public Clock(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.Clock,
-                0, 0);
-        try {
-            mAmPmStyle = a.getInt(R.styleable.Clock_amPmStyle, AM_PM_STYLE_NORMAL);
-        } finally {
-            a.recycle();
-        }
     }
 
     @Override
@@ -112,8 +95,6 @@ public class Clock extends TextView implements DemoMode, Tunable {
 
             getContext().registerReceiverAsUser(mIntentReceiver, UserHandle.ALL, filter,
                     null, getHandler());
-            TunerService.get(getContext()).addTunable(this, CLOCK_SECONDS,
-                    StatusBarIconController.ICON_BLACKLIST);
         }
 
         // NOTE: It's safe to do these after registering the receiver since the receiver always runs
@@ -133,7 +114,6 @@ public class Clock extends TextView implements DemoMode, Tunable {
         if (mAttached) {
             getContext().unregisterReceiver(mIntentReceiver);
             mAttached = false;
-            TunerService.get(getContext()).removeTunable(this);
         }
     }
 
@@ -168,21 +148,10 @@ public class Clock extends TextView implements DemoMode, Tunable {
     };
 
     final void updateClock() {
-        if (mDemoMode) return;
+        if (mDemoMode || mCalendar == null) return;
         mCalendar.setTimeInMillis(System.currentTimeMillis());
         setText(getSmallTime());
         setContentDescription(mContentDescriptionFormat.format(mCalendar.getTime()));
-    }
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        if (CLOCK_SECONDS.equals(key)) {
-            mShowSeconds = newValue != null && Integer.parseInt(newValue) != 0;
-            updateShowSeconds();
-        } else if (StatusBarIconController.ICON_BLACKLIST.equals(key)) {
-            ArraySet<String> list = StatusBarIconController.getIconBlacklist(newValue);
-            setVisibility(list.contains("clock") ? View.GONE : View.VISIBLE);
-        }
     }
 
     private void updateShowSeconds() {
@@ -340,5 +309,16 @@ public class Clock extends TextView implements DemoMode, Tunable {
             mSecondsHandler.postAtTime(this, SystemClock.uptimeMillis() / 1000 * 1000 + 1000);
         }
     };
+
+    public void setAmPmStyle(int style) {
+        mAmPmStyle = style;
+        mClockFormatString = "";
+        updateClock();
+    }
+
+    public void setShowSeconds(boolean showSeconds) {
+        mShowSeconds = showSeconds;
+        updateShowSeconds();;
+    }
 }
 
