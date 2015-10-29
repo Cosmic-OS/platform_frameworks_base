@@ -3377,6 +3377,12 @@ public final class Settings {
         public static final Validator POINTER_LOCATION_VALIDATOR = sBooleanValidator;
 
         /**
+         * Disable Immersive Message
+         * @hide
+         */
+        public static final String DISABLE_IMMERSIVE_MESSAGE = "disable_immersive_message";
+
+        /**
          * Disable FC Notifications
          * @hide
          */
