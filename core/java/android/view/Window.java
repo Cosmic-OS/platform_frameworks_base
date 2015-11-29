@@ -751,8 +751,7 @@ public abstract class Window {
             boolean hardwareAccelerated) {
         mAppToken = appToken;
         mAppName = appName;
-        mHardwareAccelerated = hardwareAccelerated
-                || SystemProperties.getBoolean(PROPERTY_HARDWARE_UI, false);
+        mHardwareAccelerated = true;
         if (wm == null) {
             wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
         }
