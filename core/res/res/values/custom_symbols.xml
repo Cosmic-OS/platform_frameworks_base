@@ -34,11 +34,13 @@
   <java-symbol type="drawable" name="ic_lock_torch" />
   <java-symbol type="drawable" name="ic_lock_user" />
   <java-symbol type="drawable" name="ic_lock_voice" />
+  <java-symbol type="drawable" name="ic_lock_screenrecord" />
   <java-symbol type="string" name="global_action_current_user" />
   <java-symbol type="string" name="global_action_screenshot" />
   <java-symbol type="string" name="global_action_search" />
   <java-symbol type="string" name="global_action_torch" />
   <java-symbol type="string" name="global_action_voicesearch" />
+  <java-symbol type="string" name="global_action_screenrecord" />
 
    <!-- Screenrecord -->
   <java-symbol type="bool" name="config_enableScreenrecordChord" />
