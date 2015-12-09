@@ -4595,6 +4595,13 @@ public final class Settings {
          */
         public static final String LOCK_SCREEN_SHOW_WEATHER_TIMESTAMP = "lock_screen_show_weather_timestamp";
 
+	/**
+         * Three Finger Gesture from Oppo
+         *
+         * @hide
+         */
+        public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
+
         /**
          * Weather condition icon on the lock screen
          * 0: monochrome
