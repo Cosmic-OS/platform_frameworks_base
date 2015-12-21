@@ -32,6 +32,8 @@ public class ClockController {
     private int mAmPmStyle;
     private int mClockLocation;
     private boolean mShowSeconds;
+    private int mClockDateStyle;
+    private int mClockDateDisplay;
 
     private int mIconTint = Color.WHITE;
 
@@ -50,6 +52,15 @@ public class ClockController {
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_SECONDS),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_DATE_DISPLAY),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_DATE_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_DATE_FORMAT),
                     false, this, UserHandle.USER_ALL);
             updateSettings();
         }
@@ -105,6 +116,8 @@ public class ClockController {
         mActiveClock.setVisibility(View.VISIBLE);
         mActiveClock.setAmPmStyle(mAmPmStyle);
         mActiveClock.setShowSeconds(mShowSeconds);
+        mActiveClock.setClockDateDisplay(mClockDateDisplay);
+        mActiveClock.setClockDateStyle(mClockDateStyle);
 
         setClockAndDateStatus();
         setTextColor(mIconTint);
@@ -122,6 +135,12 @@ public class ClockController {
         mShowSeconds = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_CLOCK_SECONDS, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mClockDateDisplay = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUS_BAR_CLOCK_DATE_DISPLAY, Clock.CLOCK_DATE_DISPLAY_GONE,
+                UserHandle.USER_CURRENT);
+        mClockDateStyle = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUS_BAR_CLOCK_DATE_STYLE, Clock.CLOCK_DATE_STYLE_REGULAR,
+                UserHandle.USER_CURRENT);
         updateActiveClock();
     }
 

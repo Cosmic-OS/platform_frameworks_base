@@ -27,12 +27,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.format.DateFormat;
 import android.text.style.CharacterStyle;
 import android.text.style.RelativeSizeSpan;
-import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.widget.TextView;
@@ -41,6 +41,7 @@ import com.android.systemui.DemoMode;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -61,6 +62,16 @@ public class Clock extends TextView implements DemoMode {
     public static final int AM_PM_STYLE_SMALL   = 1;
     public static final int AM_PM_STYLE_GONE    = 2;
 
+    public static final int CLOCK_DATE_DISPLAY_GONE = 0;
+    public static final int CLOCK_DATE_DISPLAY_SMALL = 1;
+    public static final int CLOCK_DATE_DISPLAY_NORMAL = 2;
+
+    public static final int CLOCK_DATE_STYLE_REGULAR = 0;
+    public static final int CLOCK_DATE_STYLE_LOWERCASE = 1;
+    public static final int CLOCK_DATE_STYLE_UPPERCASE = 2;
+
+    private int mClockDateDisplay = CLOCK_DATE_DISPLAY_GONE;
+    private int mClockDateStyle = CLOCK_DATE_STYLE_REGULAR;
     private int mAmPmStyle = AM_PM_STYLE_GONE;
     private boolean mShowSeconds;
     private Handler mSecondsHandler;
@@ -226,13 +237,39 @@ public class Clock extends TextView implements DemoMode {
         } else {
             sdf = mClockFormat;
         }
+
+        CharSequence dateString = null;
+
         String result = sdf.format(mCalendar.getTime());
+
+        if (mClockDateDisplay != CLOCK_DATE_DISPLAY_GONE) {
+            Date now = new Date();
+
+            String clockDateFormat = Settings.System.getString(getContext().getContentResolver(),
+                    Settings.System.STATUS_BAR_CLOCK_DATE_FORMAT);
+
+            if (clockDateFormat == null || clockDateFormat.isEmpty()) {
+                // Set dateString to short uppercase Weekday (Default for AOKP) if empty
+                dateString = DateFormat.format("EEE", now) + " ";
+            } else {
+                dateString = DateFormat.format(clockDateFormat, now) + " ";
+            }
+            if (mClockDateStyle == CLOCK_DATE_STYLE_LOWERCASE) {
+                // When Date style is small, convert date to uppercase
+                result = dateString.toString().toLowerCase() + result;
+            } else if (mClockDateStyle == CLOCK_DATE_STYLE_UPPERCASE) {
+                result = dateString.toString().toUpperCase() + result;
+            } else {
+                result = dateString.toString() + result;
+            }
+        }
+
+        SpannableStringBuilder formatted = new SpannableStringBuilder(result);
 
         if (mAmPmStyle != AM_PM_STYLE_NORMAL) {
             int magic1 = result.indexOf(MAGIC1);
             int magic2 = result.indexOf(MAGIC2);
             if (magic1 >= 0 && magic2 > magic1) {
-                SpannableStringBuilder formatted = new SpannableStringBuilder(result);
                 if (mAmPmStyle == AM_PM_STYLE_GONE) {
                     formatted.delete(magic1, magic2+1);
                 } else {
@@ -244,12 +281,24 @@ public class Clock extends TextView implements DemoMode {
                     formatted.delete(magic2, magic2 + 1);
                     formatted.delete(magic1, magic1 + 1);
                 }
-                return formatted;
             }
         }
 
-        return result;
-
+        if (mClockDateDisplay != CLOCK_DATE_DISPLAY_NORMAL) {
+            if (dateString != null) {
+                int dateStringLen = dateString.length();
+                if (mClockDateDisplay == CLOCK_DATE_DISPLAY_GONE) {
+                    formatted.delete(0, dateStringLen);
+                } else {
+                    if (mClockDateDisplay == CLOCK_DATE_DISPLAY_SMALL) {
+                        CharacterStyle style = new RelativeSizeSpan(0.7f);
+                        formatted.setSpan(style, 0, dateStringLen,
+                                          Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                    }
+                }
+            }
+        }
+        return formatted;
     }
 
     private boolean mDemoMode;
@@ -319,6 +368,16 @@ public class Clock extends TextView implements DemoMode {
     public void setShowSeconds(boolean showSeconds) {
         mShowSeconds = showSeconds;
         updateShowSeconds();;
+    }
+
+    public void setClockDateDisplay(int style) {
+        mClockDateDisplay = style;
+        updateClock();
+    }
+
+    public void setClockDateStyle(int style) {
+        mClockDateStyle = style;
+        updateClock();
     }
 }
 
