@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2017 Benzo Rom
+     Copyright (C) 2017 Cosmic-OS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -19,4 +19,10 @@
     <string name="task_unlocked_desc">Lock %1$s. Currently unlocked</string>
     <!-- Content description for Accessibility on locked tasks in recents -->
     <string name="task_locked_desc">Unlock %1$s. Currently locked</string>
+
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_fakePackageSignature">Spoof package signature</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_fakePackageSignature">Allows the app to pretend to be a different app. Malicious applications might be able to use this to access private application data. Grant this permission with caution only!</string>
+
 </resources>
