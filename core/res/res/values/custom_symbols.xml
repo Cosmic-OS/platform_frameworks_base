@@ -15,6 +15,11 @@
      limitations under the License.
 -->
 <resources>
+
+  <!-- Power menu Animations  -->
+  <java-symbol type="style" name="PowerMenuBottomAnimation" />
+  <java-symbol type="style" name="PowerMenuTopAnimation" />
+
   <!-- Reboot - Advanced Reboot -->
   <java-symbol type="array" name="shutdown_reboot_options" />
   <java-symbol type="array" name="shutdown_reboot_actions" />
