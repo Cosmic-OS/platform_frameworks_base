@@ -3756,6 +3756,13 @@ public final class Settings {
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
 
         /**
+        * List of Apps hidden from recents
+        * @hide
+        */
+        public static final String HIDE_FROM_RECENTS_LIST = "hide_from_recents_list";
+
+
+        /**
          * Enable vibration when double tapping the power button for camera
          * @hide
          */
