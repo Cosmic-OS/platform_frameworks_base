@@ -46,6 +46,8 @@ import com.android.systemui.BatteryMeterView;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.SystemUIFactory;
+import com.android.systemui.omni.AbstractBatteryView;
+import com.android.systemui.omni.BatteryViewManager;
 import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.StatusBarIconView;
@@ -86,8 +88,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private NotificationIconAreaController mNotificationIconAreaController;
     private View mNotificationIconAreaInner;
 
-    private BatteryMeterView mBatteryMeterView;
-    private BatteryMeterView mBatteryMeterViewKeyguard;
     private NetworkTraffic mNetworkTraffic;
     private ClockController mClockController;
     private View mCenterClockLayout;
@@ -99,6 +99,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     private boolean mShowLogo = false;
     private boolean mShowKeyguardLogo = false;
+
+    //private BatteryMeterView mBatteryMeterView;
+    //private BatteryMeterView mBatteryMeterViewKeyguard;
+    private BatteryViewManager mBatteryViewManager;
+    private AbstractBatteryView mCurrentBatteryView;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -160,10 +165,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
         mStatusIconsKeyguard = (LinearLayout) keyguardStatusBar.findViewById(R.id.statusIcons);
 
-        mBatteryMeterView = (BatteryMeterView) statusBar.findViewById(R.id.battery);
-        mBatteryMeterViewKeyguard = (BatteryMeterView) keyguardStatusBar.findViewById(R.id.battery);
-        scaleBatteryMeterViews(context);
         mLogoColor = StatusBarColorHelper.getLogoColor(mContext);
+        //mBatteryMeterViewKeyguard = (BatteryMeterView) keyguardStatusBar.findViewById(R.id.battery);
+        //mBatteryMeterView = (BatteryMeterView) statusBar.findViewById(R.id.battery);
+        mBatteryViewManager = phoneStatusBar.getBatteryViewManager();
+        //scaleBatteryMeterViews(context);
 
         mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
@@ -198,8 +204,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 (int) (batteryWidth * iconScaleFactor), (int) (batteryHeight * iconScaleFactor));
         scaledLayoutParams.setMarginsRelative(0, 0, 0, marginBottom);
 
-        mBatteryMeterView.setLayoutParams(scaledLayoutParams);
-        mBatteryMeterViewKeyguard.setLayoutParams(scaledLayoutParams);
+        //mBatteryMeterView.setLayoutParams(scaledLayoutParams);
+        //mBatteryMeterViewKeyguard.setLayoutParams(scaledLayoutParams);
+        //mBatteryViewManager.setLayoutParams(scaledLayoutParams);
     }
 
     @Override
@@ -618,8 +625,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
             v.setImageTintList(ColorStateList.valueOf(getTint(mTintArea, v, mIconTint)));
         }
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
-        mBatteryMeterView.setDarkIntensity(
-                isInArea(mTintArea, mBatteryMeterView) ? mDarkIntensity : 0);
 	    mNetworkTraffic.setDarkIntensity(mDarkIntensity);
         mClockController.setTextColor(mTintArea, mIconTint);
         if (mShowLogo && mLogoStyle == LOGO_LEFT) {
@@ -628,6 +633,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (mShowLogo && mLogoStyle == LOGO_RIGHT) {
             mCosmicLogo.setImageTintList(ColorStateList.valueOf(getLogoTint(mTintArea, mCosmicLogo, mLogoColor)));
         }
+        mBatteryViewManager.setDarkIntensity(
+                isInArea(mTintArea, mCurrentBatteryView) ? mDarkIntensity : 0);
     }
 
     public void appTransitionPending() {
@@ -693,7 +700,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                     ViewGroup.LayoutParams.WRAP_CONTENT, mIconSize);
             child.setLayoutParams(lp);
         }
-        scaleBatteryMeterViews(mContext);
+        mBatteryViewManager.onDensityOrFontScaleChanged();
+        //scaleBatteryMeterViews(mContext);
     }
 
     private void updateClock() {

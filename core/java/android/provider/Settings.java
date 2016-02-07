@@ -4341,6 +4341,40 @@ public final class Settings {
         public static final String QS_COLUMNS_LANDSCAPE = "qs_columns_landscape";
 
         /**
+         * Int value of the battery style 0 is default
+         * 0 - Portrait
+         * 1 - Landscape
+         * 2 - Circle
+         * 3 - Text
+         * 4 - Droid
+         * 5 - Hidden
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_STYLE = "statusbar_battery_style";
+
+        /**
+         * int value if the battery percent 0 is default
+         * 0 - Never
+         * 1 - Always
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_PERCENT = "statusbar_battery_percent";
+
+        /**
+         * boolean value if the battery percent should be shown inside the image
+         *
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_PERCENT_INSIDE = "statusbar_battery_percent_inside";
+
+        /**
+         * boolean value if the charging flash should be displayed
+         *
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_CHARGING_IMAGE = "statusbar_battery_charging_image";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4403,7 +4437,11 @@ public final class Settings {
             STATUS_BAR_CLOCK_DATE_STYLE,
             STATUS_BAR_CLOCK_DATE_FORMAT,
             NOTIFICATION_LIGHT_SCREEN_ON,
-            ALLOW_LIGHTS
+            ALLOW_LIGHTS,
+            STATUSBAR_BATTERY_STYLE,
+            STATUSBAR_BATTERY_PERCENT,
+            STATUSBAR_BATTERY_PERCENT_INSIDE,
+            STATUSBAR_BATTERY_CHARGING_IMAGE
         };
 
         /**
