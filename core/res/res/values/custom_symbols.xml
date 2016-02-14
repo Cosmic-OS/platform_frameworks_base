@@ -94,4 +94,7 @@
   <!-- Show battery percent only when battery is low -->
   <java-symbol type="integer" name="config_batteryPercentLowOnlyLevel" />
 
+  <!-- Hardware key binding -->
+  <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
 </resources>
