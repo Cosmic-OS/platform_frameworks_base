@@ -47,4 +47,8 @@
 
   <!-- sRGB mode -->
   <java-symbol type="string" name="config_srgb_path" />
+
+  <!-- Hardware key binding -->
+  <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
 </resources>
