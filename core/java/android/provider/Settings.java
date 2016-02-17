@@ -3555,11 +3555,11 @@ public final class Settings {
          * the setting value. See an example above.
          */
 
-        /** Whether to allow one finger quick settings expansion on the right side of the statusbar.
-         *
-         * @hide
-         */
-        public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
+       /** Whether to allow one finger quick settings expansion on the right side of the statusbar.
+        *
+        * @hide
+        */
+       public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
 
        /**
         * USB Data automatic unlock
@@ -3574,6 +3574,12 @@ public final class Settings {
         * @hide
         */
         public static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
+
+	    /**
+         * Whether the phone volume up / down effect should be played
+         * @hide
+         */
+        public static final String VOLUME_ADJUST_SOUNDS_ENABLED = "volume_adjust_sounds_enabled";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
