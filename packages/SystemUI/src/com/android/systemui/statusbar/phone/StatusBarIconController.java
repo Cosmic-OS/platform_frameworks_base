@@ -53,6 +53,7 @@ import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.StatusBarIconView;
 import com.android.systemui.statusbar.policy.NetworkTraffic;
+import com.android.systemui.statusbar.policy.Clock;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 import com.android.internal.util.cosmic.StatusBarColorHelper;
@@ -89,7 +90,12 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private NotificationIconAreaController mNotificationIconAreaController;
     private View mNotificationIconAreaInner;
 
-    private TextView mClock;
+    private Clock mClock;
+    private Clock mCenterClock;
+    private Clock mLeftClock;
+    private boolean mShowClock;
+    private int mClockLocation;
+    private LinearLayout mCenterClockLayout;
     private NetworkTraffic mNetworkTraffic;
 
     private ImageView mCosmicLogo;
@@ -171,12 +177,19 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mBatteryViewManager = phoneStatusBar.getBatteryViewManager();
         //scaleBatteryMeterViews(context);
 
-        mClock = (TextView) statusBar.findViewById(R.id.clock);
+        mClock = (Clock) statusBar.findViewById(R.id.clock);
+        mCenterClockLayout = (LinearLayout)statusBar.findViewById(R.id.center_clock_layout);
+        mCenterClock = (Clock) statusBar.findViewById(R.id.center_clock);
+        mLeftClock = (Clock) statusBar.findViewById(R.id.left_clock);
         mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
         mHandler = new Handler();
         loadDimens();
+
+        mClock.setStatusBarIconController(this);
+        mCenterClock.setStatusBarIconController(this);
+        mLeftClock.setStatusBarIconController(this);
 
         TunerService.get(mContext).addTunable(this, ICON_BLACKLIST);
     }
@@ -352,10 +365,12 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate);
+        animateHide(mCenterClockLayout, animate);
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
+        animateShow(mCenterClockLayout, animate);
     }
 
     public void hideNotificationIconArea(boolean animate) {
@@ -379,7 +394,30 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     }
 
     public void setClockVisibility(boolean visible) {
-        mClock.setVisibility(visible ? View.VISIBLE : View.GONE);
+        ContentResolver resolver = mContext.getContentResolver();
+        boolean showClock = (Settings.System.getIntForUser(
+                resolver, Settings.System.STATUS_BAR_CLOCK, 1,
+                UserHandle.USER_CURRENT) == 1);
+        int clockLocation = Settings.System.getIntForUser(
+                resolver, Settings.System.STATUSBAR_CLOCK_STYLE, 0,
+                UserHandle.USER_CURRENT);
+        if (clockLocation == 0 && mClock != null) {
+            mClock.setVisibility(visible ? (showClock ? View.VISIBLE : View.GONE) : View.GONE);
+        }
+        if (clockLocation == 1 && mCenterClock != null) {
+            mCenterClock.setVisibility(visible ? (showClock ? View.VISIBLE : View.GONE) : View.GONE);
+        }
+        if (clockLocation == 2 && mLeftClock != null) {
+            mLeftClock.setVisibility(visible ? (showClock ? View.VISIBLE : View.GONE) : View.GONE);
+        }
+    }
+
+    public void setClockAndDateStatus(int width, int mode, boolean enabled) {
+        if (mNotificationIconAreaController != null) {
+            mNotificationIconAreaController.setClockAndDateStatus(width, mode, enabled);
+        }
+        mClockLocation = mode;
+        mShowClock = enabled;
     }
 
     public void setLogoVisibility(boolean showLogo, boolean forceHide, int maxAllowedIcons) {
@@ -620,6 +658,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         }
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
         mClock.setTextColor(getTint(mTintArea, mClock, mIconTint));
+        mCenterClock.setTextColor(getTint(mTintArea, mCenterClock, mIconTint));
+        mLeftClock.setTextColor(getTint(mTintArea, mLeftClock, mIconTint));
 	    mNetworkTraffic.setDarkIntensity(mDarkIntensity);
         if (mShowLogo && mLogoStyle == LOGO_LEFT) {
             mCosmicLogoLeft.setImageTintList(ColorStateList.valueOf(getLogoTint(mTintArea, mCosmicLogo, mLogoColor)));
@@ -700,7 +740,23 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     private void updateClock() {
         FontSizeUtils.updateFontSize(mClock, R.dimen.status_bar_clock_size);
+        FontSizeUtils.updateFontSize(mCenterClock, R.dimen.status_bar_clock_size);
+        FontSizeUtils.updateFontSize(mLeftClock, R.dimen.status_bar_clock_size);
         mClock.setPaddingRelative(
+                mContext.getResources().getDimensionPixelSize(
+                        R.dimen.status_bar_clock_starting_padding),
+                0,
+                mContext.getResources().getDimensionPixelSize(
+                        R.dimen.status_bar_clock_end_padding),
+                0);
+        mCenterClock.setPaddingRelative(
+                mContext.getResources().getDimensionPixelSize(
+                        R.dimen.status_bar_clock_starting_padding),
+                0,
+                mContext.getResources().getDimensionPixelSize(
+                        R.dimen.status_bar_clock_end_padding),
+                0);
+        mLeftClock.setPaddingRelative(
                 mContext.getResources().getDimensionPixelSize(
                         R.dimen.status_bar_clock_starting_padding),
                 0,
