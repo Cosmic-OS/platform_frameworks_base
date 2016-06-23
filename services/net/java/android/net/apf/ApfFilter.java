@@ -513,7 +513,7 @@ public class ApfFilter {
                     throw new IllegalArgumentException(String.format(
                         "Invalid option length opt=%d len=%d", optionType, optionLength));
                 }
-                mPacket.position(position + optionLength);
+                mPacket.position(mPacket.position() + optionLength);
             }
             // Mark non-lifetime bytes since last lifetime.
             addNonLifetime(lastNonLifetimeStart, 0, 0);

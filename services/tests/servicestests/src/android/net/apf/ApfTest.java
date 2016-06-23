@@ -993,35 +993,6 @@ public class ApfTest extends AndroidTestCase {
         verifyRaLifetime(ipManagerCallback, packet, lifetime);
     }
 
-    private void verifyRaEvent(RaEvent expected) {
-        ArgumentCaptor<Parcelable> captor = ArgumentCaptor.forClass(Parcelable.class);
-        verify(mLog, atLeastOnce()).log(captor.capture());
-        RaEvent got = lastRaEvent(captor.getAllValues());
-        if (!raEventEquals(expected, got)) {
-            assertEquals(expected, got);  // fail for printing an assertion error message.
-        }
-    }
-
-    private RaEvent lastRaEvent(List<Parcelable> events) {
-        RaEvent got = null;
-        for (Parcelable ev : events) {
-            if (ev instanceof RaEvent) {
-                got = (RaEvent) ev;
-            }
-        }
-        return got;
-    }
-
-    private boolean raEventEquals(RaEvent ev1, RaEvent ev2) {
-        return (ev1 != null) && (ev2 != null)
-                && (ev1.routerLifetime == ev2.routerLifetime)
-                && (ev1.prefixValidLifetime == ev2.prefixValidLifetime)
-                && (ev1.prefixPreferredLifetime == ev2.prefixPreferredLifetime)
-                && (ev1.routeInfoLifetime == ev2.routeInfoLifetime)
-                && (ev1.rdnssLifetime == ev2.rdnssLifetime)
-                && (ev1.dnsslLifetime == ev2.dnsslLifetime);
-    }
-
     private void assertInvalidRa(TestApfFilter apfFilter, MockIpManagerCallback ipManagerCallback,
             ByteBuffer packet) throws IOException, ErrnoException {
         ipManagerCallback.resetApfProgramWait();
@@ -1047,6 +1018,16 @@ public class ApfTest extends AndroidTestCase {
 
         testRaLifetime(apfFilter, ipManagerCallback, basePacket, 1000);
         verifyRaEvent(new RaEvent(1000, -1, -1, -1, -1, -1));
+
+        // Ensure zero-length options cause the packet to be silently skipped.
+        // Do this before we test other packets. http://b/29586253
+        ByteBuffer zeroLengthOptionPacket = ByteBuffer.wrap(
+                new byte[ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_OPTION_LEN]);
+        basePacket.clear();
+        zeroLengthOptionPacket.put(basePacket);
+        zeroLengthOptionPacket.put((byte)ICMP6_PREFIX_OPTION_TYPE);
+        zeroLengthOptionPacket.put((byte)0);
+        assertInvalidRa(apfFilter, ipManagerCallback, zeroLengthOptionPacket);
 
         // Ensure zero-length options cause the packet to be silently skipped.
         // Do this before we test other packets. http://b/29586253
