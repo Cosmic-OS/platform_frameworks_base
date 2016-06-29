@@ -1724,6 +1724,8 @@ public class ActivityManagerService extends IActivityManager.Stub
     static ServiceThread sKillThread = null;
     static KillHandler sKillHandler = null;
 
+    static final int UPDATE_OOMADJ_MSG = 99999;
+
     CompatModeDialog mCompatModeDialog;
     UnsupportedDisplaySizeDialog mUnsupportedDisplaySizeDialog;
     long mLastMemUsageReportTime = 0;
@@ -2468,6 +2470,11 @@ public class ActivityManagerService extends IActivityManager.Stub
                             }
                         }
                     }
+                }
+            } break;
+            case UPDATE_OOMADJ_MSG: {
+                synchronized (ActivityManagerService.this) {
+                    updateOomAdjLocked();
                 }
             } break;
             }
@@ -5573,7 +5580,8 @@ public class ActivityManagerService extends IActivityManager.Stub
             handleAppDiedLocked(app, false, true);
 
             if (doOomAdj) {
-                updateOomAdjLocked();
+                mHandler.removeMessages(UPDATE_OOMADJ_MSG);
+                mHandler.sendEmptyMessage(UPDATE_OOMADJ_MSG);
             }
             if (doLowMem) {
                 doLowMemReportIfNeededLocked(app);
