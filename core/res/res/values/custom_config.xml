@@ -74,4 +74,6 @@
     <!-- Battery level for when "show battery percent only on low battery" is enabled -->
     <integer name="config_batteryPercentLowOnlyLevel">20</integer>
 
+    <!-- Whether device has dash charging support -->
+    <bool name="config_hasDashCharger">false</bool>
 </resources>

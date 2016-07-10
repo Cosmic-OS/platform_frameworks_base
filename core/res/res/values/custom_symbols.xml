@@ -125,4 +125,7 @@
   <!-- Show battery percent only when battery is low -->
   <java-symbol type="integer" name="config_batteryPercentLowOnlyLevel" />
 
+  <!-- Whether device has dash charging support -->
+  <java-symbol type="bool" name="config_hasDashCharger" />
+
 </resources>
