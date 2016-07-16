@@ -105,6 +105,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
             CastController cast, HotspotController hotspot, UserInfoController userInfoController,
             BluetoothController bluetooth, RotationLockController rotationLockController,
             DataSaverController dataSaver) {
+
         mContext = context;
         mIconController = iconController;
         mCast = cast;
@@ -321,16 +322,12 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
 
     private void updateBluetoothBattery(Intent intent) {
         if (intent.hasExtra(BluetoothHeadset.EXTRA_VENDOR_SPECIFIC_HEADSET_EVENT_CMD)) {
-            String command = intent.getStringExtra(
-                    BluetoothHeadset.EXTRA_VENDOR_SPECIFIC_HEADSET_EVENT_CMD);
+            String command = intent.getStringExtra(BluetoothHeadset.EXTRA_VENDOR_SPECIFIC_HEADSET_EVENT_CMD);
             if ("+IPHONEACCEV".equals(command)) {
-                Object[] args = (Object[]) intent.getSerializableExtra(
-                        BluetoothHeadset.EXTRA_VENDOR_SPECIFIC_HEADSET_EVENT_ARGS);
-                if (args.length >= 3 && args[0] instanceof Integer &&
-                        ((Integer)args[0])*2+1<=args.length) {
+                Object[] args = (Object[]) intent.getSerializableExtra(BluetoothHeadset.EXTRA_VENDOR_SPECIFIC_HEADSET_EVENT_ARGS);
+                if (args.length >= 3 && args[0] instanceof Integer && ((Integer)args[0])*2+1<=args.length) {
                     for (int i=0;i<((Integer)args[0]);i++) {
-                        if (!(args[i*2+1] instanceof Integer) ||
-                                !(args[i*2+2] instanceof Integer)) {
+                        if (!(args[i*2+1] instanceof Integer) || !(args[i*2+2] instanceof Integer)) {
                             continue;
                         }
                         if (args[i*2+1].equals(1)) {
