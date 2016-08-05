@@ -1799,7 +1799,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     && !mNotificationPanel.isTracking() && !mNotificationPanel.isQsExpanded()) {
                 if (mState == StatusBarState.SHADE) {
                     animateCollapsePanels();
-                } else if (mState == StatusBarState.SHADE_LOCKED) {
+                } else if (mState == StatusBarState.SHADE_LOCKED && !isCollapsing()) {
                     goToKeyguard();
                 }
             }
