@@ -3832,6 +3832,12 @@ public final class Settings {
         public static final String KEYGUARD_SHOW_CLOCK = "keyguard_show_clock";
 
         /**
+         * Disable dashboard conditions in settings
+         * @hide
+         */
+        public static final String DISABLE_DASHBOARD_CONDITIONS = "disable_dashboard_conditions";
+
+        /**
          * Disable dashboard suggestions in settings
          * @hide
          */
