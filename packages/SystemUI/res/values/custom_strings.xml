@@ -112,6 +112,9 @@
     <string name="sysui_qqs_count_6">6</string>
     <string name="sysui_qqs_count_7">7</string>
 
+    <!-- Navbar tuner -->
+    <string name="navbar_tuner_title">Navbar tuner</string>
+
     <!-- Nfc qs tile -->
     <string name="quick_settings_nfc_label">NFC</string>
     <!-- Content description of the NFC tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
