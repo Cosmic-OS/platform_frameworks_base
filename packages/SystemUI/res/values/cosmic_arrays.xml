@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 Cosmic-OS Project
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!--- Small tiles count -->
+    <string-array name="sysui_qqs_count_entries">
+        <item>@string/sysui_qqs_count_3</item>
+        <item>@string/sysui_qqs_count_4</item>
+        <item>@string/sysui_qqs_count_5_default</item>
+        <item>@string/sysui_qqs_count_6</item>
+        <item>@string/sysui_qqs_count_7</item>
+    </string-array>
+
+    <string-array name="sysui_qqs_count_values">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+</resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The OmniROM Project
+<!-- Copyright (C) 2016 Cosmic-OS Project
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -76,5 +76,16 @@
          values/config.xml) and must be truncated.
          [CHAR LIMIT=4] -->
     <string name="status_bar_notification_info_overflow" translatable="false">\u221E</string>
+
+    <string name="sysui_qs_fancy_anim_title">Fancy animation</string>
+    <string name="sysui_qs_move_whole_rows_title">Move whole rows</string>
+
+    <!--- Small tiles count -->
+    <string name="sysui_qqs_count_title">Small quick tiles count</string>
+    <string name="sysui_qqs_count_3">3</string>
+    <string name="sysui_qqs_count_4">4</string>
+    <string name="sysui_qqs_count_5_default">5 (default)</string>
+    <string name="sysui_qqs_count_6">6</string>
+    <string name="sysui_qqs_count_7">7</string>
 
 </resources>

@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.android.internal.util.aosip;
+package com.android.internal.util.cosmic;
 
 import android.content.Intent;
 
