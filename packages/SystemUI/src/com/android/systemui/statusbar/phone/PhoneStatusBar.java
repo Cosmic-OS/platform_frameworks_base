@@ -473,6 +473,24 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_TICKER),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_SHOW),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_SHOW_ON_LOCK_SCREEN),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+					Settings.System.STATUS_BAR_COSMIC_LOGO_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+					Settings.System.STATUS_BAR_COSMIC_LOGO_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_HIDE_LOGO),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_NUMBER_OF_NOTIFICATION_ICONS),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -492,6 +510,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         mContext.getResources().getBoolean(R.bool.enable_ticker)
                         ? 1 : 1, UserHandle.USER_CURRENT) == 1;
                 initTickerView();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_COLOR))) {
+                updateStatusBarLogoColor(true);
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_SHOW_ON_LOCK_SCREEN))) {
+                showKeyguardLogo();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_SHOW))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_STYLE))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_HIDE_LOGO))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_NUMBER_OF_NOTIFICATION_ICONS))) {
+                    setCosmicLogoVisibility();
             }
             update();
         }
@@ -2051,6 +2084,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         updateNotificationShade();
         mIconController.updateNotificationIcons(mNotificationData);
+        setCosmicLogoVisibility();
     }
 
     public void requestNotificationUpdate() {
@@ -2414,6 +2448,43 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     }
                 }
             }
+        }
+    }
+
+    private void updateSettings() {
+        updateStatusBarLogoColor(false);
+        setCosmicLogoVisibility();
+        showKeyguardLogo();
+    }
+
+    private void updateStatusBarLogoColor(boolean animate) {
+        if (mIconController != null) {
+            mIconController.updateLogoColor(animate);
+        }
+    }
+
+
+    private void setCosmicLogoVisibility() {
+        final ContentResolver resolver = mContext.getContentResolver();
+
+        final boolean showLogo = Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_COSMIC_LOGO_SHOW, 1) == 1;
+        final boolean forceHide = Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_COSMIC_LOGO_HIDE_LOGO, 1) == 1;
+        final int maxAllowedIcons = Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_COSMIC_LOGO_NUMBER_OF_NOTIFICATION_ICONS, 4);
+
+        if (mIconController != null) {
+            mIconController.setLogoVisibility(showLogo, forceHide, maxAllowedIcons);
+        }
+    }
+
+    private void showKeyguardLogo() {
+        final boolean show = Settings.System.getInt(
+                mContext.getContentResolver(), Settings.System.STATUS_BAR_COSMIC_LOGO_SHOW_ON_LOCK_SCREEN,
+                0) == 1;
+        if (mIconController != null) {
+            mIconController.showKeyguardLogo(show);
         }
     }
 

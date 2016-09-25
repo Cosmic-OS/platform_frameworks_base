@@ -55,6 +55,17 @@
             android:singleLine="true"
             android:visibility="gone"
             />
+
+        <com.android.systemui.statusbar.AlphaImageView
+            android:id="@+id/left_cosmic_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:src="@drawable/ic_qs_cosmic"
+            android:scaleType="center"
+            android:visibility="gone"
+            />
+
         <!-- The alpha of this area is controlled from both PhoneStatusBarTransitions and
              PhoneStatusBar (DISABLE_NOTIFICATION_ICONS). -->
         <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
@@ -90,6 +101,16 @@
                 android:gravity="center_vertical|start"
                 />
         </com.android.keyguard.AlphaOptimizedLinearLayout>
+
+        <com.android.systemui.statusbar.AlphaImageView
+            android:id="@+id/cosmic_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:src="@drawable/ic_qs_cosmic"
+            android:scaleType="center"
+            android:visibility="gone"
+            />
     </LinearLayout>
     <ViewStub
         android:id="@+id/ticker_stub"
