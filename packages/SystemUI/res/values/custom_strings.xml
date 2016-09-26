@@ -71,6 +71,10 @@
      <string name="quick_settings_sound_vibrate">Vibrate</string>
      <string name="quick_settings_sound_dnd">Do not disturb</string>
 
+    <string name="quick_settings_adb_network">ADB network</string>
+    <string name="quick_settings_network_adb_enabled_label">Enabled</string>
+    <string name="quick_settings_network_adb_disabled_label">Disabled</string>
+
     <!-- Text to use when the number in a notification info is too large
          (greater than status_bar_notification_info_maxnum, defined in
          values/config.xml) and must be truncated.
