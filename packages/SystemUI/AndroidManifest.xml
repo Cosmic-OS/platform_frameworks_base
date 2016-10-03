@@ -256,7 +256,7 @@
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/systemui_tuner_statusbar_title"
-                  android:parentActivityName="com.cosmic.galaxy.Galaxy"
+                  android:parentActivityName="com.cosmic.galaxy.GalaxySettings"
                   android:process=":tuner"
                   android:exported="true">
         </activity>
@@ -275,10 +275,26 @@
         </activity-alias>
 
         <activity android:name=".tuner.NavbarActivity"
-                  android:theme="@android:style/Theme.Material.Settings"
+                  android:theme="@style/TunerSettings"
                   android:label="@string/navbar_tuner_title"
                   android:process=":tuner"
-                  android:parentActivityName="com.cosmic.galaxy.navigation.NavigationButtonsCategory"
+                  android:parentActivityName="com.cosmic.galaxy.GalaxySettings"
+                  android:exported="true">
+        </activity>
+
+        <activity android:name=".tuner.ColorAndAppearanceActivity"
+                  android:theme="@style/TunerSettings"
+                  android:label="@string/tuner_display_color"
+                  android:process=":tuner"
+                  android:parentActivityName="com.cosmic.galaxy.GalaxySettings"
+                  android:exported="true">
+        </activity>
+
+        <activity android:name=".tuner.PowerNotificationControlsActivity"
+                  android:theme="@style/TunerSettings"
+                  android:label="@string/tuner_notification_control"
+                  android:process=":tuner"
+                  android:parentActivityName="com.cosmic.galaxy.GalaxySettings"
                   android:exported="true">
         </activity>
 

@@ -24,6 +24,9 @@ import android.support.v7.preference.ListPreference;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceChangeListener;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
@@ -46,6 +49,7 @@ public class TunerFragment extends PreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -64,14 +68,13 @@ public class TunerFragment extends PreferenceFragment implements
                int SysuiQqsCount = TunerService.get(getContext()).getValue(NUM_QUICK_TILES, 5);
                mSysuiQqsCount.setValue(Integer.toString(SysuiQqsCount));
                mSysuiQqsCount.setSummary(mSysuiQqsCount.getEntry());
-            }
+         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         getActivity().setTitle(R.string.systemui_tuner_statusbar_title);
-
         MetricsLogger.visibility(getContext(), MetricsEvent.TUNER, true);
     }
 
@@ -98,4 +101,16 @@ public class TunerFragment extends PreferenceFragment implements
          return false;
      }
 
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
