@@ -26,6 +26,18 @@
     <!-- Nav bar tuner colors -->
     <color name="navbar_tuner_background_color">@android:color/white</color>
     <color name="navbar_tuner_text_color">@*android:color/material_deep_teal_500</color>
+	
+	<!-- QS battery % text color -->
+    <color name="qs_battery_text_color">#ff80cbc4</color>
+	
+	<!-- QS battery graph text color -->
+    <color name="qs_battery_graph_text_color">#66FFFFFF</color>
+
+	<!-- QS battery accent color -->
+    <color name="qs_battery_accent">#ff80cbc4</color>
+	
+    <!-- QS date usage text color -->
+	<color name="data_usage_primary">#ff80cbc4</color>
 
     <!-- QS alarm status text color -->
     <color name="qs_alarm_status_text_color">#64ffffff</color>
