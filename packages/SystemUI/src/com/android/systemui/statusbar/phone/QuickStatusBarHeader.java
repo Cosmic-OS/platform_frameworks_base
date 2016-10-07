@@ -131,6 +131,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
         mSettingsButton = findViewById(R.id.settings_button);
         mSettingsButton.setOnClickListener(this);
+        mSettingsButton.setOnLongClickListener(this);
 
         mAlarmStatusCollapsed = findViewById(R.id.alarm_status_collapsed);
         mAlarmStatus = (TextView) findViewById(R.id.alarm_status);
@@ -382,6 +383,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             startDateLongClickActivity();
         } else if (v == mMultiUserSwitch) {
             startUserLongClickActivity();
+        } else if (v == mSettingsButton) {
+            startCOSMICActivity();
         }
         return false;
     }
@@ -389,6 +392,13 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     private void startSettingsActivity() {
         mActivityStarter.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS),
                 true /* dismissShade */);
+    }
+
+    private void startCOSMICActivity() {
+        Intent cosmicIntent = new Intent(Intent.ACTION_MAIN);
+        cosmicIntent.setClassName("com.android.settings",
+            "com.android.settings.Settings$GalaxyActivity");
+        mActivityStarter.startActivity(cosmicIntent, true /* dismissShade */);
     }
 
     private void startCalendarActivity() {
