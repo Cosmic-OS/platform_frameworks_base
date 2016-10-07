@@ -509,6 +509,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_CARRIER),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.LOCK_QS_DISABLED),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -557,6 +560,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_SHOW_CARRIER))) {
                 update();
                 updateCarrier();
+            } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.LOCK_QS_DISABLED))) {
+                updateQSLock();
             }
             update();
         }
@@ -2525,6 +2531,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         Resources res = mContext.getResources();
         if (res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             updateResources();
+        }
+    }
+
+    private void updateQSLock() {
+        if (mNotificationPanel != null) {
+            mNotificationPanel .updateSettings();
         }
     }
 
