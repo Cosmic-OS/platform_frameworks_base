@@ -434,7 +434,7 @@
     <dimen name="keyguard_affordance_icon_height">24dp</dimen>
     <dimen name="keyguard_affordance_icon_width">24dp</dimen>
 
-    <dimen name="keyguard_indication_margin_bottom">65dp</dimen>
+    <dimen name="keyguard_indication_margin_bottom">90dp</dimen>
 
     <!-- The text size for battery level -->
     <dimen name="battery_level_text_size">12sp</dimen>
@@ -476,7 +476,7 @@
 
     <!-- Extra padding between the mobile data type icon and the strength indicator when the data
          type icon is wide for the tile in quick settings. -->
-    <dimen name="wide_type_icon_start_padding_qs">3dp</dimen>
+    <dimen name="wide_type_icon_start_padding_qs">8dp</dimen>
 
     <!-- The maximum width of the navigation bar ripples. -->
     <dimen name="key_button_ripple_max_width">95dp</dimen>

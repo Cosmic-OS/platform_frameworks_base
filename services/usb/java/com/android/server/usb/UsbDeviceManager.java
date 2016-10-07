@@ -343,7 +343,14 @@ public class UsbDeviceManager {
                 mAdbEnabled = UsbManager.containsFunction(getDefaultFunctions(),
                         UsbManager.USB_FUNCTION_ADB);
                 setEnabledFunctions(null, false);
-
+                if (mContext.getResources().getBoolean(
+                        com.android.internal.R.bool.config_usb_data_unlock)) {
+                    boolean mtpEnable = UsbManager.containsFunction(getDefaultFunctions(),
+                            UsbManager.USB_FUNCTION_MTP);
+                    boolean ptpEnable = UsbManager.containsFunction(getDefaultFunctions(),
+                            UsbManager.USB_FUNCTION_PTP);
+                    if (mtpEnable || ptpEnable) mUsbDataUnlocked = true;
+                }
                 String state = FileUtils.readTextFile(new File(STATE_PATH), 0, null).trim();
                 updateState(state);
 
@@ -528,7 +535,9 @@ public class UsbDeviceManager {
         }
 
         private String applyAdbFunction(String functions) {
-            if (mAdbEnabled) {
+            //Not enable adb when it s charging mode
+            if (mAdbEnabled &&
+                !UsbManager.containsFunction(functions, UsbManager.USB_FUNCTION_CHARGING)) {
                 functions = UsbManager.addFunction(functions, UsbManager.USB_FUNCTION_ADB);
             } else {
                 functions = UsbManager.removeFunction(functions, UsbManager.USB_FUNCTION_ADB);
