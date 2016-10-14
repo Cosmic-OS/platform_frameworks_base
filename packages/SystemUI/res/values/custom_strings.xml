@@ -126,4 +126,7 @@
      <string name="accessibility_quick_settings_volume_panel">Volume</string>
      <string name="quick_settings_volume_panel_label">Volume</string>
 
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_expanded_header_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
+
 </resources>
