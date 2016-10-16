@@ -57,6 +57,7 @@ import com.android.internal.telephony.ITelephony;
 import com.android.server.pm.PackageManagerService;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.WindowManager;
 
 import java.io.BufferedReader;
@@ -65,6 +66,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.lang.reflect.Method;
+import com.android.internal.R;
 
 public final class ShutdownThread extends Thread {
     // constants
@@ -246,6 +248,27 @@ public final class ShutdownThread extends Thread {
 
             closer.dialog = sConfirmDialog;
             sConfirmDialog.setOnDismissListener(closer);
+
+            WindowManager.LayoutParams attrs = sConfirmDialog.getWindow().getAttributes();
+
+            boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
+            int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
+
+            switch (powermenuAnimations) {
+               case 0:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationEnter;
+                  attrs.gravity = Gravity.CENTER|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 1:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimation;
+                  attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 2:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationTop;
+                  attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
+               break;
+            }
+
             sConfirmDialog.getWindow().setDimAmount(setPowerRebootDialogDim(context));
             sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
             sConfirmDialog.show();
@@ -264,6 +287,11 @@ public final class ShutdownThread extends Thread {
         } catch (RemoteException e) {
             Log.e(TAG, "failure trying to perform soft reboot", e);
         }
+    }
+
+    private static int getPowermenuAnimations(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.POWER_MENU_ANIMATIONS, 0);
     }
 
     private static class CloseDialogReceiver extends BroadcastReceiver
@@ -400,6 +428,25 @@ public final class ShutdownThread extends Thread {
         }
         pd.setCancelable(false);
         pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+
+        WindowManager.LayoutParams attrs = pd.getWindow().getAttributes();
+        boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
+        int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
+
+        switch (powermenuAnimations) {
+           case 0:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationEnter;
+              attrs.gravity = Gravity.CENTER|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 1:
+              attrs.windowAnimations = R.style.GlobalActionsAnimation;
+              attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 2:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationTop;
+              attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
+           break;
+        }
 
         pd.getWindow().setDimAmount(setPowerRebootDialogDim(context));
         pd.show();
