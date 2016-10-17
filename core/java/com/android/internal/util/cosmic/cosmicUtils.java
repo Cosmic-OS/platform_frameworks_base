@@ -20,6 +20,8 @@ import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import java.util.Locale;
+import android.content.res.Resources;
 
 public class cosmicUtils {
 
@@ -43,5 +45,10 @@ public class cosmicUtils {
             // Ignore
         }
         return false;
+    }
+
+    public static boolean isChineseLanguage() {
+       return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
+               Locale.CHINESE.getLanguage());
     }
 }
