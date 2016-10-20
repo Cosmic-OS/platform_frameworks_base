@@ -90,6 +90,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private LinearLayout mCenterClockLayout;
     private NetworkTraffic mNetworkTraffic;
     private TextView mCarrierLabel;
+    private ImageView mCosmicLogo;
+    private ImageView mCosmicLogoRight;
+    private ImageView mCosmicLogoLeft;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -155,6 +158,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mLeftClock = (Clock) statusBar.findViewById(R.id.left_clock);
         mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
+        mCosmicLogo = (ImageView) statusBar.findViewById(R.id.cosmic_logo);
+        mCosmicLogoRight = (ImageView) statusBar.findViewById(R.id.right_cosmic_logo);
+        mCosmicLogoLeft = (ImageView) statusBar.findViewById(R.id.left_cosmic_logo);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
         mHandler = new Handler();
@@ -344,11 +350,19 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate);
         animateHide(mCenterClockLayout, animate);
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_COSMIC_LOGO, 0) == 1) {
+            animateHide(mCosmicLogoLeft, animate);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
         animateShow(mCenterClockLayout, animate);
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_COSMIC_LOGO, 0) == 1) {
+            animateShow(mCosmicLogoLeft, animate);
+        }
     }
 
     public void hideNotificationIconArea(boolean animate) {
@@ -593,6 +607,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 UserHandle.USER_CURRENT) == mContext.getResources().
                 getColor(R.color.status_bar_clock_color)) {
             mCarrierLabel.setTextColor(getTint(mTintArea, mCarrierLabel, mIconTint));
+        }
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_COSMIC_LOGO_COLOR, 0xFFFFFFFF,
+                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
+            mCosmicLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
+            mCosmicLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
+            mCosmicLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
         }
     }
 
