@@ -586,8 +586,14 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mCenterClock.setTextColor(getTint(mTintArea, mCenterClock, mIconTint));
         mLeftClock.setTextColor(getTint(mTintArea, mLeftClock, mIconTint));
         mNetworkTraffic.setDarkIntensity(mDarkIntensity);
-        mCarrierLabel.setTextColor(getTint(mTintArea, mCarrierLabel, mIconTint));
         mBatteryLevelView.setTextColor(getTint(mTintArea, mBatteryLevelView, mIconTint));
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CARRIER_COLOR,
+                mContext.getResources().getColor(R.color.status_bar_clock_color),
+                UserHandle.USER_CURRENT) == mContext.getResources().
+                getColor(R.color.status_bar_clock_color)) {
+            mCarrierLabel.setTextColor(getTint(mTintArea, mCarrierLabel, mIconTint));
+        }
     }
 
     public void appTransitionPending() {
