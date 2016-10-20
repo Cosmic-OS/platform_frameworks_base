@@ -19,6 +19,8 @@ package com.android.internal.util.cosmic;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,6 +35,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 
 import com.android.internal.statusbar.IStatusBarService;
+import java.util.Locale;
 
 /**
  * Some custom utilities
@@ -122,5 +125,10 @@ public class CosmicUtils {
                 }
             }
         }
+    }
+
+    public static boolean isChineseLanguage() {
+       return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
+               Locale.CHINESE.getLanguage());
     }
 }

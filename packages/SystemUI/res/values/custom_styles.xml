@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright 2016-2017 The Cosmic-OS Project
+     Copyright 2016-2018 The Cosmic-OS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -24,6 +24,13 @@
     <!-- Status bar notification ticker -->
     <style name="TextAppearance.StatusBar.PhoneTicker" parent="@*android:style/TextAppearance.StatusBar">
         <item name="android:textSize">14dp</item>
+    </style>
+
+    <!-- Custom Carrier Label -->
+    <style name="TextAppearance.StatusBar.CarrierLabel" parent="@*android:style/TextAppearance.StatusBar.Icon">
+        <item name="android:textSize">@dimen/status_bar_carrier_height</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/status_bar_carrier_color</item>
     </style>
 
 </resources>
