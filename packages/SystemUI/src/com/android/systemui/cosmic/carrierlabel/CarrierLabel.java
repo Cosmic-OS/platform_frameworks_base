@@ -47,6 +47,26 @@ public class CarrierLabel extends TextView {
     private Context mContext;
     private boolean mAttached;
     private static boolean isCN;
+    private int mCarrierFontSize = 14;
+
+    Handler mHandler;
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUS_BAR_CARRIER_FONT_SIZE), false, this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSize();
+        }
+    }
 
     public CarrierLabel(Context context) {
         this(context, null);
@@ -60,6 +80,10 @@ public class CarrierLabel extends TextView {
         super(context, attrs, defStyle);
         mContext = context;
         updateNetworkName(true, null, false, null);
+        mHandler = new Handler();
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
+        updateSize();
     }
 
     @Override
@@ -137,5 +161,12 @@ public class CarrierLabel extends TextView {
             operatorName = telephonyManager.getSimOperatorName();
         }
         return operatorName;
+    }
+
+    private void updateSize() {
+        mCarrierFontSize = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CARRIER_FONT_SIZE, 14);
+
+        setTextSize(mCarrierFontSize);
     }
 }
