@@ -41,6 +41,9 @@ import com.android.systemui.statusbar.policy.SignalCallbackAdapter;
 public class CellularTile extends QSTile<QSTile.SignalState> {
     static final Intent CELLULAR_SETTINGS = new Intent().setComponent(new ComponentName(
             "com.android.settings", "com.android.settings.Settings$DataUsageSummaryActivity"));
+    private static final Intent MOBILE_NETWORK_SETTINGS = new Intent(Intent.ACTION_MAIN)
+            .setComponent(new ComponentName("com.android.phone",
+                    "com.android.phone.MobileNetworkSettings"));
 
     private final NetworkController mController;
     private final DataUsageController mDataController;
@@ -89,7 +92,12 @@ public class CellularTile extends QSTile<QSTile.SignalState> {
         MetricsLogger.action(mContext, getMetricsCategory());
         if (mDataController.isMobileDataSupported()) {
             if(mController.isAdvancedDataTileEnabled()) {
-                mDataController.setMobileDataEnabled(!mDataController.isMobileDataEnabled());
+		boolean enabled = mDataController.isMobileDataEnabled();
+		if (!enabled) {
+		    mDataController.setMobileDataEnabled(true);
+        	} else {
+        	    mDataController.setMobileDataEnabled(false);
+	        }
             } else {
                 showDetail(true);
             }
@@ -282,7 +290,7 @@ public class CellularTile extends QSTile<QSTile.SignalState> {
 
         @Override
         public Intent getSettingsIntent() {
-            return CELLULAR_SETTINGS;
+            return MOBILE_NETWORK_SETTINGS;
         }
 
         @Override
