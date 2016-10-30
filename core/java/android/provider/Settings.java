@@ -4322,6 +4322,12 @@ public final class Settings {
         public static final Validator HOME_WAKE_SCREEN_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+          /**
+          * Whether to show the negociated charger current in the lockscreen
+          * @hide
+          */
+         public static final String LOCKSCREEN_CHARGING_CURRENT = "lockscreen_charging_current";
+
         /**
          * Whether to wake the screen with the back key, the value is boolean.
          * 0 = 0ff, 1 = on
