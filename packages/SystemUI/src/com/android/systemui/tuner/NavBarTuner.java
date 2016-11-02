@@ -203,8 +203,7 @@ public class NavBarTuner extends Fragment implements TunerService.Tunable {
                     NAV_BAR_VIEWS, null);
             return true;
         } else if (item.getItemId() == android.R.id.home) {
-            getActivity().onBackPressed();
-            return true;
+            getFragmentManager().popBackStack();
         }
         return super.onOptionsItemSelected(item);
     }
