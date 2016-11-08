@@ -197,7 +197,6 @@ import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback;
 import com.android.systemui.statusbar.policy.BatteryControllerImpl;
 import com.android.systemui.statusbar.policy.BluetoothControllerImpl;
-import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.statusbar.policy.CastControllerImpl;
 import com.android.systemui.statusbar.policy.EncryptionHelper;
 import com.android.systemui.statusbar.policy.FlashlightController;
@@ -356,7 +355,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     protected UserSwitcherController mUserSwitcherController;
     NextAlarmController mNextAlarmController;
     protected KeyguardMonitor mKeyguardMonitor;
-    BrightnessMirrorController mBrightnessMirrorController;
     AccessibilityController mAccessibilityController;
     FingerprintUnlockController mFingerprintUnlockController;
     LightStatusBarController mLightStatusBarController;
@@ -1355,7 +1353,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     mUserSwitcherController, mUserInfoController, mKeyguardMonitor,
                     mSecurityController, mBatteryController, mIconController,
                     mNextAlarmController);
-            mBrightnessMirrorController = new BrightnessMirrorController(mContext, mStatusBarWindow);
             container.addInflateListener(new InflateListener() {
                 @Override
                 public void onInflated(View v) {
@@ -1363,7 +1360,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             R.id.quick_settings_container);
                     qsContainer.setHost(qsh);
                     mQSPanel = qsContainer.getQsPanel();
-                    mQSPanel.setBrightnessMirror(mBrightnessMirrorController);
                     mKeyguardStatusBar.setQSPanel(mQSPanel);
                     mHeader = qsContainer.getHeader();
 
@@ -1538,9 +1534,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         super.onDensityOrFontScaleChanged();
         mScrimController.onDensityOrFontScaleChanged();
         mStatusBarView.onDensityOrFontScaleChanged();
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.onDensityOrFontScaleChanged();
-        }
         inflateSignalClusters();
         mIconController.onDensityOrFontScaleChanged();
         inflateDismissView();
@@ -4605,9 +4598,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         if (mNotificationPanel != null) {
             mNotificationPanel.updateResources();
-        }
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.updateResources();
         }
     }
 
