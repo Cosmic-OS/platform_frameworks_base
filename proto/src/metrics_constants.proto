@@ -2223,5 +2223,6 @@ message MetricsEvent {
 
     // Cosmic-OS 
     GALAXY = 420;
+    COS_TILE = 421;
   }
 }
