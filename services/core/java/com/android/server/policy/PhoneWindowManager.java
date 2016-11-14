@@ -149,7 +149,7 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.policy.IShortcutService;
 import com.android.internal.statusbar.IStatusBarService;
-import com.android.internal.util.aosip.aosipUtils;
+import com.android.internal.util.cosmic.cosmicUtils;
 import com.android.internal.util.ScreenShapeHelper;
 import com.android.internal.view.RotationPolicy;
 import com.android.internal.widget.PointerLocationView;

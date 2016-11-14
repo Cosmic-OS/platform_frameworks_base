@@ -31,10 +31,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.internal.util.aosip.AppHelper;
-import com.android.internal.util.aosip.ActionHelper;
-import com.android.internal.util.aosip.ActionConfig;
-import com.android.internal.util.aosip.Action;
+import com.android.internal.util.cosmic.AppHelper;
+import com.android.internal.util.cosmic.ActionHelper;
+import com.android.internal.util.cosmic.ActionConfig;
+import com.android.internal.util.cosmic.Action;
 import com.android.internal.widget.LockPatternUtils;
 
 import com.android.keyguard.R;

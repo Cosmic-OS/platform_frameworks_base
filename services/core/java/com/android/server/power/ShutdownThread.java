@@ -503,7 +503,6 @@ public final class ShutdownThread extends Thread {
         }
         WindowManager.LayoutParams attrs = pd.getWindow().getAttributes();
 
-        WindowManager.LayoutParams attrs = pd.getWindow().getAttributes();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
         int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
 
