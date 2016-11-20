@@ -153,7 +153,6 @@ public class BatteryMeterDrawable extends Drawable implements
         }
         levels.recycle();
         colors.recycle();
-        mBatteryPct = context.getResources().getBoolean(R.bool.config_showBatteryPercentage);
         updateShowPercent();
         updateForceChargeBatteryText();
         updateCustomChargingSymbol();
