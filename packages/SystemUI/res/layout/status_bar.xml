@@ -58,8 +58,8 @@
 
         <com.android.systemui.statusbar.AlphaImageView
             android:id="@+id/left_cosmic_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/status_bar_icon_size"
+            android:layout_height="match_parent"
             android:paddingEnd="4dp"
             android:src="@drawable/ic_qs_cosmic"
             android:scaleType="center"
@@ -104,8 +104,8 @@
 
         <com.android.systemui.statusbar.AlphaImageView
             android:id="@+id/cosmic_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/status_bar_icon_size"
+            android:layout_height="match_parent"
             android:paddingStart="4dp"
             android:src="@drawable/ic_qs_cosmic"
             android:scaleType="center"
