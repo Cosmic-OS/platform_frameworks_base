@@ -278,6 +278,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         mUiContext = ThemeUtils.createUiContext(mContext);
         mUiContext.setTheme(android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
         return mUiContext != null ? mUiContext : mContext;
+   }
 
     private float setPowerRebootDialogDim() {
         int mPowerRebootDialogDim = Settings.System.getInt(mContext.getContentResolver(),
