@@ -209,12 +209,6 @@ public class NotificationIconAreaController {
         }
     }
 
-    public void setClockAndDateStatus(int mode) {
-        if (mNotificationIcons != null) {
-            mNotificationIcons.setClockAndDateStatus(mode);
-        }
-    }
-
     public int getNotificationIconsCount() {
         return mNotificationIcons.getChildCount();
     }
