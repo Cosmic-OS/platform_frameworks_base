@@ -101,7 +101,7 @@ public class BatteryDroidView extends AbstractBatteryView implements
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         mCircleWidth = (int) (13 * metrics.density + 0.5f);
-        mStrokeWidth = (int) (2 * metrics.density + 0.5f);
+        mStrokeWidth = (int) (1.3 * metrics.density + 0.5f);
         mBatteryPaint.setStrokeWidth(mStrokeWidth);
         mFramePaint.setStrokeWidth(mStrokeWidth);
         mPercentOffsetY = (int) (0.5 * metrics.density + 0.5f);
