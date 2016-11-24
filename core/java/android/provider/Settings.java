@@ -4134,30 +4134,6 @@ public final class Settings {
          */
         public static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
 
-        /**
-         * Shows custom date before clock time
-         * 0 - No Date
-         * 1 - Small Date
-         * 2 - Normal Date
-         * @hide
-         */
-        public static final String STATUS_BAR_CLOCK_DATE_DISPLAY = "statusbar_clock_date_display";
-
-        /**
-         * Sets the date string style
-         * 0 - Regular style
-         * 1 - Lowercase
-         * 2 - Uppercase
-         * @hide
-         */
-        public static final String STATUS_BAR_CLOCK_DATE_STYLE = "statusbar_clock_date_style";
-
-        /**
-         * Stores the java DateFormat string for the date
-         * @hide
-         */
-        public static final String STATUS_BAR_CLOCK_DATE_FORMAT = "statusbar_clock_date_format";
-
          /**
          * Volume key controls ringtone or media sound stream
          *
@@ -4454,9 +4430,6 @@ public final class Settings {
             STATUS_BAR_CLOCK,
             STATUS_BAR_CLOCK_SECONDS,
             STATUS_BAR_AM_PM,
-            STATUS_BAR_CLOCK_DATE_DISPLAY,
-            STATUS_BAR_CLOCK_DATE_STYLE,
-            STATUS_BAR_CLOCK_DATE_FORMAT,
             NOTIFICATION_LIGHT_SCREEN_ON,
             ALLOW_LIGHTS,
             STATUSBAR_BATTERY_STYLE,
