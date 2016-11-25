@@ -134,7 +134,7 @@ import android.widget.Toast;
 
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.aosip.ColorUtils;
+import com.android.internal.util.cosmic.ColorUtils;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.Preconditions;
