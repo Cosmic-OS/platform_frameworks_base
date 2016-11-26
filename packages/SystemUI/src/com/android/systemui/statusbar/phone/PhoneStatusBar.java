@@ -133,7 +133,6 @@ import com.android.systemui.doze.DozeHost;
 import com.android.systemui.doze.DozeLog;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.qs.QSContainer;
-import com.android.systemui.omni.BatteryViewManager;
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.recents.ScreenPinningRequest;
 import com.android.systemui.recents.events.EventBus;
@@ -428,9 +427,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     int mLinger;
     int mInitialTouchX;
     int mInitialTouchY;
-
-    // omni additions
-    private BatteryViewManager mBatteryViewManager;
 
     // for disabling the status bar
     int mDisabled1 = 0;
@@ -1049,6 +1045,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         // set the inital view visibility
         setAreThereNotifications();
 
+        createIconController();
 
         // Background thread for any controllers that need it.
         mHandlerThread = new HandlerThread(TAG, Process.THREAD_PRIORITY_BACKGROUND);
@@ -1071,13 +1068,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 // noop
             }
         });
-
-        // must be before StatusBarIconController
-        LinearLayout batteryContainer = (LinearLayout) mStatusBarView.findViewById(R.id.battery_container);
-        mBatteryViewManager = new BatteryViewManager(mContext, batteryContainer, mStatusBarView.getBarTransitions(), null);
-
-        createIconController();
-
         mNetworkController = new NetworkControllerImpl(mContext, mHandlerThread.getLooper());
         mNetworkController.setUserSetupComplete(mUserSetup);
         mHotspotController = new HotspotControllerImpl(mContext);
@@ -1151,8 +1141,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mKeyguardStatusBar.setUserSwitcherController(mUserSwitcherController);
         mUserInfoController.reloadUserInfo();
 
-        mBatteryViewManager.setBatteryController(mBatteryController);
-        mHeader.setBatteryController(mBatteryController);
+        ((BatteryMeterView) mStatusBarView.findViewById(R.id.battery)).setBatteryController(
+                mBatteryController);
         mKeyguardStatusBar.setBatteryController(mBatteryController);
         mHeader.setWeatherController(mWeatherController);
 
@@ -4006,7 +3996,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         clearCurrentMediaNotification();
         mLockscreenWallpaper.setCurrentUser(newUserId);
         updateMediaMetaData(true, false);
-        mBatteryViewManager.update();
     }
 
     private void setControllerUsers() {
@@ -5491,9 +5480,5 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 }
             }
         }
-    }
-
-    protected BatteryViewManager getBatteryViewManager() {
-        return mBatteryViewManager;
     }
 }

@@ -65,11 +65,4 @@
 
     <string name="default_string">Default</string>
 
-    <string name="battery_style_portrait">Portrait</string>
-    <string name="battery_style_landscape">Landscape</string>
-    <string name="battery_style_circle">Circle</string>
-    <string name="battery_style_text">Text only</string>
-    <string name="battery_style_droid">Kronic</string>
-    <string name="battery_style_hidden">Hide</string>
-
 </resources>
