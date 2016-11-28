@@ -31,4 +31,8 @@
     <dimen name="phone_bottom_padding">40dp</dimen>
     <dimen name="phone_width">320dp</dimen>
     <dimen name="phone_height">420dp</dimen>
+
+    <!-- QS title visibility -->
+    <dimen name="qs_tile_height_wo_label">48dp</dimen>
+
 </resources>
