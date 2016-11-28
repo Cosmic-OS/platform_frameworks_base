@@ -78,7 +78,6 @@ import com.android.server.media.projection.MediaProjectionManagerService;
 import com.android.server.net.NetworkPolicyManagerService;
 import com.android.server.net.NetworkStatsService;
 import com.android.server.notification.NotificationManagerService;
-import com.android.server.om.OverlayManagerService;
 import com.android.server.os.RegionalizationService;
 import com.android.server.os.SchedulingPolicyService;
 import com.android.server.pm.BackgroundDexOptService;
@@ -509,9 +508,6 @@ public final class SystemServer {
         traceBeginAndSlog("StartUserManagerService");
         mSystemServiceManager.startService(UserManagerService.LifeCycle.class);
         Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-
-        // Manages Overlay packages
-        mSystemServiceManager.startService(new OverlayManagerService(mSystemContext, installer));
 
         // Initialize attribute cache used to cache resources from packages.
         AttributeCache.init(mSystemContext);
