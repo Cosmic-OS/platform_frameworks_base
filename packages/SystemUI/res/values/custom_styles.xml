@@ -36,6 +36,7 @@
     <style name="BatteryMeterViewDrawable.Circle">
         <item name="blendMode">overlay</item>
     </style>
+    <style name="BatteryMeterViewDrawable.Solid"/>
 
     <!-- Switch bar text appearance -->
     <style name="TextAppearance.SwitchBar" parent="@android:style/TextAppearance.Material.Title">
