@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2016 The Pure Nexus Project
+     Copyright (C) 2014 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,15 +14,11 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
-    <!-- carrier label color -->
-    <color name="status_bar_carrier_color">#FFFFFFFF</color>
 
-    <!-- Status bar battery level text color -->
-    <color name="status_bar_battery_level_text_color">#ffffff</color>
-
-    <!-- Floating action button -->
-    <color name="fab_color">@*android:color/material_deep_teal_500</color>
-    <color name="floating_action_button_icon_color">#ffffff</color>
-
-</resources>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@android:color/white">
+    <shape
+            android:shape="oval"
+            android:tint="@color/fab_color">
+    </shape>
+</ripple>
