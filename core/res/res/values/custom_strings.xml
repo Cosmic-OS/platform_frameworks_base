@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2016 The Pure Nexus Project
-     Copyright (C) 2016 The JDCTeam
+     Copyright (C) 2016 Cosmic-OS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -34,7 +33,6 @@
     <!-- Global Actions -->
     <string name="global_action_current_user">Current</string>
     <string name="global_action_screenshot">Screenshot</string>
-    <string name="global_action_screen_record">Screen record</string>
     <string name="global_action_search">Search</string>
     <string name="global_action_torch">Flashlight</string>
     <string name="global_action_voicesearch">Voice Search</string>

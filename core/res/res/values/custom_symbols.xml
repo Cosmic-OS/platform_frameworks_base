@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2016 The JDCTeam
+     Copyright (C) 2016 Cosmic-OS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -26,9 +26,6 @@
   <java-symbol type="bool" name="config_forceAnalogCarDock" />
   <java-symbol type="bool" name="config_forceAnalogDeskDock" />
 
-  <java-symbol type="integer" name="config_longPressOnMenuBehavior" />
-  <java-symbol type="integer" name="config_longPressOnAppSwitchBehavior" />
-
   <!-- Reboot - Advanced Reboot -->
   <java-symbol type="array" name="shutdown_reboot_options" />
   <java-symbol type="array" name="shutdown_reboot_actions" />
@@ -44,18 +41,13 @@
   <java-symbol type="dimen" name="global_actions_avatar_size" />
   <java-symbol type="drawable" name="ic_lock_assist" />
   <java-symbol type="drawable" name="ic_lock_screenshot" />
-  <java-symbol type="drawable" name="ic_lock_screen_record" />
   <java-symbol type="drawable" name="ic_lock_settings" />
   <java-symbol type="drawable" name="ic_lock_torch" />
   <java-symbol type="drawable" name="ic_lock_user" />
   <java-symbol type="drawable" name="ic_lock_voice" />
   <java-symbol type="string" name="global_action_current_user" />
   <java-symbol type="string" name="global_action_screenshot" />
-  <java-symbol type="string" name="global_action_screen_record" />
   <java-symbol type="string" name="global_action_search" />
   <java-symbol type="string" name="global_action_torch" />
   <java-symbol type="string" name="global_action_voicesearch" />
-
-  <!-- Screen Recording -->
-  <java-symbol type="bool" name="config_enableScreenrecordChord" />
 </resources>
