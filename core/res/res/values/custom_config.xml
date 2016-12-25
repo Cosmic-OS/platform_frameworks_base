@@ -22,7 +22,4 @@
     <!-- The list of components which should be forced to be enabled. -->
     <string-array name="config_forceEnabledComponents" translatable="false">
     </string-array>
-
-    <!-- Is Advanced Reboot enabled? -->
-    <bool name="config_advanced_reboot">true</bool>
 </resources>
