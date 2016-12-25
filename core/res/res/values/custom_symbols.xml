@@ -37,13 +37,4 @@
   <!-- Intent chooser -->
   <java-symbol type="id" name="filtered_item_container" />
 
-  <!-- Power menu -->
-  <java-symbol type="drawable" name="ic_lock_assist" />
-  <java-symbol type="drawable" name="ic_lock_screenshot" />
-  <java-symbol type="drawable" name="ic_lock_settings" />
-  <java-symbol type="drawable" name="ic_lock_user" />
-  <java-symbol type="drawable" name="ic_lock_voice" />
-  <java-symbol type="string" name="global_action_screenshot" />
-  <java-symbol type="string" name="global_action_search" />
-  <java-symbol type="string" name="global_action_voicesearch" />
 </resources>
