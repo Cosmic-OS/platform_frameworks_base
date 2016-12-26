@@ -29,6 +29,4 @@
   <!-- Intent chooser -->
   <java-symbol type="id" name="filtered_item_container" />
 
-  <java-symbol type="integer" name="config_longPressOnMenuBehavior" />
-  <java-symbol type="integer" name="config_longPressOnAppSwitchBehavior" />
 </resources>
