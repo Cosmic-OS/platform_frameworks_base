@@ -108,4 +108,5 @@ interface IStatusBarService
      * Cosmic-OS
      */
     void toggleCameraFlash();
+    void restartUI();
 }
