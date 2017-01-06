@@ -48,7 +48,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ConcurrentHashMap;
+
 import libcore.io.IoUtils;
 
 final class SharedPreferencesImpl implements SharedPreferences {
@@ -63,7 +63,7 @@ final class SharedPreferencesImpl implements SharedPreferences {
     private final File mBackupFile;
     private final int mMode;
 
-    private ConcurrentHashMap<String, Object> mMap;     // guarded by 'this'
+    private Map<String, Object> mMap;     // guarded by 'this'
     private int mDiskWritesInFlight = 0;  // guarded by 'this'
     private boolean mLoaded = false;      // guarded by 'this'
     private long mStatTimestamp;          // guarded by 'this'
@@ -118,7 +118,7 @@ final class SharedPreferencesImpl implements SharedPreferences {
             Log.w(TAG, "Attempt to read preferences file " + mFile + " without permission");
         }
 
-        ConcurrentHashMap map = null;
+        Map map = null;
         StructStat stat = null;
         try {
             stat = Os.stat(mFile.getPath());
@@ -145,7 +145,7 @@ final class SharedPreferencesImpl implements SharedPreferences {
                 mStatTimestamp = stat.st_mtime;
                 mStatSize = stat.st_size;
             } else {
-                mMap = new ConcurrentHashMap<>();
+                mMap = new HashMap<>();
             }
             notifyAll();
         }
@@ -224,7 +224,7 @@ final class SharedPreferencesImpl implements SharedPreferences {
         synchronized (this) {
             awaitLoadedLocked();
             //noinspection unchecked
-            return new ConcurrentHashMap<String, Object>(mMap);
+            return new HashMap<String, Object>(mMap);
         }
     }
 
@@ -409,7 +409,7 @@ final class SharedPreferencesImpl implements SharedPreferences {
                     // in-flight write owns it.  Clone it before
                     // modifying it.
                     // noinspection unchecked
-                    mMap = new ConcurrentHashMap<String, Object>(mMap);
+                    mMap = new HashMap<String, Object>(mMap);
                 }
                 mcr.mapToWriteToDisk = mMap;
                 mDiskWritesInFlight++;
