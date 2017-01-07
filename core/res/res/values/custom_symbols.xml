@@ -62,4 +62,6 @@
    <!-- Screenrecord -->
   <java-symbol type="bool" name="config_enableScreenrecordChord" />
 
+  <!-- sRGB mode -->
+  <java-symbol type="string" name="config_srgb_path" />
 </resources>
