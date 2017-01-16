@@ -56,6 +56,7 @@ public abstract class WindowOrientationListener {
     private boolean mEnabled;
     private int mRate;
     private String mSensorType;
+    private boolean mUseDefaultBatchingForAccel;
     private Sensor mSensor;
     private OrientationJudge mOrientationJudge;
     private int mCurrentRotation = -1;
@@ -90,6 +91,9 @@ public abstract class WindowOrientationListener {
         mRate = rate;
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_DEVICE_ORIENTATION);
 
+        mUseDefaultBatchingForAccel = context.getResources().getBoolean(
+            com.android.internal.R.bool.config_useDefaultBatchingForAccel);
+
         if (mSensor != null) {
             mOrientationJudge = new OrientationSensorJudge();
         }
@@ -119,7 +123,8 @@ public abstract class WindowOrientationListener {
                     Slog.d(TAG, "WindowOrientationListener enabled");
                 }
                 mOrientationJudge.resetLocked();
-                if (mSensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                if (mSensor.getType() == Sensor.TYPE_ACCELEROMETER
+                    && mUseDefaultBatchingForAccel) {
                     mSensorManager.registerListener(
                             mOrientationJudge, mSensor, mRate, DEFAULT_BATCH_LATENCY, mHandler);
                 } else {
