@@ -187,4 +187,9 @@
     <string name="quick_settings_location_high_accuracy_label">High accuracy</string>
     <string name="quick_settings_location_off_label">Location off</string>
 
+    <!-- vpn icon switch -->
+    <string name="status_bar_vpn">VPN</string>
+    <!-- data saver icon switch -->
+    <string name="status_bar_datasaver">Data saver</string>
+
 </resources>
