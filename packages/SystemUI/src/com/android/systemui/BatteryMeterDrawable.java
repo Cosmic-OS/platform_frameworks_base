@@ -80,8 +80,6 @@ public class BatteryMeterDrawable extends Drawable implements
     public static final int BATTERY_STYLE_LANDSCAPE = 5;
     public static final int BATTERY_STYLE_TEXT      = 6;
 
-    private static final int FULL = 96;
-
     private final int[] mColors;
     private final int mIntrinsicWidth;
     private final int mIntrinsicHeight;
