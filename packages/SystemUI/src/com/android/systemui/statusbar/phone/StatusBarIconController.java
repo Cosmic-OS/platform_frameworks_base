@@ -25,6 +25,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Icon;
+import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -93,6 +94,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private ImageView mCosmicLogo;
     private ImageView mCosmicLogoRight;
     private ImageView mCosmicLogoLeft;
+
+    private int mCustomLogo;
+    private ImageView mCLogo;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -163,6 +167,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mCosmicLogoLeft = (ImageView) statusBar.findViewById(R.id.left_cosmic_logo);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
+        mCLogo = (ImageView) statusBar.findViewById(R.id.custom);
         mHandler = new Handler();
         loadDimens();
 
@@ -354,6 +359,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 Settings.System.STATUS_BAR_COSMIC_LOGO, 0) == 1) {
             animateHide(mCosmicLogoLeft, animate);
         }
+
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
+       animateHide(mCLogo, animate);
+       }
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -362,6 +372,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_COSMIC_LOGO, 0) == 1) {
             animateShow(mCosmicLogoLeft, animate);
+        }
+
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1 ) {
+        animateShow(mCLogo, animate);
         }
     }
 
@@ -593,6 +608,23 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
             StatusBarIconView v = (StatusBarIconView) mStatusIcons.getChildAt(i);
             v.setImageTintList(ColorStateList.valueOf(getTint(mTintArea, v, mIconTint)));
         }
+
+        mCustomLogo = Settings.System.getIntForUser(mContext.getContentResolver(),
+               Settings.System.CUSTOM_LOGO_STYLE, 0,
+               UserHandle.USER_CURRENT);
+	    int mCustomlogoColor = 
+Settings.System.getIntForUser(mContext.getContentResolver(),
+		       Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, 
+               UserHandle.USER_CURRENT);
+        if (mCustomlogoColor == 0xFFFFFFFF) { 
+	    // we cant set imagetintlist on the last one. It is non colorable. Hence use a condition.
+                if (mCustomLogo == 37) {
+		        mCLogo.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
+                } else {
+         	    mCLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
+                }	
+        }
+        
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
         mBatteryMeterView.setDarkIntensity(
                 isInArea(mTintArea, mBatteryMeterView) ? mDarkIntensity : 0);

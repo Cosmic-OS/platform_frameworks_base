@@ -65,6 +65,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -127,6 +128,7 @@ import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -449,7 +451,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private ImageView cosmicLogoright;
     private ImageView cosmicLogoleft;
     private int mCosmicLogoStyle;
- 
+
+    // Custom Logos
+    private boolean mCustomlogo;
+    private ImageView mCLogo;
+    private int mCustomlogoColor;
+    private int mCustomlogoStyle;
+
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
     private int mStatusBarHeaderHeight;
@@ -628,11 +636,22 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                    Settings.System.STATUS_BAR_COSMIC_LOGO_STYLE), false, this,
                    UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.SHOW_CUSTOM_LOGO), false, this,
+                   UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.CUSTOM_LOGO_COLOR), false, this,
+                   UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.CUSTOM_LOGO_STYLE), false, this,
+                  UserHandle.USER_ALL);
            update();
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+        ContentResolver resolver = mContext.getContentResolver();
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_CARRIER))) {
                 update();
@@ -651,8 +670,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         mContext.getContentResolver(),
                         Settings.System.STATUS_BAR_SHOW_TICKER,
                         0, UserHandle.USER_CURRENT) == 1;
-                initTickerView();
-            }
+                    initTickerView();
+            }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SHOW_CUSTOM_LOGO))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_LOGO_STYLE))) {
+            		mCustomlogo = Settings.System.getIntForUser(resolver,
+            		Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
+            		mCustomlogoColor = Settings.System.getIntForUser(resolver,
+            		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+				    showmCustomlogo(mCustomlogo,mCustomlogoColor);
+           }
             update();
         }
 
@@ -720,6 +748,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             
             mQsLayoutColumns = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_LAYOUT_COLUMNS, 3, mCurrentUserId);
+
+            mCustomlogoStyle = Settings.System.getIntForUser(
+            resolver, Settings.System.CUSTOM_LOGO_STYLE, 0,
+            UserHandle.USER_CURRENT);
+            mCustomlogo = Settings.System.getIntForUser(resolver,
+            Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
+            mCustomlogoColor = Settings.System.getIntForUser(resolver,
+            Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+			mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
+
+	        showmCustomlogo(mCustomlogo,mCustomlogoColor);
 
             if (mNotificationPanel != null) {
                 mNotificationPanel.updateSettings();
@@ -4370,6 +4409,101 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
     };
+
+
+ public void showmCustomlogo(boolean show,int color) { 
+        if (!show) {
+            mCLogo.setVisibility(View.GONE);
+            return;
+        }
+        Drawable d = null;
+        int style = mCustomlogoStyle;
+		if ( style == 0) {
+        d = mContext.getResources().getDrawable(R.drawable.custom);
+		} else if ( style == 1) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_1);
+		} else if ( style == 2) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_2);
+		} else if ( style == 3) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_3);
+		} else if ( style == 4) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_4);
+		} else if ( style == 5) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_5);
+		} else if ( style == 6) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_6);
+		} else if ( style == 7) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_7);
+		} else if ( style == 8) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_8);
+		}  else if ( style == 9) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_9);
+		} else if ( style == 10) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_10);
+		} else if ( style == 11) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_11);
+		} else if ( style == 12) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_12);
+		} else if ( style  == 13) {
+        d = mContext.getResources().getDrawable(R.drawable.weather_off);
+		} else if ( style  == 14) {
+        d = mContext.getResources().getDrawable(R.drawable.blender);
+		} else if ( style  == 15) {
+        d = mContext.getResources().getDrawable(R.drawable.cake_variant);
+		} else if ( style  == 16) {
+        d = mContext.getResources().getDrawable(R.drawable.guitar_electric);
+		} else if ( style  == 17) {
+        d = mContext.getResources().getDrawable(R.drawable.tag_faces);
+		} else if ( style  == 18) {
+        d = mContext.getResources().getDrawable(R.drawable.run);
+		} else if ( style  == 19) {
+        d = mContext.getResources().getDrawable(R.drawable.radioactive);
+		} else if ( style  == 20) {
+        d = mContext.getResources().getDrawable(R.drawable.professional_hexagon);
+		} else if ( style  == 21) {
+        d = mContext.getResources().getDrawable(R.drawable.pokeball);
+		} else if ( style  == 22) {
+        d = mContext.getResources().getDrawable(R.drawable.package_variant);
+		} else if ( style  == 23) {
+        d = mContext.getResources().getDrawable(R.drawable.package_variant_closed);
+		} else if ( style  == 24) {
+        d = mContext.getResources().getDrawable(R.drawable.weather_fog);
+		} else if ( style  == 25) {
+        d = mContext.getResources().getDrawable(R.drawable.cat);
+		} else if ( style == 26) {
+        d = mContext.getResources().getDrawable(R.drawable.android1);
+		} else if ( style == 27) {
+        d = mContext.getResources().getDrawable(R.drawable.bike);
+		} else if ( style == 28) {
+        d = mContext.getResources().getDrawable(R.drawable.candycane);
+		} else if ( style == 29) {
+        d = mContext.getResources().getDrawable(R.drawable.shit);
+		} else if ( style == 30) {
+        d = mContext.getResources().getDrawable(R.drawable.chart_bubble);
+		} else if ( style == 31) {
+        d = mContext.getResources().getDrawable(R.drawable.google1);
+		} else if ( style == 32) {
+        d = mContext.getResources().getDrawable(R.drawable.fish);
+		} else if ( style == 33) {
+        d = mContext.getResources().getDrawable(R.drawable.gender_male);
+		} else if ( style == 34) {
+        d = mContext.getResources().getDrawable(R.drawable.gender_female);
+		} else if ( style == 35) {
+        d = mContext.getResources().getDrawable(R.drawable.spider1);
+		} else if ( style == 36) {
+        d = mContext.getResources().getDrawable(R.drawable.spider2);
+		} else if ( style == 37) {
+        d = mContext.getResources().getDrawable(R.drawable.orioles_logo);
+		}
+	    mCLogo.setImageDrawable(null);
+	    mCLogo.setImageDrawable(d);
+		if (color != 0xFFFFFFFF) {
+		mCLogo.setColorFilter(color, Mode.MULTIPLY);
+		} else {
+		mCLogo.clearColorFilter();
+		}
+		mCLogo.setVisibility(View.VISIBLE);
+   }
 
     public void resetUserExpandedStates() {
         ArrayList<Entry> activeNotifications = mNotificationData.getActiveNotifications();
