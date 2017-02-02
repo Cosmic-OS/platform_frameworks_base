@@ -48,4 +48,7 @@
     <!-- Battery charging color -->
     <color name="system_primary_color">@*android:color/material_blue_grey_900</color>
 
+    <!-- Keyguard affordance circle background -->
+    <color name="keyguard_affordance_circle_background">@android:color/white</color>
+
 </resources>
