@@ -125,6 +125,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     private boolean hasExpandIndicator;
     private boolean hasMultiUserSwitch;
     private boolean mDateTimeGroupCenter;
+    private boolean hasRunningServices;
 
     // qs headers
     private ImageView mBackgroundImage;
@@ -353,16 +354,23 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         updateDateTimePosition();
         mEmergencyOnly.setVisibility(mExpanded && (mShowEmergencyCallsOnly || mIsRoaming)
                 ? View.VISIBLE : View.INVISIBLE);
+
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
+
         hasMultiUserSwitch = !isMultiUserSwitchDisabled();
         mMultiUserSwitch.setVisibility(mExpanded && hasMultiUserSwitch && !isDemo
                 ? View.VISIBLE : View.GONE);
         mMultiUserAvatar.setVisibility(hasMultiUserSwitch ? View.VISIBLE : View.GONE);
-        mRunningServicesButton.setVisibility(View.VISIBLE);
+
+        hasRunningServices = !isRunningServicesDisabled();
+        mRunningServicesButton.setVisibility(hasRunningServices ? View.VISIBLE : View.GONE);
+
         hasEdit = !isEditDisabled();
         mEdit.setVisibility(hasEdit && !isDemo && mExpanded ? View.VISIBLE : View.GONE);
+
         hasSettingsIcon = !isSettingsIconDisabled();
         mSettingsButton.setVisibility(hasSettingsIcon ? View.VISIBLE : View.GONE);
+
         hasExpandIndicator = !isExpandIndicatorDisabled();
         mExpandIndicator.setVisibility(hasExpandIndicator ? View.VISIBLE : View.GONE);
     }
@@ -658,6 +666,11 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     public boolean isExpandIndicatorDisabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.QS_EXPAND_INDICATOR_TOGGLE, 0) == 1;
+    }
+
+    public boolean isRunningServicesDisabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_RUNNING_SERVICES_TOGGLE, 0) == 1;
     }
 
     public boolean isMultiUserSwitchDisabled() {
