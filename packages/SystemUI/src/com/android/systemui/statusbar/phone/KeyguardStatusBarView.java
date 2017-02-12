@@ -201,7 +201,6 @@ public class KeyguardStatusBarView extends RelativeLayout
         }
         mBatteryLevel.setVisibility(
                 (mBatteryCharging && mForceChargeBatteryText) || mShowBatteryText || mForceBatteryText ? View.VISIBLE : View.GONE);
-
         if (mCarrierLabel != null) {
             if (mShowCarrierLabel == 1) {
                 mCarrierLabel.setVisibility(View.VISIBLE);
