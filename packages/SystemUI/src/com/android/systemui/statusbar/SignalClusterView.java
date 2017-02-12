@@ -449,8 +449,8 @@ public class SignalClusterView
     private void apply() {
         if (mWifiGroup == null) return;
 
-        mVpn.setVisibility(mVpnVisible && !mBlockVpn ? View.VISIBLE : View.GONE);
-        if (mVpnVisible && !mBlockVpn) {
+       mVpn.setVisibility(mVpnVisible ? View.VISIBLE : View.GONE);
+        if (mVpnVisible) {
             if (mLastVpnIconId != mVpnIconId) {
                 setIconForView(mVpn, mVpnIconId);
                 mLastVpnIconId = mVpnIconId;
