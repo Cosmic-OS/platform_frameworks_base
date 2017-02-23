@@ -26,12 +26,6 @@
     <color name="icon_color_home">@android:color/white</color>
     <color name="icon_color_overview">@android:color/white</color>
 
-    <!-- Status bar battery level text color -->
-    <color name="status_bar_battery_level_text_color">#ffffff</color>
-
-    <!-- Battery charging color -->
-    <color name="system_primary_color">@*android:color/material_blue_grey_900</color>
-
     <!-- QS battery % text color -->
     <color name="qs_battery_text_color">@*android:color/accent_device_default_light</color>
 

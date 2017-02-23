@@ -7844,62 +7844,6 @@ public final class Settings {
         public static final String ONE_HANDED_MODE_UI = "one_handed_mode_ui";
 
         /**
-         * Status bar battery %
-         * 0: Hide the battery percentage
-         * 1: Display the battery percentage inside the icon
-         * 2: Display the battery percentage next to the icon
-         * @hide
-         */
-        public static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
-
-         /**
-         * Sub-option of battery inside the icon
-         * Hide the battery percentage only when battery level is beyond config_LowBatteryWarningLevel (default: 15)
-         * @hide
-         */
-        public static final String STATUS_BAR_SHOW_BATTERY_PERCENT_LOW_ONLY = "status_bar_show_battery_percent_low_only";
-
-        /**
-         * Display style of the status bar battery information
-         * 0: Display the battery an icon in portrait mode
-         * 2: Display the battery as a circle
-         * 4: Hide the battery status information
-         * 5: Display the battery an icon in landscape mode
-         * 6: Display the battery as plain text
-         * default: 0
-         * @hide
-         */
-        public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
-
-        /**
-         * Whether to sync the battery tile stile with the statusbar battery icon style
-         * @hide
-         */
-        public static final String STATUS_BAR_BATTERY_STYLE_TILE = "status_bar_battery_style_tile";
-
-        /**
-         * battery icon color when charging
-         * @hide
-         */
-        public static final String STATUS_BAR_CHARGE_COLOR = "status_bar_charge_color";
-
-        /**
-         * Whether to force percentage text out of the battery icon when charging
-         * @hide
-         */
-        public static final String FORCE_CHARGE_BATTERY_TEXT = "force_charge_battery_text";
-
-        /**
-         * Charging symbol near battery text percentage
-         * 0: no symbol
-         * 1: flash symbol
-         * 2: tilde symbol
-         * default: 0
-         * @hide
-         */
-        public static final String TEXT_CHARGING_SYMBOL = "text_charging_symbol";
-
-        /**
          * Count of small QS tiles.
          * @hide
          */
@@ -7990,10 +7934,7 @@ public final class Settings {
             DOZE_ENABLED,
             DOZE_PULSE_ON_PICK_UP,
             DOZE_PULSE_ON_DOUBLE_TAP,
-            NFC_PAYMENT_DEFAULT_COMPONENT,
-            STATUS_BAR_SHOW_BATTERY_PERCENT,
-            STATUS_BAR_BATTERY_STYLE,
-            STATUS_BAR_BATTERY_STYLE_TILE
+            NFC_PAYMENT_DEFAULT_COMPONENT
         };
 
         /**
