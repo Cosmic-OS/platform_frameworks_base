@@ -605,9 +605,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                    Settings.System.STATUSBAR_CLOCK_STYLE),
                    false, this, UserHandle.USER_ALL);
-           resolver.registerContentObserver(Settings.System.getUriFor(
-                   Settings.System.QS_QUICKBAR_SCROLL_ENABLED),
-                   false, this, UserHandle.USER_ALL);
            update();
         }
 
@@ -5184,7 +5181,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     public void onClosingFinished() {
         runPostCollapseRunnables();
-        mHeader.onClosingFinished();
     }
 
     public void onUnlockHintStarted() {
