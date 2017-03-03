@@ -21,8 +21,15 @@
     <string-array name="config_disabledComponents" translatable="false">
     </string-array>
 	
-	<!-- The list of components which should be forced to be enabled. -->
+    <!-- The list of components which should be forced to be enabled. -->
     <string-array name="config_forceEnabledComponents" translatable="false">
     </string-array>
   
+    <!-- Whether Keypress Boost is enabled -->
+    <bool name="config_enableKeypressBoost">false</bool>
+
+    <!-- Boost parameters which get passed to QPerformance -->
+    <integer-array name="keypressboost_strong_param_value"/>
+    <integer-array name="keypressboost_weak_param_value"/>
+
 </resources>
