@@ -37,18 +37,13 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
-import android.util.Log;
 
 import com.android.systemui.R;
 
 public class OmniJawsClient {
-    private static final String TAG = "WeatherService:OmniJawsClient";
-    private static final boolean DEBUG = false;
     public static final String SERVICE_PACKAGE = "org.omnirom.omnijaws";
-    public static final Uri WEATHER_URI
-            = Uri.parse("content://org.omnirom.omnijaws.provider/weather");
-    public static final Uri SETTINGS_URI
-            = Uri.parse("content://org.omnirom.omnijaws.provider/settings");
+    public static final Uri WEATHER_URI = Uri.parse("content://org.omnirom.omnijaws.provider/weather");
+    public static final Uri SETTINGS_URI = Uri.parse("content://org.omnirom.omnijaws.provider/settings");
 
     private static final String ICON_PACKAGE_DEFAULT = "org.omnirom.omnijaws";
     private static final String ICON_PREFIX_DEFAULT = "weather";
@@ -163,12 +158,12 @@ public class OmniJawsClient {
     private List<OmniJawsObserver> mObserver;
     private WeatherUpdateReceiver mReceiver;
     private OmniJawsSettingsObserver mSettingsObserver;
-    private Handler mHandler = new Handler();
 
     public OmniJawsClient(Context context) {
         mContext = context;
         mEnabled = isOmniJawsServiceInstalled();
         mObserver = new ArrayList<OmniJawsObserver>();
+        Handler mHandler = new Handler();
         mSettingsObserver = new OmniJawsSettingsObserver(mHandler);
         mSettingsObserver.observe();
     }
@@ -178,7 +173,7 @@ public class OmniJawsClient {
         if (mReceiver != null) {
             try {
                 mContext.unregisterReceiver(mReceiver);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             mReceiver = null;
         }
@@ -196,9 +191,8 @@ public class OmniJawsClient {
 
     public Intent getSettingsIntent() {
         if (mEnabled) {
-            Intent settings = new Intent(Intent.ACTION_MAIN)
-                    .setClassName("com.android.settings", "com.android.settings.Settings$OmniJawsSettingsActivity");
-            return settings;
+            return new Intent(Intent.ACTION_MAIN)
+                    .setClassName("com.android.settings", "com.android.settings.Settings$QuickSettingsSettingsActivity");
         }
         return null;
     }
@@ -220,7 +214,6 @@ public class OmniJawsClient {
 
     public void queryWeather() {
         if (!isOmniJawsEnabled()) {
-            Log.w(TAG, "queryWeather while disabled");
             mCachedInfo = null;
             return;
         }
@@ -262,14 +255,12 @@ public class OmniJawsClient {
             }
         }
         updateUnits();
-        if (DEBUG) Log.d(TAG, "queryWeather " + mCachedInfo);
     }
 
     private void loadDefaultIconsPackage() {
         mPackageName = ICON_PACKAGE_DEFAULT;
         mIconPrefix = ICON_PREFIX_DEFAULT;
         mSettingIconPackage = mPackageName + "." + mIconPrefix;
-        if (DEBUG) Log.d(TAG, "Load default icon pack " + mSettingIconPackage + " " + mPackageName + " " + mIconPrefix);
         try {
             PackageManager packageManager = mContext.getPackageManager();
             mRes = packageManager.getResourcesForApplication(mPackageName);
@@ -277,7 +268,6 @@ public class OmniJawsClient {
             mRes = null;
         }
         if (mRes == null) {
-            Log.w(TAG, "No default package found");
         }
     }
 
@@ -285,7 +275,6 @@ public class OmniJawsClient {
         int idx = mSettingIconPackage.lastIndexOf(".");
         mPackageName = mSettingIconPackage.substring(0, idx);
         mIconPrefix = mSettingIconPackage.substring(idx + 1);
-        if (DEBUG) Log.d(TAG, "Load custom icon pack " + mSettingIconPackage + " " + mPackageName + " " + mIconPrefix);
         try {
             PackageManager packageManager = mContext.getPackageManager();
             mRes = packageManager.getResourcesForApplication(mPackageName);
@@ -293,29 +282,24 @@ public class OmniJawsClient {
             mRes = null;
         }
         if (mRes == null) {
-            Log.w(TAG, "Icon pack loading failed - loading default");
             loadDefaultIconsPackage();
         }
     }
 
     public Drawable getWeatherConditionImage(int conditionCode) {
         if (!isOmniJawsEnabled()) {
-            Log.w(TAG, "Requesting condition image while disabled");
             return null;
         }
         if (!isAvailableApp(mPackageName)) {
-            Log.w(TAG, "Icon pack no longer available - loading default " + mPackageName);
             loadDefaultIconsPackage();
         }
         if (mRes == null) {
-            Log.w(TAG, "Requesting condition image while disabled");
             return null;
         }
         try {
             int resId = mRes.getIdentifier(mIconPrefix + "_" + conditionCode, "drawable", mPackageName);
             return mRes.getDrawable(resId);
         } catch(Exception e) {
-            Log.w(TAG, "Failed to get condition image for " + conditionCode);
             return null;
         }
     }
@@ -334,8 +318,7 @@ public class OmniJawsClient {
             int count = c.getCount();
             if (count == 1) {
                 c.moveToPosition(0);
-                boolean enabled = c.getInt(0) == 1;
-                return enabled;
+                return c.getInt(0) == 1;
             }
         }
         return true;
@@ -412,7 +395,7 @@ public class OmniJawsClient {
             if (mReceiver != null) {
                 try {
                     mContext.unregisterReceiver(mReceiver);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
             mReceiver = new WeatherUpdateReceiver();
@@ -428,7 +411,7 @@ public class OmniJawsClient {
         if (mObserver.size() == 0 && mReceiver != null) {
             try {
                 mContext.unregisterReceiver(mReceiver);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             mReceiver = null;
         }

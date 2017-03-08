@@ -18,7 +18,6 @@
 package com.android.systemui.omni;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -31,14 +30,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.text.format.DateFormat;
-import android.util.ArraySet;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,9 +47,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DetailedWeatherView extends LinearLayout {
-
-    static final String TAG = "DetailedWeatherView";
-    static final boolean DEBUG = true;
 
     private TextView mWeatherCity;
     private TextView mWeatherTimestamp;
@@ -236,7 +227,6 @@ public class DetailedWeatherView extends LinearLayout {
         final int footerHeight = Math.round(18 * density);
         final int imageWidth = image.getIntrinsicWidth();
         final int imageHeight = image.getIntrinsicHeight();
-        Log.d("maxwen", "" + imageWidth + " " + imageHeight);
         final TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
         textPaint.setTypeface(font);
