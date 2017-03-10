@@ -71,9 +71,6 @@
          config to 7. -->
     <integer name="config_deviceHardwareKeys">64</integer>
 
-    <!-- Wether doze feature is enabled by default in settings. -->
-    <bool name="config_doze_enabled_by_default">true</bool>
-
     <!-- Battery level for when "show battery percent only on low battery" is enabled -->
     <integer name="config_batteryPercentLowOnlyLevel">20</integer>
 
