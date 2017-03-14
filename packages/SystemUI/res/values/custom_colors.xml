@@ -45,4 +45,7 @@
     <!-- Battery charging color -->
     <color name="system_primary_color">@*android:color/material_blue_grey_900</color>
 
+    <!-- OmniJaws detailed view temperature text -->
+    <color name="omni_jaws_detailed_temperature_color">@android:color/white</color>
+
 </resources>
