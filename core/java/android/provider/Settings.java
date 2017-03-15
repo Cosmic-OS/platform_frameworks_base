@@ -5232,6 +5232,11 @@ public final class Settings {
         /** @hide */
         private static final Validator STATUSBAR_HIDE_NOTCH_VALIDATOR = BOOLEAN_VALIDATOR;
 
+        /**
+         * @hide
+         */
+        public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
+
         /** End of Cosmic-OS system settings**/
 
         /**
