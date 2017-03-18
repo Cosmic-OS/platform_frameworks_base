@@ -85,8 +85,8 @@ public class Clock extends TextView implements DemoMode {
     public static final int STYLE_DATE_RIGHT = 1;
 
     public static final int FONT_NORMAL = 0;
-    public static final int FONT_ITALIC = 1;
-    public static final int FONT_BOLD = 2;
+    public static final int FONT_BOLD = 1;
+    public static final int FONT_ITALIC = 2;
     public static final int FONT_BOLD_ITALIC = 3;
     public static final int FONT_LIGHT = 4;
     public static final int FONT_LIGHT_ITALIC = 5;
