@@ -4058,7 +4058,7 @@ public final class Settings {
           * @hide
           */
          public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
- 
+
         /**
          * Network traffic indicator, goes from least to greatest significant bitwise
          * 0 = Display up-stream traffic if set
@@ -4079,7 +4079,7 @@ public final class Settings {
          * Network traffic inactivity threshold (default is 10 kBs)
          * @hide
          */
-        public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = 
+        public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD =
                 "network_traffic_autohide_threshold";
 
         /**
@@ -4652,22 +4652,17 @@ public final class Settings {
         public static final String FP_UNLOCK_KEYSTORE = "fp_unlock_keystore";
 
         /**
-         * @hide
-         */
-        public static final String QS_QUICKBAR_SCROLL_ENABLED = "qs_quickbar_scroll_enabled";
-
-        /**
          * Statusbar Cosmic-OS logo
          * @hide
          */
         public static final String STATUS_BAR_COSMIC_LOGO = "status_bar_cosmic_logo";
- 
+
         /**
          * Statusbar Cosmic-OS logo color setting
          * @hide
          */
         public static final String STATUS_BAR_COSMIC_LOGO_COLOR = "status_bar_cosmic_logo_color";
- 
+
          /**
          * Style of Status bar logo
          * 0 - Left (default)
@@ -4675,7 +4670,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_COSMIC_LOGO_STYLE = "status_bar_cosmic_logo_style";
-        
+
         /**
          * Statusbar Custom logos
          * @hide
@@ -4690,7 +4685,7 @@ public final class Settings {
 	    public static final String CUSTOM_LOGO_COLOR = "custom_logo_color";
 
  	    /**
-         * Take your Pick 
+         * Take your Pick
          * @hide
          */
         public static final String CUSTOM_LOGO_STYLE = "custom_logo_style";
@@ -6263,7 +6258,7 @@ public final class Settings {
          * @hide
          */
         public static final String PULSE_LAVALAMP_SOLID_SPEED = "lava_lamp_solid_speed";
- 
+
         /**
          * Pulse Solid units count
          * @hide
