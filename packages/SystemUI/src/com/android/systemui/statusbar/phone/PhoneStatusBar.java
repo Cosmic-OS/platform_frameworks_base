@@ -413,7 +413,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mKeyguardFadingAway;
     private long mKeyguardFadingAwayDelay;
     private long mKeyguardFadingAwayDuration;
-    
+
     //Blur stuff
     private int mBlurScale;
     private int mBlurRadius;
@@ -624,9 +624,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                    Settings.System.STATUSBAR_CLOCK_STYLE),
                    false, this, UserHandle.USER_ALL);
            resolver.registerContentObserver(Settings.System.getUriFor(
-                   Settings.System.QS_QUICKBAR_SCROLL_ENABLED),
-                   false, this, UserHandle.USER_ALL);
-           resolver.registerContentObserver(Settings.System.getUriFor(
                    Settings.System.STATUS_BAR_COSMIC_LOGO), false, this,
                    UserHandle.USER_ALL);
            resolver.registerContentObserver(Settings.System.getUriFor(
@@ -734,17 +731,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.RECENT_APPS_SCALE_PREFERENCE_KEY, 6);
             mRadiusRecents = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.RECENT_APPS_RADIUS_PREFERENCE_KEY, 3);
-                    
-            mBlurDarkColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
+
+            mBlurDarkColorFilter = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.BLUR_DARK_COLOR_PREFERENCE_KEY, Color.LTGRAY);
-            mBlurMixedColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
+            mBlurMixedColorFilter = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.BLUR_MIXED_COLOR_PREFERENCE_KEY, Color.GRAY);
-            mBlurLightColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
+            mBlurLightColorFilter = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.BLUR_LIGHT_COLOR_PREFERENCE_KEY, Color.DKGRAY);
-                    
+
             RecentsActivity.updateBlurColors(mBlurDarkColorFilter,mBlurMixedColorFilter,mBlurLightColorFilter);
             RecentsActivity.updateRadiusScale(mScaleRecents,mRadiusRecents);
-            
+
             mQsLayoutColumns = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_LAYOUT_COLUMNS, 3, mCurrentUserId);
 
@@ -1378,9 +1375,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     mStatusBarHeaderMachine.addObserver((QuickStatusBarHeader) mHeader);
                     mStatusBarHeaderMachine.updateEnablement();
 
-                    // Update all other settings
-                    mHeader.updateSettings();
-
                     initSignalCluster(mHeader);
                     mHeader.setActivityStarter(PhoneStatusBar.this);
                 }
@@ -1498,7 +1492,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         } catch (Exception e){
             Log.d("mango918", String.valueOf(e));
         }
-        
+
         return mStatusBarView;
     }
 
@@ -1524,7 +1518,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         RecentsActivity.updatePreferences(context);
         BaseStatusBar.updatePreferences();
     }
-    
+
     protected BatteryController createBatteryController() {
         return new BatteryControllerImpl(mContext);
     }
@@ -4432,7 +4426,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     };
 
 
- public void showmCustomlogo(boolean show,int color) { 
+ public void showmCustomlogo(boolean show,int color) {
         if (!show) {
             mCLogo.setVisibility(View.GONE);
             return;
@@ -5461,7 +5455,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     public void onClosingFinished() {
         runPostCollapseRunnables();
-        mHeader.onClosingFinished();
     }
 
     public void onUnlockHintStarted() {
@@ -5772,7 +5765,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mVibrator.vibrate(new long[]{0, 400}, -1 /* repeat */);
         } else {
             mVibrator.vibrate(new long[]{0, 0}, -1 /* repeat */);
-        }        
+        }
     }
 
     public void onScreenTurnedOn() {
