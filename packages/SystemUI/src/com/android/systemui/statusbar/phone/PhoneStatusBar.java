@@ -64,6 +64,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -126,6 +127,7 @@ import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -187,13 +189,13 @@ import com.android.systemui.statusbar.RemoteInputController;
 import com.android.systemui.statusbar.ScrimView;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.StatusBarState;
+import com.android.systemui.statusbar.VisualizerView;
 import com.android.systemui.statusbar.phone.UnlockMethodCache.OnUnlockMethodChangedListener;
 import com.android.systemui.statusbar.policy.AccessibilityController;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback;
 import com.android.systemui.statusbar.policy.BatteryControllerImpl;
 import com.android.systemui.statusbar.policy.BluetoothControllerImpl;
-import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.statusbar.policy.CastControllerImpl;
 import com.android.systemui.statusbar.policy.EncryptionHelper;
 import com.android.systemui.statusbar.policy.FlashlightController;
@@ -351,7 +353,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     protected UserSwitcherController mUserSwitcherController;
     NextAlarmController mNextAlarmController;
     protected KeyguardMonitor mKeyguardMonitor;
-    BrightnessMirrorController mBrightnessMirrorController;
     AccessibilityController mAccessibilityController;
     FingerprintUnlockController mFingerprintUnlockController;
     LightStatusBarController mLightStatusBarController;
@@ -438,6 +439,20 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     boolean mExpandedVisible;
 
     private boolean mDoubleTapVib;
+
+    // Cosmic-OS logo
+    private boolean mCosmicLogo;
+    private int mCosmicLogoColor;
+    private ImageView cosmicLogo;
+    private ImageView cosmicLogoright;
+    private ImageView cosmicLogoleft;
+    private int mCosmicLogoStyle;
+
+    // Custom Logos
+    private boolean mCustomlogo;
+    private ImageView mCLogo;
+    private int mCustomlogoColor;
+    private int mCustomlogoStyle;
 
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
@@ -605,11 +620,31 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                    Settings.System.STATUSBAR_CLOCK_STYLE),
                    false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.STATUS_BAR_COSMIC_LOGO), false, this,
+                   UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.STATUS_BAR_COSMIC_LOGO_COLOR), false, this,
+                   UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.STATUS_BAR_COSMIC_LOGO_STYLE), false, this,
+                   UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.SHOW_CUSTOM_LOGO), false, this,
+                   UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.CUSTOM_LOGO_COLOR), false, this,
+                   UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.CUSTOM_LOGO_STYLE), false, this,
+                  UserHandle.USER_ALL);
            update();
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+        ContentResolver resolver = mContext.getContentResolver();
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_CARRIER))) {
                 update();
@@ -628,8 +663,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         mContext.getContentResolver(),
                         Settings.System.STATUS_BAR_SHOW_TICKER,
                         0, UserHandle.USER_CURRENT) == 1;
-                initTickerView();
-            }
+                    initTickerView();
+            }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SHOW_CUSTOM_LOGO))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_LOGO_STYLE))) {
+            		mCustomlogo = Settings.System.getIntForUser(resolver,
+            		Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
+            		mCustomlogoColor = Settings.System.getIntForUser(resolver,
+            		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+				    showmCustomlogo(mCustomlogo,mCustomlogoColor);
+           }
             update();
         }
 
@@ -643,6 +687,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
+
+            mCosmicLogoStyle = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_COSMIC_LOGO_STYLE, 0,
+                    UserHandle.USER_CURRENT);
+            mCosmicLogo = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_COSMIC_LOGO, 0, mCurrentUserId) == 1;
+            mCosmicLogoColor = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_COSMIC_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+            cosmicLogo = (ImageView) mStatusBarView.findViewById(R.id.cosmic_logo);
+            cosmicLogoleft = (ImageView) mStatusBarView.findViewById(R.id.left_cosmic_logo);
+            cosmicLogoright = (ImageView) mStatusBarView.findViewById(R.id.right_cosmic_logo);
+            showCosmicLogo(mCosmicLogo, mCosmicLogoColor, mCosmicLogoStyle);
+
             mShowCarrierLabel = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
             mClockLocation = Settings.System.getIntForUser(
@@ -684,6 +741,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
             mQsLayoutColumns = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_LAYOUT_COLUMNS, 3, mCurrentUserId);
+
+            mCustomlogoStyle = Settings.System.getIntForUser(
+            resolver, Settings.System.CUSTOM_LOGO_STYLE, 0,
+            UserHandle.USER_CURRENT);
+            mCustomlogo = Settings.System.getIntForUser(resolver,
+            Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
+            mCustomlogoColor = Settings.System.getIntForUser(resolver,
+            Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+			mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
+
+	        showmCustomlogo(mCustomlogo,mCustomlogoColor);
 
             if (mNotificationPanel != null) {
                 mNotificationPanel.updateSettings();
@@ -809,6 +877,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private PorterDuffXfermode mSrcXferMode = new PorterDuffXfermode(PorterDuff.Mode.SRC);
     private PorterDuffXfermode mSrcOverXferMode = new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER);
 
+    private VisualizerView mVisualizerView;
+    private boolean mScreenOn;
+    private boolean mKeyguardShowingMedia;
+
     private MediaSessionManager mMediaSessionManager;
     private MediaController mMediaController;
     private String mMediaNotificationKey;
@@ -824,6 +896,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     clearCurrentMediaNotification();
                     updateMediaMetaData(true, true);
                 }
+                mVisualizerView.setPlaying(state.getState() == PlaybackState.STATE_PLAYING);
             }
         }
 
@@ -1162,9 +1235,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (ENABLE_LOCKSCREEN_WALLPAPER) {
             mLockscreenWallpaper = new LockscreenWallpaper(mContext, this, mHandler);
         }
+        FrameLayout scrimView = (FrameLayout) mStatusBarWindow.findViewById(R.id.scrimview);
+        ScrimView scrimBehind = (ScrimView) scrimView.findViewById(R.id.scrim_behind);
+        ScrimView scrimInFront =
+                (ScrimView) mStatusBarWindow.findViewById(R.id.scrim_in_front);
 
-        ScrimView scrimBehind = (ScrimView) mStatusBarWindow.findViewById(R.id.scrim_behind);
-        ScrimView scrimInFront = (ScrimView) mStatusBarWindow.findViewById(R.id.scrim_in_front);
         View headsUpScrim = mStatusBarWindow.findViewById(R.id.heads_up_scrim);
         mScrimController = SystemUIFactory.getInstance().createScrimController(
                 scrimBehind, scrimInFront, headsUpScrim, mLockscreenWallpaper);
@@ -1184,6 +1259,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mStackScroller.setScrimController(mScrimController);
         mStatusBarView.setScrimController(mScrimController);
         mDozeScrimController = new DozeScrimController(mScrimController, context);
+        mVisualizerView = (VisualizerView) scrimView.findViewById(R.id.visualizerview);
 
         mKeyguardStatusBar = (KeyguardStatusBarView) mStatusBarWindow.findViewById(R.id.keyguard_header);
         mKeyguardStatusView = mStatusBarWindow.findViewById(R.id.keyguard_status_view);
@@ -1280,7 +1356,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     mUserSwitcherController, mUserInfoController, mKeyguardMonitor,
                     mSecurityController, mBatteryController, mIconController,
                     mNextAlarmController);
-            mBrightnessMirrorController = new BrightnessMirrorController(mContext, mStatusBarWindow);
             container.addInflateListener(new InflateListener() {
                 @Override
                 public void onInflated(View v) {
@@ -1288,7 +1363,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             R.id.quick_settings_container);
                     qsContainer.setHost(qsh);
                     mQSPanel = qsContainer.getQsPanel();
-                    mQSPanel.setBrightnessMirror(mBrightnessMirrorController);
                     mKeyguardStatusBar.setQSPanel(mQSPanel);
                     mHeader = qsContainer.getHeader();
 
@@ -1297,9 +1371,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     // the old one will be removed in the same step
                     mStatusBarHeaderMachine.addObserver((QuickStatusBarHeader) mHeader);
                     mStatusBarHeaderMachine.updateEnablement();
-
-                    // Update all other settings
-                    mHeader.updateSettings();
 
                     initSignalCluster(mHeader);
                     mHeader.setActivityStarter(PhoneStatusBar.this);
@@ -1462,9 +1533,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         super.onDensityOrFontScaleChanged();
         mScrimController.onDensityOrFontScaleChanged();
         mStatusBarView.onDensityOrFontScaleChanged();
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.onDensityOrFontScaleChanged();
-        }
         inflateSignalClusters();
         mIconController.onDensityOrFontScaleChanged();
         inflateDismissView();
@@ -2644,6 +2712,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), artworkBitmap);
             }
         }
+        mKeyguardShowingMedia = artworkDrawable != null;
+
         boolean allowWhenShade = false;
         if (ENABLE_LOCKSCREEN_WALLPAPER && artworkDrawable == null) {
             Bitmap lockWallpaper = mLockscreenWallpaper.getBitmap();
@@ -2660,7 +2730,22 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         boolean hideBecauseOccluded = mStatusBarKeyguardViewManager != null
                 && mStatusBarKeyguardViewManager.isOccluded();
 
+        final boolean keyguardVisible = (mState != StatusBarState.SHADE);
         final boolean hasArtwork = artworkDrawable != null;
+
+        if (!mKeyguardFadingAway && keyguardVisible && hasArtwork && mScreenOn) {
+            // if there's album art, ensure visualizer is visible
+            mVisualizerView.setPlaying(mMediaController != null
+                    && mMediaController.getPlaybackState() != null
+                    && mMediaController.getPlaybackState().getState()
+                            == PlaybackState.STATE_PLAYING);
+        }
+
+        if (keyguardVisible && mKeyguardShowingMedia &&
+                (artworkDrawable instanceof BitmapDrawable)) {
+            // always use current backdrop to color eq
+            mVisualizerView.setBitmap(((BitmapDrawable)artworkDrawable).getBitmap());
+        }
 
         if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK)
                 && (mState != StatusBarState.SHADE || allowWhenShade)
@@ -4193,6 +4278,38 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }, cancelAction, afterKeyguardGone);
     }
 
+    public void showCosmicLogo(boolean show, int color, int style) {
+        if (mStatusBarView == null) return;
+         if (!show) {
+            cosmicLogo.setVisibility(View.GONE);
+            cosmicLogoright.setVisibility(View.GONE);
+            cosmicLogoleft.setVisibility(View.GONE);
+            return;
+        }
+        if (color != 0xFFFFFFFF) {
+            cosmicLogo.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            cosmicLogoright.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            cosmicLogoleft.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        } else {
+            cosmicLogo.clearColorFilter();
+            cosmicLogoright.clearColorFilter();
+            cosmicLogoleft.clearColorFilter();
+        }
+        if (style == 0) {
+            cosmicLogo.setVisibility(View.VISIBLE);
+            cosmicLogoright.setVisibility(View.GONE);
+            cosmicLogoleft.setVisibility(View.GONE);
+        } else if (style == 1) {
+            cosmicLogo.setVisibility(View.GONE);
+            cosmicLogoright.setVisibility(View.VISIBLE);
+            cosmicLogoleft.setVisibility(View.GONE);
+        } else if (style == 2) {
+            cosmicLogo.setVisibility(View.GONE);
+            cosmicLogoright.setVisibility(View.GONE);
+            cosmicLogoleft.setVisibility(View.VISIBLE);
+        }
+    }
+
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -4213,12 +4330,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 }
             }
             else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                mScreenOn = false;
                 notifyNavigationBarScreenOn(false);
                 notifyHeadsUpScreenOff();
                 finishBarAnimations();
                 resetUserExpandedStates();
             }
             else if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                mScreenOn = true;
                 notifyNavigationBarScreenOn(true);
                 NotificationPanelView.recycle();
             }
@@ -4249,6 +4368,101 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
     };
+
+
+ public void showmCustomlogo(boolean show,int color) {
+        if (!show) {
+            mCLogo.setVisibility(View.GONE);
+            return;
+        }
+        Drawable d = null;
+        int style = mCustomlogoStyle;
+		if ( style == 0) {
+        d = mContext.getResources().getDrawable(R.drawable.custom);
+		} else if ( style == 1) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_1);
+		} else if ( style == 2) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_2);
+		} else if ( style == 3) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_3);
+		} else if ( style == 4) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_4);
+		} else if ( style == 5) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_5);
+		} else if ( style == 6) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_6);
+		} else if ( style == 7) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_7);
+		} else if ( style == 8) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_8);
+		}  else if ( style == 9) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_9);
+		} else if ( style == 10) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_10);
+		} else if ( style == 11) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_11);
+		} else if ( style == 12) {
+        d = mContext.getResources().getDrawable(R.drawable.custom_12);
+		} else if ( style  == 13) {
+        d = mContext.getResources().getDrawable(R.drawable.weather_off);
+		} else if ( style  == 14) {
+        d = mContext.getResources().getDrawable(R.drawable.blender);
+		} else if ( style  == 15) {
+        d = mContext.getResources().getDrawable(R.drawable.cake_variant);
+		} else if ( style  == 16) {
+        d = mContext.getResources().getDrawable(R.drawable.guitar_electric);
+		} else if ( style  == 17) {
+        d = mContext.getResources().getDrawable(R.drawable.tag_faces);
+		} else if ( style  == 18) {
+        d = mContext.getResources().getDrawable(R.drawable.run);
+		} else if ( style  == 19) {
+        d = mContext.getResources().getDrawable(R.drawable.radioactive);
+		} else if ( style  == 20) {
+        d = mContext.getResources().getDrawable(R.drawable.professional_hexagon);
+		} else if ( style  == 21) {
+        d = mContext.getResources().getDrawable(R.drawable.pokeball);
+		} else if ( style  == 22) {
+        d = mContext.getResources().getDrawable(R.drawable.package_variant);
+		} else if ( style  == 23) {
+        d = mContext.getResources().getDrawable(R.drawable.package_variant_closed);
+		} else if ( style  == 24) {
+        d = mContext.getResources().getDrawable(R.drawable.weather_fog);
+		} else if ( style  == 25) {
+        d = mContext.getResources().getDrawable(R.drawable.cat);
+		} else if ( style == 26) {
+        d = mContext.getResources().getDrawable(R.drawable.android1);
+		} else if ( style == 27) {
+        d = mContext.getResources().getDrawable(R.drawable.bike);
+		} else if ( style == 28) {
+        d = mContext.getResources().getDrawable(R.drawable.candycane);
+		} else if ( style == 29) {
+        d = mContext.getResources().getDrawable(R.drawable.shit);
+		} else if ( style == 30) {
+        d = mContext.getResources().getDrawable(R.drawable.chart_bubble);
+		} else if ( style == 31) {
+        d = mContext.getResources().getDrawable(R.drawable.google1);
+		} else if ( style == 32) {
+        d = mContext.getResources().getDrawable(R.drawable.fish);
+		} else if ( style == 33) {
+        d = mContext.getResources().getDrawable(R.drawable.gender_male);
+		} else if ( style == 34) {
+        d = mContext.getResources().getDrawable(R.drawable.gender_female);
+		} else if ( style == 35) {
+        d = mContext.getResources().getDrawable(R.drawable.spider1);
+		} else if ( style == 36) {
+        d = mContext.getResources().getDrawable(R.drawable.spider2);
+		} else if ( style == 37) {
+        d = mContext.getResources().getDrawable(R.drawable.orioles_logo);
+		}
+	    mCLogo.setImageDrawable(null);
+	    mCLogo.setImageDrawable(d);
+		if (color != 0xFFFFFFFF) {
+		mCLogo.setColorFilter(color, Mode.MULTIPLY);
+		} else {
+		mCLogo.clearColorFilter();
+		}
+		mCLogo.setVisibility(View.VISIBLE);
+   }
 
     public void resetUserExpandedStates() {
         ArrayList<Entry> activeNotifications = mNotificationData.getActiveNotifications();
@@ -4350,9 +4564,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         if (mNotificationPanel != null) {
             mNotificationPanel.updateResources();
-        }
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.updateResources();
         }
     }
 
@@ -5042,6 +5253,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mDozeScrimController.setDozing(mDozing &&
                 mFingerprintUnlockController.getMode()
                         != FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING, animate);
+        mVisualizerView.setDozing(mDozing);
         Trace.endSection();
     }
 
@@ -5160,6 +5372,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             maybeEscalateHeadsUp();
         }
         mState = state;
+        mVisualizerView.setStatusBarState(state);
         mGroupManager.setStatusBarState(state);
         mFalsingManager.setStatusBarState(state);
         mStatusBarWindowManager.setStatusBarState(state);
@@ -5495,6 +5708,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     public void onScreenTurnedOn() {
         mScreenTurningOn = false;
         mDozeScrimController.onScreenTurnedOn();
+        mVisualizerView.setVisible(true);
     }
 
     /**
@@ -5633,6 +5847,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         == FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING;
         updateDozingState();
         Trace.endSection();
+    }
+
+    public VisualizerView getVisualizer() {
+        return mVisualizerView;
     }
 
     private final class ShadeUpdates {
