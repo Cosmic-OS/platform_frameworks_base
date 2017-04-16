@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2017 JDCTeam
+     Copyright (C) 2017 Cosmic-OS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,18 +15,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Volume stream title names -->
-    <string name="stream_title_call">Call</string>
-    <string name="stream_title_system">System</string>
-    <string name="stream_title_ring">Ring</string>
-    <string name="stream_title_media">Media</string>
-    <string name="stream_title_alarm">Alarm</string>
-    <string name="stream_title_notification">Notification</string>
-    <string name="stream_title_bluetooth">Bluetooth</string>
 
-    <!-- Wi-Fi hotspot label when enabled -->
-    <plurals name="wifi_hotspot_connected_clients_label">
-        <item quantity="one">%1$d client</item>
-        <item quantity="other">%1$d clients</item>
-    </plurals>
+    <string name="permlab_preventpower">Override power key</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_preventpower">Allows an app to override the power key.</string>
 </resources>

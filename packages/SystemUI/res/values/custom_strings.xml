@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2016 The Pure Nexus Project
+     Copyright (C) 2017 Cosmic-OS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -18,22 +18,25 @@
     <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_data_connection_hspap">HSPA+</string>
 
-    <!-- Screenrecord Notification Ticker -->
-    <string name="screenrecord_notif_ticker">Screen is being recorded</string>
-    <!-- Screenrecord notification title -->
-    <string name="screenrecord_notif_title">Recording screen</string>
-    <!-- Screenrecord notification action: Stop -->
-    <string name="screenrecord_notif_stop">Stop</string>
-    <!-- Screenrecord notification action: show/hide pointer -->
-    <string name="screenrecord_notif_pointer_on">Show pointer</string>
-    <string name="screenrecord_notif_pointer_off">Hide pointer</string>
-    <!-- Screen record notification error title -->
-    <string name="screenrecord_notif_error">Unable to record screen</string>
-
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Screenshot deleted</string>
 
     <!-- NavBar Tuner -->
     <string name="menu_ime_always_show">Menu / Keyboard Switcher (always show)</string>
     <string name="search">Search</string>
+
+    <!-- Volume stream title names -->
+    <string name="stream_title_call">Call</string>
+    <string name="stream_title_system">System</string>
+    <string name="stream_title_ring">Ring</string>
+    <string name="stream_title_media">Media</string>
+    <string name="stream_title_alarm">Alarm</string>
+    <string name="stream_title_notification">Notification</string>
+    <string name="stream_title_bluetooth">Bluetooth</string>
+
+    <!-- Wi-Fi hotspot label when enabled -->
+    <plurals name="wifi_hotspot_connected_clients_label">
+        <item quantity="one">%1$d client</item>
+        <item quantity="other">%1$d clients</item>
+    </plurals>
 </resources>
