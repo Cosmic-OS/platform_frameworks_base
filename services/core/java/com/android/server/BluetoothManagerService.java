@@ -354,10 +354,10 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
      *  Save the Bluetooth on/off state
      */
     private void persistBluetoothSetting(int value) {
+        long callingIdentity = Binder.clearCallingIdentity();
         Settings.Global.putInt(mContext.getContentResolver(),
                                Settings.Global.BLUETOOTH_ON,
                                value);
-        Binder.restoreCallingIdentity(callingIdentity);
     }
 
     /**
@@ -723,7 +723,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                     "Need BLUETOOTH ADMIN permission");
             if(isStrictOpEnable()){
                 AppOpsManager mAppOpsManager = mContext.getSystemService(AppOpsManager.class);
-                String packageName = mContext.getPackageManager().getNameForUid(Binder.getCallingUid());
+                packageName = mContext.getPackageManager().getNameForUid(Binder.getCallingUid());
 
                 if ((Binder.getCallingUid() > 10000)
                         && (packageName.indexOf("android.uid.systemui") != 0)
