@@ -143,13 +143,13 @@ static jobjectArray android_view_InputChannel_nativeOpenInputChannelPair(JNIEnv*
     }
 
     jobject serverChannelObj = android_view_InputChannel_createInputChannel(env,
-            util::make_unique<NativeInputChannel>(serverChannel));
+            new NativeInputChannel(serverChannel));
     if (env->ExceptionCheck()) {
         return NULL;
     }
 
     jobject clientChannelObj = android_view_InputChannel_createInputChannel(env,
-            util::make_unique<NativeInputChannel>(clientChannel));
+            new NativeInputChannel(clientChannel));
     if (env->ExceptionCheck()) {
         return NULL;
     }
