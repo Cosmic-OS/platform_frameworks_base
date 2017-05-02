@@ -249,9 +249,9 @@ final class BroadcastRecord extends Binder {
 
     boolean cleanupDisabledPackageReceiversLocked(
             String packageName, Set<String> filterByClasses, int userId, boolean doit) {
-        final boolean cleanUpAllUser = userId == UserHandle.USER_ALL;
-        final boolean sendToAllUser = this.userId == UserHandle.USER_ALL;
-        if ((!cleanUpAllUser && !sendToAllUser && this.userId != userId) || receivers == null) {
+        final boolean cleanAll = userId == UserHandle.USER_ALL;
+        final boolean sendToAll = this.userId == UserHandle.USER_ALL;
+        if ((!cleanAll && !sendToAll && this.userId != userId) || receivers == null) {
             return false;
         }
 
@@ -267,11 +267,9 @@ final class BroadcastRecord extends Binder {
 
             final boolean sameComponent = packageName == null
                     || (info.applicationInfo.packageName.equals(packageName)
-                    && (filterByClasses == null || filterByClasses.contains(info.name)));
-            final boolean sameUser = cleanUpAllUser
-                    || UserHandle.getUserId(info.applicationInfo.uid) == userId;
-
-            if (sameComponent && sameUser) {
+                    && (filterByClasses == null || filterByClasses.contains(info.name))
+                    && (allUser || UserHandle.getUserId(info.applicationInfo.uid) == userId));
+            if (sameComponent) {
                 if (!doit) {
                     return true;
                 }
