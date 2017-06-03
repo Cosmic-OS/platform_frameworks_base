@@ -2183,7 +2183,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         + deviceKeyHandlerLib, e);
             }
         }
-    }
 
         if (ENABLE_CUSTOM_INPUT_POLICY) {
             // Custom input policy settings.
@@ -2197,6 +2196,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mKeyLongPressBehaviorDefaultResId.put(keyCode, getKeyLongPressBehaviorResId(keyCode));
             }
         }
+    }
 
     /**
      * Read values from config.xml that may be overridden depending on
