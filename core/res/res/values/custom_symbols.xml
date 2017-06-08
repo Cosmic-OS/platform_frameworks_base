@@ -16,10 +16,6 @@
 */
 -->
 <resources>
-  <!-- Button Brightness -->
-  <java-symbol type="integer" name="config_buttonBrightnessSettingMinimum" />
-  <java-symbol type="integer" name="config_buttonBrightnessSettingMaximum" />
-  <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
 
   <!-- Reboot - Advanced Reboot -->
   <java-symbol type="array" name="shutdown_reboot_options" />
