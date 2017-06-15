@@ -178,6 +178,11 @@
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
+    <!-- used for subsidy lock broadcasts. -->
+    <permission android:name="com.codeaurora.permission.SUBSIDYLOCK"
+        android:protectionLevel="signatureOrSystem"/>
+    <uses-permission android:name="com.codeaurora.permission.SUBSIDYLOCK" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
