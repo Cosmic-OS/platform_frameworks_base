@@ -56,7 +56,8 @@ static const char* kPathWhitelist[] = {
   "/system/framework/framework-res.apk",
   "/dev/urandom",
   "/dev/ion",
-  "/dev/dri/renderD129", // Fixes b/31172436
+  "/dev/dri/renderD129",
+  "/prov/ged", // Fixes b/31172436
 };
 
 static const char* kFdPath = "/proc/self/fd";
