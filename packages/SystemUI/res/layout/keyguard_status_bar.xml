@@ -82,13 +82,16 @@
         android:gravity="center"
         android:visibility="gone" />
 
-    <com.android.keyguard.CarrierText
+    <com.android.systemui.cosmic.carrierlabel.CarrierLabel
         android:id="@+id/keyguard_carrier_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_marginStart="@dimen/keyguard_carrier_text_margin"
+        android:layout_toEndOf="@+id/system_icons_super_container"
+        android:gravity="center_vertical"
+        android:ellipsize="marquee"
+        android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
         android:singleLine="true" />
 
     </LinearLayout>

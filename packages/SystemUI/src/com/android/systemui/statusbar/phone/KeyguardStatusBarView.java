@@ -54,6 +54,7 @@ public class KeyguardStatusBarView extends RelativeLayout
     private boolean mBatteryCharging;
     private boolean mKeyguardUserSwitcherShowing;
     private boolean mBatteryListening;
+    private int mShowCarrierLabel;
 
     private TextView mCarrierLabel;
     private View mSystemIconsSuperContainer;
@@ -75,6 +76,7 @@ public class KeyguardStatusBarView extends RelativeLayout
     private ContentObserver mObserver = new ContentObserver(new Handler()) {
         public void onChange(boolean selfChange, Uri uri) {
             showKeyguardClock();
+            showStatusBarCarrier();
             updateVisibilities();
         }
     };
@@ -82,11 +84,17 @@ public class KeyguardStatusBarView extends RelativeLayout
     public KeyguardStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         showKeyguardClock();
+        showStatusBarCarrier();
     }
 
     private void showKeyguardClock() {
         mShowKeyguardClock = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.KEYGUARD_SHOW_CLOCK, 1, UserHandle.USER_CURRENT);
+    }
+
+    private void showStatusBarCarrier() {
+        mShowCarrierLabel = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
     }
 
     @Override
@@ -200,6 +208,15 @@ public class KeyguardStatusBarView extends RelativeLayout
 
         mBatteryLevel.setBatteryCharging(mBatteryCharging);
 
+        }
+        if (mCarrierLabel != null) {
+            if (mShowCarrierLabel == 1) {
+                mCarrierLabel.setVisibility(View.VISIBLE);
+            } else if (mShowCarrierLabel == 3) {
+                mCarrierLabel.setVisibility(View.VISIBLE);
+            } else {
+                mCarrierLabel.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -363,5 +380,12 @@ public class KeyguardStatusBarView extends RelativeLayout
         super.onAttachedToWindow();
         getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                 "keyguard_show_clock"), false, mObserver);
+        getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+		        Settings.System.STATUS_BAR_SHOW_CARRIER), false, mObserver);
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
     }
 }
