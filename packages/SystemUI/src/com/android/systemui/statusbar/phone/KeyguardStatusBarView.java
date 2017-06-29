@@ -41,7 +41,6 @@ import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
-import com.android.systemui.BatteryLevelTextView;
 
 import java.text.NumberFormat;
 
@@ -60,7 +59,7 @@ public class KeyguardStatusBarView extends RelativeLayout
     private View mSystemIconsSuperContainer;
     private MultiUserSwitch mMultiUserSwitch;
     private ImageView mMultiUserAvatar;
-    private BatteryLevelTextView mBatteryLevel;
+    private TextView mBatteryLevel;
 
     private TextView mKeyguardClock;
     private int mShowKeyguardClock;
@@ -104,7 +103,7 @@ public class KeyguardStatusBarView extends RelativeLayout
         mSystemIconsContainer = findViewById(R.id.system_icons_container);
         mMultiUserSwitch = (MultiUserSwitch) findViewById(R.id.multi_user_switch);
         mMultiUserAvatar = (ImageView) findViewById(R.id.multi_user_avatar);
-        mBatteryLevel = (BatteryLevelTextView) findViewById(R.id.battery_level);
+        mBatteryLevel = (TextView) findViewById(R.id.battery_level);
         mCarrierLabel = (TextView) findViewById(R.id.keyguard_carrier_text);
         mKeyguardClock = (TextView) findViewById(R.id.keyguard_clock);
         loadDimens();
@@ -207,7 +206,9 @@ public class KeyguardStatusBarView extends RelativeLayout
             mKeyguardClock.setVisibility(View.GONE);
         }
 
-        mBatteryLevel.setBatteryCharging(mBatteryCharging);
+        boolean showBatteryLevel = getResources().getBoolean(R.bool.config_showBatteryPercentage);
+        mBatteryLevel.setVisibility(
+                mBatteryCharging || showBatteryLevel ? View.VISIBLE : View.GONE);
 
         }
         if (mCarrierLabel != null) {
@@ -259,7 +260,6 @@ public class KeyguardStatusBarView extends RelativeLayout
     public void setBatteryController(BatteryController batteryController) {
         mBatteryController = batteryController;
         ((BatteryMeterView) findViewById(R.id.battery)).setBatteryController(batteryController);
-        ((BatteryLevelTextView) findViewById(R.id.battery_level)).setBatteryController(batteryController);
     }
 
     public void setUserSwitcherController(UserSwitcherController controller) {
