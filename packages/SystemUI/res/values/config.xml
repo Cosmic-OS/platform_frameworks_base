@@ -103,12 +103,12 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane
+        wifi,cell,battery,hotspot,flashlight,rotation,bt,airplane,location
     </string>
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_stock" translatable="false">
-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,work,cast,night,ambient,screenshot,caffeine,brightness,reboot,nfc
+        wifi,cell,battery,hotspot,flashlight,rotation,bt,airplane,location,dnd,inversion,saver,work,cast,night,ambient,screenshot,caffeine,brightness,reboot,nfc
     </string>
 
     <!-- The tiles to display in QuickSettings -->
@@ -136,7 +136,7 @@
     <bool name="config_showCarrierLabel">false</bool>
 
     <!-- Whether or not we also show wifi activity in status bar. -->
-    <bool name="config_showWifiActivity">false</bool>
+    <bool name="config_showWifiActivity">true</bool>
 
     <!-- Show indicator for Wifi on but not connected. -->
     <bool name="config_showWifiIndicatorWhenEnabled">false</bool>
