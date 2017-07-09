@@ -84,4 +84,7 @@
     <string name="quick_settings_reboot_label">Reboot</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
 
+    <!-- Volte icon -->
+    <string name="status_bar_volte">VoLTE</string>
+
 </resources>
