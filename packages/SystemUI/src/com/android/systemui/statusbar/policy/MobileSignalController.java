@@ -441,6 +441,9 @@ public class MobileSignalController extends SignalController<
     }
 
     private boolean isMobileIms() {
+        if (mStyle != STATUS_BAR_STYLE_EXTENDED) {
+            return false;
+        }
 
         List<SubscriptionInfo> subInfos = SubscriptionManager.from(mContext)
                         .getActiveSubscriptionInfoList();

@@ -465,7 +465,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             int qsType, boolean activityIn, boolean activityOut, int dataActivityId,
             int mobileActivityId, int stackedDataIcon, int stackedVoiceIcon,
             String typeContentDescription, String description, boolean isWide, int subId,
-            boolean roaming, boolean isMobileIms) {
+            boolean roaming) {
         mRoamingsBySubId.put(subId, roaming);
         boolean isRoaming = calculateRoaming();
         if (mIsRoaming != isRoaming) {

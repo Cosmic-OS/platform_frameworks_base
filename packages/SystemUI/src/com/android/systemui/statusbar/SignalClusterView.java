@@ -63,7 +63,6 @@ public class SignalClusterView
     private static final String SLOT_MOBILE = "mobile";
     private static final String SLOT_WIFI = "wifi";
     private static final String SLOT_ETHERNET = "ethernet";
-    private static final String SLOT_VOLTE = "volte";
 
     NetworkControllerImpl mNC;
     SecurityController mSC;
@@ -114,7 +113,6 @@ public class SignalClusterView
     private boolean mBlockMobile;
     private boolean mBlockWifi;
     private boolean mBlockEthernet;
-    private boolean mBlockVolte;
     private TelephonyManager mTelephonyManager;
 
     public SignalClusterView(Context context) {
@@ -155,15 +153,13 @@ public class SignalClusterView
         boolean blockMobile = blockList.contains(SLOT_MOBILE);
         boolean blockWifi = blockList.contains(SLOT_WIFI);
         boolean blockEthernet = blockList.contains(SLOT_ETHERNET);
-        boolean blockVolte = blockList.contains(SLOT_VOLTE);
 
         if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
-                || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi || blockVolte != mBlockVolte) {
+                || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi) {
             mBlockAirplane = blockAirplane;
             mBlockMobile = blockMobile;
             mBlockEthernet = blockEthernet;
             mBlockWifi = blockWifi;
-            mBlockVolte = blockVolte;
             // Re-register to get new callbacks.
             mNC.removeSignalCallback(this);
             mNC.addSignalCallback(this);
@@ -300,7 +296,7 @@ public class SignalClusterView
             int qsType, boolean activityIn, boolean activityOut, int dataActivityId,
             int mobileActivityId, int stackedDataId, int stackedVoiceId,
             String typeContentDescription, String description, boolean isWide, int subId,
-            boolean roaming, boolean isMobileIms) {
+            boolean roaming) {
         PhoneState state = getState(subId);
         if (state == null) {
             return;
@@ -316,7 +312,6 @@ public class SignalClusterView
         state.mStackedDataId = stackedDataId;
         state.mStackedVoiceId = stackedVoiceId;
         state.mRoaming = roaming;
-        mMobileIms = isMobileIms;
 
         apply();
     }
@@ -628,7 +623,7 @@ public class SignalClusterView
             mImsOverWifiImageView.setVisibility(View.GONE);
         }
 
-        if (mMobileIms && !mBlockVolte){
+        if (mMobileIms){
             mMobileImsImageView.setVisibility(View.VISIBLE);
         } else {
             mMobileImsImageView.setVisibility(View.GONE);
