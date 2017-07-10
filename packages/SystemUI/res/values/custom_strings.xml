@@ -91,6 +91,7 @@
     <string name="quick_settings_reboot_label">Reboot</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
 
+<<<<<<< HEAD
     <!-- Music QS Tile -->
     <string name="quick_settings_music_label">Music</string>
     <string name="quick_settings_music_play">Play</string>
@@ -132,4 +133,6 @@
     <string name="quick_settings_location_high_accuracy_label">High accuracy</string>
     <string name="quick_settings_location_off_label">Location off</string>
 
+=======
+>>>>>>> parent of 35bd490... Add Volte Icon Switch
 </resources>
