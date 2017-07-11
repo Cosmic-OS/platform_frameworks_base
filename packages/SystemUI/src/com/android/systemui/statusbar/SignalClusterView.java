@@ -300,7 +300,7 @@ public class SignalClusterView
             int qsType, boolean activityIn, boolean activityOut, int dataActivityId,
             int mobileActivityId, int stackedDataId, int stackedVoiceId,
             String typeContentDescription, String description, boolean isWide, int subId,
-            boolean roaming, boolean isMobileIms) {
+            boolean roaming) {
         PhoneState state = getState(subId);
         if (state == null) {
             return;
@@ -316,7 +316,6 @@ public class SignalClusterView
         state.mStackedDataId = stackedDataId;
         state.mStackedVoiceId = stackedVoiceId;
         state.mRoaming = roaming;
-        mMobileIms = isMobileIms;
 
         apply();
     }
