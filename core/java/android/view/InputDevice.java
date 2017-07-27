@@ -114,6 +114,15 @@ public final class InputDevice implements Parcelable {
     public static final int SOURCE_CLASS_TRACKBALL = 0x00000004;
 
     /**
+     * The input source is a custom virtual key event sent programmatically to emulate different events.
+     *
+     * The key requested is different from the actual key's event.
+     * @author Carlo Savignano
+     * @hide
+     */
+    public static final int SOURCE_CUSTOM = 0x08000000 | SOURCE_CLASS_BUTTON;
+
+    /**
      * The input source is an absolute positioning device not associated with a display
      * (unlike {@link #SOURCE_CLASS_POINTER}).
      *
