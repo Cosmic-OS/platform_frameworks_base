@@ -9571,7 +9571,16 @@ public final class Settings {
                 NON_NEGATIVE_INTEGER_VALIDATOR;
 
         /**
+
          * The number of times (integer) the user has manually enabled battery saver.
+         * Force authorize Substratum (or equivalent) frontend calling packages by ThemeInterfacer
+         * The value is boolean (1 or 0).
+         * @hide
+         */
+        public static final String FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES = "force_authorize_substratum_packages";
+
+        /**
+         * Boolean value whether to link ringtone and notification volume
          * @hide
          */
         public static final String LOW_POWER_MANUAL_ACTIVATION_COUNT =
