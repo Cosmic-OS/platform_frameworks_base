@@ -5891,6 +5891,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MEDIA_METADATA),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -5900,6 +5903,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         public void update() {
             setLockscreenDoubleTapToSleep();
+            setStatusDoubleTapToSleep();
             setLockscreenMediaMetadata();
         }
     }
@@ -5907,6 +5911,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void setLockscreenDoubleTapToSleep() {
         if (mStatusBarWindow != null) {
             mStatusBarWindow.setLockscreenDoubleTapToSleep();
+        }
+    }
+
+    private void setStatusDoubleTapToSleep() {
+        if (mStatusBarWindow != null) {
+            mStatusBarWindow.setStatusDoubleTapToSleep();
         }
     }
 
