@@ -44,5 +44,8 @@
     <java-symbol type="string" name="global_restart_recovery_message" />
     <java-symbol type="string" name="global_restart_bootloader" />
     <java-symbol type="string" name="global_restart_bootloader_message" />
-  
+
+    <!-- IME selector notification toggle -->
+    <java-symbol type="bool" name="config_show_cmIMESwitcher"/>
+
 </resources>
