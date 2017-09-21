@@ -52,4 +52,7 @@
     <!-- Ambient indication -->
     <dimen name="ambient_indication_margin_bottom">12.0dip</dimen>
 
+    <!-- QS tile height -->
+    <dimen name="qs_tile_height_wo_label">48dp</dimen>
+
 </resources>
