@@ -33,4 +33,9 @@
     <string name="global_restart_recovery_message">Restarting to recovery\u2026</string><!-- Can be used in SysUIReboot -->
     <string name="global_restart_bootloader">Bootloader</string>
     <string name="global_restart_bootloader_message">Restarting to bootloader\u2026</string><!-- Can be used in SysUIReboot -->
+
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_toggleNavigationEditor">control navigation editor</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_toggleNavigationEditor">Allows an application to control the navigation bar editor.</string>
 </resources>
