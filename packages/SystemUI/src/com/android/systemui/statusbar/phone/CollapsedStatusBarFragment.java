@@ -77,7 +77,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     // COSMIC Status Logo
     private View mCOSMICLogo;
-    private boolean mShowLogo;
+    private View mCOSMICLogoRight;
+    private int mShowLogo;
     private final Handler mHandler = new Handler();
 
     private class COSMICSettingsObserver extends ContentObserver {
@@ -163,6 +164,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCenterClockLayout = (LinearLayout) mStatusBar.findViewById(R.id.center_clock_layout);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
         mCOSMICLogo = mStatusBar.findViewById(R.id.status_bar_logo);
+        mCOSMICLogoRight = mStatusBar.findViewById(R.id.status_bar_logo_right);
         updateSettings(false);
         // Default to showing until we know otherwise.
         showSystemIconArea(false);
@@ -269,25 +271,31 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate, true);
         animateHide(mCenterClockLayout, animate);
+        if (mShowLogo == 2) {
+            animateHide(mCOSMICLogoRight, animate, false);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
         animateShow(mCenterClockLayout, animate);
+        if (mShowLogo == 2) {
+            animateShow(mCOSMICLogoRight, animate);
+        }
     }
 
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate, true);
         animateHide(mCenterClockLayout, animate);
-        if (mShowLogo) {
-            animateHide(mCOSMICLogo, animate, true);
+        if (mShowLogo == 1) {
+            animateHide(mCOSMICLogo, animate, false);
         }
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCenterClockLayout, animate);
-        if (mShowLogo) {
+        if (mShowLogo == 1) {
             animateShow(mCOSMICLogo, animate);
         }
     }
@@ -372,14 +380,23 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void updateSettings(boolean animate) {
         mShowLogo = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_LOGO, 0,
-                UserHandle.USER_CURRENT) == 1;
+                UserHandle.USER_CURRENT);
         if (mNotificationIconAreaInner != null) {
-            if (mShowLogo) {
+            if (mShowLogo == 1) {
                 if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
                     animateShow(mCOSMICLogo, animate);
                 }
-            } else {
+            } else if (mShowLogo != 1) {
                 animateHide(mCOSMICLogo, animate, false);
+            }
+        }
+        if (mSystemIconArea != null) {
+            if (mShowLogo == 2) {
+                if (mSystemIconArea.getVisibility() == View.VISIBLE) {
+                    animateShow(mCOSMICLogoRight, animate);
+                }
+            } else if (mShowLogo != 2) {
+                animateHide(mCOSMICLogoRight, animate, false);
             }
         }
     }
