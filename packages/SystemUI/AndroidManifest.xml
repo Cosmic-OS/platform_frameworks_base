@@ -229,6 +229,10 @@
     <!-- Locale QS -->
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
 
+    <!-- Reboot tile -->
+    <uses-permission android:name="android.permission.REBOOT" />
+    <uses-permission android:name="android.permission.RECOVERY" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
