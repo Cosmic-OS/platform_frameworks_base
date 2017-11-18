@@ -24,6 +24,7 @@ import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.SystemUIApplication;
 import com.android.internal.policy.IKeyguardDismissCallback;
+import com.android.systemui.keyguard.KeyguardViewMediator;
 
 import java.util.ArrayList;
 
