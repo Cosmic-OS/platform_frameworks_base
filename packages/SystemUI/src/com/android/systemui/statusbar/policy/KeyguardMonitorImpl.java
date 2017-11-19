@@ -25,6 +25,7 @@ import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.SystemUIApplication;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.systemui.keyguard.KeyguardViewMediator;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -125,6 +126,7 @@ public class KeyguardMonitorImpl extends KeyguardUpdateMonitorCallback
         new ArrayList<Callback>(mCallbacks).forEach(Callback::onKeyguardShowingChanged);
         if(mKeyguardViewMediator && mShowing && mCanSkipBouncer && !mOccluded)
         mKeyguardViewMediator.dismiss(IKeyguardDismissCallback callback);
+        else Log.e("IFU","Check failed);
         
     }
 
