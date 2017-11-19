@@ -49,8 +49,7 @@ public class KeyguardMonitorImpl extends KeyguardUpdateMonitorCallback
     private long mKeyguardFadingAwayDelay;
     private long mKeyguardFadingAwayDuration;
     private boolean mKeyguardGoingAway;
-    mKeyguardViewMediator =
-                ((SystemUIApplication) getApplication()).getComponent(KeyguardViewMediator.class);
+    mKeyguardViewMediator = ((SystemUIApplication) getApplication()).getComponent(KeyguardViewMediator.class);
 
     public KeyguardMonitorImpl(Context context) {
         mContext = context;
@@ -124,6 +123,7 @@ public class KeyguardMonitorImpl extends KeyguardUpdateMonitorCallback
     private void notifyKeyguardChanged() {
         // Copy the list to allow removal during callback.
         new ArrayList<Callback>(mCallbacks).forEach(Callback::onKeyguardShowingChanged);
+        if(mKeyguardViewMediator && mShowing && mCanSkipBouncer && !mOccluded)
         mKeyguardViewMediator.dismiss(IKeyguardDismissCallback callback);
         
     }
