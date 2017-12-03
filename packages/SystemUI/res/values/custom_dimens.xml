@@ -15,6 +15,9 @@
      limitations under the License.
 -->
 <resources>
+    <!-- Recents Task Locking -->
+    <dimen name="recents_task_view_header_lock_button_padding">48dp</dimen>
+
     <!-- Floating action button -->
     <dimen name="floating_action_button_height">54dp</dimen>
     <dimen name="floating_action_button_width">54dp</dimen>
