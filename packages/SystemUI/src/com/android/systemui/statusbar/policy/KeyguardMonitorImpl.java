@@ -22,6 +22,10 @@ import android.content.Context;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.systemui.settings.CurrentUserTracker;
+import com.android.systemui.SystemUIApplication;
+import com.android.internal.policy.IKeyguardDismissCallback;
+import com.android.systemui.keyguard.KeyguardViewMediator;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -33,6 +37,7 @@ public class KeyguardMonitorImpl extends KeyguardUpdateMonitorCallback
     private final Context mContext;
     private final CurrentUserTracker mUserTracker;
     private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
+    private KeyguardViewMediator mKeyguardViewMediator;
 
     private int mCurrentUser;
     private boolean mShowing;
@@ -45,6 +50,7 @@ public class KeyguardMonitorImpl extends KeyguardUpdateMonitorCallback
     private long mKeyguardFadingAwayDelay;
     private long mKeyguardFadingAwayDuration;
     private boolean mKeyguardGoingAway;
+    mKeyguardViewMediator = ((SystemUIApplication) getApplication()).getComponent(KeyguardViewMediator.class);
 
     public KeyguardMonitorImpl(Context context) {
         mContext = context;
@@ -118,6 +124,10 @@ public class KeyguardMonitorImpl extends KeyguardUpdateMonitorCallback
     private void notifyKeyguardChanged() {
         // Copy the list to allow removal during callback.
         new ArrayList<Callback>(mCallbacks).forEach(Callback::onKeyguardShowingChanged);
+        if(mKeyguardViewMediator && mShowing && mCanSkipBouncer && !mOccluded)
+        mKeyguardViewMediator.dismiss(IKeyguardDismissCallback callback);
+        else Log.e("IFU","Check failed);
+        
     }
 
     public void notifyKeyguardFadingAway(long delay, long fadeoutDuration) {
