@@ -50,8 +50,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.substratum.ISubstratumHelperService;
-import com.android.internal.util.ConcurrentUtils;
-import com.android.server.SystemServerInitThreadPool;
 import com.android.server.SystemService;
 
 import java.io.BufferedInputStream;
@@ -63,7 +61,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.Throwable;
 import java.util.Arrays;
-import java.util.concurrent.Future;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -72,7 +69,7 @@ public final class SubstratumService extends SystemService {
 
     private static final String TAG = "SubstratumService";
     private static final String SUBSTRATUM_PACKAGE = "projekt.substratum";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private static final Signature SUBSTRATUM_SIGNATURE = new Signature(""
             + "308202eb308201d3a003020102020411c02f2f300d06092a864886f70d01010b050030263124302206"
@@ -147,26 +144,25 @@ public final class SubstratumService extends SystemService {
                 "ringtone", "ringtone", RingtoneManager.TYPE_RINGTONE)
     );
 
-    private IOverlayManager mOm;
-    private IPackageManager mPm;
-    private boolean mIsWaiting;
-    private String mInstalledPackageName;
+    private static IOverlayManager mOm;
+    private static IPackageManager mPm;
+    private static boolean isWaiting = false;
+    private static String installedPackageName;
 
     private Context mContext;
     private final Object mLock = new Object();
-    private Future<?> mInitCompleteSignal;
 
-    private ISubstratumHelperService mHelperService;
-    private final ServiceConnection mHelperConnection = new ServiceConnection() {
+    private static ISubstratumHelperService helperService;
+    private final ServiceConnection helperConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mHelperService = ISubstratumHelperService.Stub.asInterface(service);
+            helperService = ISubstratumHelperService.Stub.asInterface(service);
             log("Helper service connected");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mHelperService = null;
+            helperService = null;
             log("Helper service disconnected");
         }
     };
@@ -174,43 +170,37 @@ public final class SubstratumService extends SystemService {
     public SubstratumService(@NonNull final Context context) {
         super(context);
         mContext = context;
-        mInitCompleteSignal = SystemServerInitThreadPool.get().submit(() -> {
-            if (makeDir(SYSTEM_THEME_DIR)) restoreconThemeDir();
-            mOm = IOverlayManager.Stub.asInterface(ServiceManager.getService("overlay"));
-            mPm = IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
-            publishBinderService("substratum", mService);
-            if (DEBUG) {
-                Log.e(TAG, "published substratum service");
-            }
-        }, "Init SubstratumService");
-    }
-
-    @Override
-    public void onBootPhase(int phase) {
-        if (phase == PHASE_SYSTEM_SERVICES_READY) {
-            ConcurrentUtils.waitForFutureNoInterrupt(mInitCompleteSignal,
-                    "Wait for SubstratumService init");
-            mInitCompleteSignal = null;
-        }
+        if (makeDir(SYSTEM_THEME_DIR)) restoreconThemeDir();
+        publishBinderService("substratum", mService);
     }
 
     @Override
     public void onStart() {
-        // Intentionally left empty.
     }
 
     @Override
     public void onSwitchUser(final int newUserId) {
-        // Intentionally left empty.
     }
 
     private void waitForHelperConnection() {
-        if (mHelperService == null) {
+        if (helperService == null) {
             Intent intent = new Intent("android.substratum.service.SubstratumHelperService");
             intent.setPackage("android.substratum.service");
-            mContext.bindServiceAsUser(intent, mHelperConnection,
+            mContext.bindServiceAsUser(intent, helperConnection,
                     Context.BIND_AUTO_CREATE, UserHandle.SYSTEM);
+
+            while (helperService == null) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    // Shouldn't happen
+                }
+            }
         }
+    }
+
+    private void endHelperConnection() {
+        mContext.unbindService(helperConnection);
     }
 
     private boolean forceAuthorizePackages() {
@@ -222,7 +212,7 @@ public final class SubstratumService extends SystemService {
     private boolean doSignaturesMatch(String packageName, Signature signature) {
         if (packageName != null) {
               try {
-                  PackageInfo pi = mPm.getPackageInfo(packageName,
+                  PackageInfo pi = getPm().getPackageInfo(packageName,
                         PackageManager.GET_SIGNATURES, UserHandle.USER_SYSTEM);
                   if (pi.signatures != null
                            && pi.signatures.length == 1
@@ -236,18 +226,18 @@ public final class SubstratumService extends SystemService {
        return false;
     }
 
-    private void checkCallerAuthorization(int uid) {
+    private boolean isCallerAuthorized(int uid) {
         String callingPackage;
         try {
-            callingPackage = mPm.getPackagesForUid(uid)[0];
+            callingPackage = getPm().getPackagesForUid(uid)[0];
         } catch (RemoteException ignored) {
-            throw new SecurityException("Cannot check caller authorization");
+            return false;
         }
 
         if (TextUtils.equals(callingPackage, SUBSTRATUM_PACKAGE)) {
             for (Signature sig : AUTHORIZED_SIGNATURES) {
                 if (doSignaturesMatch(callingPackage, sig)) {
-                return;
+                return true;
                 }
             }
         }
@@ -256,17 +246,18 @@ public final class SubstratumService extends SystemService {
             log("\'" + callingPackage + "\' is not an authorized calling package, but the user " +
                     "has explicitly allowed all calling packages, " +
                     "validating calling package permissions...");
-            return;
+            return true;
         }
 
-        throw new SecurityException("Caller is not authorized");
+        logE("\'" + callingPackage + "\' is not an authorized calling package.");
+        return false;
     }
 
 
     private final IBinder mService = new ISubstratumService.Stub() {
         @Override
         public void installOverlay(List<String> paths) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             final int packageVerifierEnable = Settings.Global.getInt(
                     mContext.getContentResolver(),
@@ -276,39 +267,39 @@ public final class SubstratumService extends SystemService {
                     PackageInstallObserver installObserver = new PackageInstallObserver();
                     PackageDeleteObserver deleteObserver = new PackageDeleteObserver();
                     for (String path : paths) {
-                        mInstalledPackageName = null;
+                        installedPackageName = null;
                         File apkFile = new File(path);
                         if (apkFile.exists()) {
                             log("Installer - installing package from path \'" + path + "\'");
-                            mIsWaiting = true;
+                            isWaiting = true;
                             Settings.Global.putInt(mContext.getContentResolver(),
                                     Settings.Global.PACKAGE_VERIFIER_ENABLE, 0);
-                            mPm.installPackageAsUser(
+                            getPm().installPackageAsUser(
                                     path,
                                     installObserver,
                                     PackageManager.INSTALL_REPLACE_EXISTING,
                                     null,
                                     UserHandle.USER_SYSTEM);
-                            while (mIsWaiting) {
+                            while (isWaiting) {
                                 Thread.sleep(1);
                             }
 
-                            if (mInstalledPackageName != null) {
-                                PackageInfo pi = mPm.getPackageInfo(mInstalledPackageName,
+                            if (installedPackageName != null) {
+                                PackageInfo pi = getPm().getPackageInfo(installedPackageName,
                                         0, UserHandle.USER_SYSTEM);
                                 if ((pi.applicationInfo.flags & ApplicationInfo.FLAG_HAS_CODE) != 0 ||
                                         pi.overlayTarget == null) {
-                                    mIsWaiting = true;
-                                    int versionCode = mPm
-                                            .getPackageInfo(mInstalledPackageName, 0, UserHandle.USER_SYSTEM)
+                                    isWaiting = true;
+                                    int versionCode = getPm()
+                                            .getPackageInfo(installedPackageName, 0, UserHandle.USER_SYSTEM)
                                             .versionCode;
-                                    mPm.deletePackageAsUser(
-                                            mInstalledPackageName,
+                                    getPm().deletePackageAsUser(
+                                            installedPackageName,
                                             versionCode,
                                             deleteObserver,
                                             0,
                                             UserHandle.USER_SYSTEM);
-                                    while (mIsWaiting) {
+                                    while (isWaiting) {
                                         Thread.sleep(1);
                                     }
                                 }
@@ -327,7 +318,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void uninstallOverlay(List<String> packages, boolean restartUi) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 synchronized (mLock) {
@@ -338,19 +329,19 @@ public final class SubstratumService extends SystemService {
                             switchOverlayState(p, false);
                         }
 
-                        PackageInfo pi = mPm
+                        PackageInfo pi = getPm()
                                 .getPackageInfo(p, 0, UserHandle.USER_SYSTEM);
                         if ((pi.applicationInfo.flags & ApplicationInfo.FLAG_HAS_CODE) == 0 &&
                                 pi.overlayTarget != null) {
                             log("Remover - uninstalling \'" + p + "\'...");
-                            mIsWaiting = true;
-                            mPm.deletePackageAsUser(
+                            isWaiting = true;
+                            getPm().deletePackageAsUser(
                                     p,
                                     pi.versionCode,
                                     observer,
                                     0,
                                     UserHandle.USER_SYSTEM);
-                            while (mIsWaiting) {
+                            while (isWaiting) {
                                 Thread.sleep(1);
                             }
                         }
@@ -368,7 +359,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void switchOverlay(List<String> packages, boolean enable, boolean restartUi) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 synchronized (mLock) {
@@ -387,7 +378,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void setPriority(List<String> packages, boolean restartUi) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 synchronized (mLock) {
@@ -396,7 +387,7 @@ public final class SubstratumService extends SystemService {
                         String parentName = packages.get(i);
                         String packageName = packages.get(i + 1);
 
-                        mOm.setPriority(packageName, parentName,
+                        getOm().setPriority(packageName, parentName,
                                 UserHandle.USER_SYSTEM);
                     }
                     if (restartUi) {
@@ -412,7 +403,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void restartSystemUI() {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 log("Restarting SystemUI...");
@@ -424,7 +415,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void copy(String source, String destination) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 log("CopyJob - copying \'" + source + "\' to \'" + destination + "\'...");
@@ -445,7 +436,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void move(String source, String destination) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 log("MoveJob - moving \'" + source + "\' to \'" + destination + "\'...");
@@ -467,7 +458,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void mkdir(String destination) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 log("MkdirJob - creating \'" + destination + "\'...");
@@ -479,7 +470,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void deleteDirectory(String directory, boolean withParent) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 if (withParent) {
@@ -494,7 +485,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void applyBootanimation(String name) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 if (name == null) {
@@ -511,7 +502,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void applyFonts(String pid, String fileName) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 if (pid == null) {
@@ -528,7 +519,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void applySounds(String pid, String fileName) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 if (pid == null) {
@@ -547,7 +538,7 @@ public final class SubstratumService extends SystemService {
         @Override
         public void applyProfile(List<String> enable, List<String> disable, String name,
                 boolean restartUi) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 log("ProfileJob - Applying profile: " + name);
@@ -557,7 +548,7 @@ public final class SubstratumService extends SystemService {
                 boolean oldFontsExists = SYSTEM_THEME_FONT_DIR.exists();
                 boolean oldSoundsExists = SYSTEM_THEME_AUDIO_DIR.exists();
 
-                mHelperService.applyProfile(name);
+                helperService.applyProfile(name);
 
                 boolean newFontsExists = SYSTEM_THEME_FONT_DIR.exists();
                 boolean newSoundsExists = SYSTEM_THEME_AUDIO_DIR.exists();
@@ -593,7 +584,7 @@ public final class SubstratumService extends SystemService {
 
         @Override
         public void applyShutdownAnimation(String name) {
-            checkCallerAuthorization(Binder.getCallingUid());
+            if (!isCallerAuthorized(Binder.getCallingUid())) return;
             final long ident = Binder.clearCallingIdentity();
             try {
                 if (name == null) {
@@ -609,6 +600,22 @@ public final class SubstratumService extends SystemService {
         }
     };
 
+    private static IOverlayManager getOm() {
+        if (mOm == null) {
+            mOm = IOverlayManager.Stub.asInterface(
+                    ServiceManager.getService(Context.OVERLAY_SERVICE));
+        }
+        return mOm;
+    }
+
+    private static IPackageManager getPm() {
+        if (mPm == null) {
+            mPm = IPackageManager.Stub.asInterface(
+                    ServiceManager.getService("package"));
+        }
+        return mPm;
+    }
+
     private Context getAppContext(String packageName) {
         Context ctx = null;
         try {
@@ -620,9 +627,13 @@ public final class SubstratumService extends SystemService {
         return ctx;
     }
 
+    private Context getSubsContext() {
+        return getAppContext(SUBSTRATUM_PACKAGE);
+    }
+
     private void switchOverlayState(String packageName, boolean enable) {
         try {
-            mOm.setEnabled(packageName, enable, UserHandle.USER_SYSTEM);
+            getOm().setEnabled(packageName, enable, UserHandle.USER_SYSTEM);
         } catch (RemoteException e) {
             logE("There is an exception when trying to switch overlay state", e);
         }
@@ -631,7 +642,7 @@ public final class SubstratumService extends SystemService {
     private boolean isOverlayEnabled(String packageName) {
         boolean enabled = false;
         try {
-            OverlayInfo info = mOm.getOverlayInfo(packageName, UserHandle.USER_SYSTEM);
+            OverlayInfo info = getOm().getOverlayInfo(packageName, UserHandle.USER_SYSTEM);
             if (info != null) {
                 enabled = info.isEnabled();
             } else {
@@ -652,7 +663,7 @@ public final class SubstratumService extends SystemService {
     private void copyBootAnimation(String fileName) {
         try {
             waitForHelperConnection();
-            mHelperService.applyBootAnimation();
+            helperService.applyBootAnimation();
         } catch (Exception e) {
             logE("There is an exception when trying to apply boot animation", e);
         }
@@ -674,7 +685,7 @@ public final class SubstratumService extends SystemService {
     private void copyShutdownAnimation(String fileName) {
         try {
             waitForHelperConnection();
-            mHelperService.applyShutdownAnimation();
+            helperService.applyShutdownAnimation();
         } catch (Exception e) {
             logE("There is an exception when trying to apply shutdown animation", e);
         }
@@ -739,7 +750,7 @@ public final class SubstratumService extends SystemService {
         // is kind enough to provide one for us in it's assets
         File testConfig = new File(cacheDir, "fonts.xml");
         if (!testConfig.exists()) {
-            AssetManager subsAm = getAppContext(SUBSTRATUM_PACKAGE).getAssets();
+            AssetManager subsAm = getSubsContext().getAssets();
             try (InputStream inputStream = subsAm.open("fonts.xml")) {
                 FileUtils.copyToFile(inputStream, testConfig);
             } catch (Exception e) {
@@ -869,7 +880,7 @@ public final class SubstratumService extends SystemService {
                 FileUtils.S_IRWXU | FileUtils.S_IRGRP | FileUtils.S_IRWXO,
                 FileUtils.S_IRWXU | FileUtils.S_IRWXG | FileUtils.S_IROTH | FileUtils.S_IXOTH);
 
-        int metaDataId = getAppContext(SUBSTRATUM_PACKAGE).getResources().getIdentifier(
+        int metaDataId = getSubsContext().getResources().getIdentifier(
                 "content_resolver_notification_metadata",
                 "string", SUBSTRATUM_PACKAGE);
 
@@ -891,8 +902,8 @@ public final class SubstratumService extends SystemService {
                     SoundUtils.setUISounds(mContext.getContentResolver(), sound.soundName, ogg
                             .getAbsolutePath());
                 } else {
-                    SoundUtils.setAudible(mContext, ogg, ogg, sound.type,
-                            getAppContext(SUBSTRATUM_PACKAGE).getString(metaDataId));
+                    SoundUtils.setAudible(mContext, ogg, ogg, sound.type, getSubsContext().getString
+                            (metaDataId));
                 }
             } else if (mp3.exists()) {
                 if (sound.themePath.equals(SYSTEM_THEME_UI_SOUNDS_DIR.getAbsolutePath())
@@ -902,8 +913,8 @@ public final class SubstratumService extends SystemService {
                     SoundUtils.setUISounds(mContext.getContentResolver(), sound.soundName,
                             mp3.getAbsolutePath());
                 } else {
-                    SoundUtils.setAudible(mContext, mp3, mp3, sound.type,
-                            getAppContext(SUBSTRATUM_PACKAGE).getString(metaDataId));
+                    SoundUtils.setAudible(mContext, mp3, mp3, sound.type, getSubsContext().getString
+                            (metaDataId));
                 }
             } else {
                 if (sound.themePath.equals(SYSTEM_THEME_UI_SOUNDS_DIR.getAbsolutePath())) {
@@ -1013,7 +1024,7 @@ public final class SubstratumService extends SystemService {
 
     private void log(String msg) {
         if (DEBUG) {
-            Log.e(TAG, msg);
+            Log.d(TAG, msg);
         }
     }
 
@@ -1056,15 +1067,15 @@ public final class SubstratumService extends SystemService {
         @Override
         public void onUserActionRequired(Intent intent) throws RemoteException {
             log("Installer - user action required callback");
-            mIsWaiting = false;
+            isWaiting = false;
         }
 
         @Override
         public void onPackageInstalled(String packageName, int returnCode,
                                        String msg, Bundle extras) {
             log("Installer - successfully installed \'" + packageName + "\'!");
-            mInstalledPackageName = packageName;
-            mIsWaiting = false;
+            installedPackageName = packageName;
+            isWaiting = false;
         }
     }
 
@@ -1072,7 +1083,7 @@ public final class SubstratumService extends SystemService {
         @Override
         public void packageDeleted(String packageName, int returnCode) {
             log("Remover - successfully removed \'" + packageName + "\'");
-            mIsWaiting = false;
+            isWaiting = false;
         }
     }
 }

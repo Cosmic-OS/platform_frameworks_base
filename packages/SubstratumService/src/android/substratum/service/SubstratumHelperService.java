@@ -6,7 +6,6 @@ import android.os.Binder;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.IBinder;
-import android.os.Process;
 import android.os.SELinux;
 import android.util.Log;
 
@@ -21,7 +20,7 @@ public class SubstratumHelperService extends Service {
             new File(Environment.getExternalStorageDirectory(), ".substratum");
     private final File SYSTEM_THEME_DIR = new File(Environment.getDataSystemDirectory(), "theme");
 
-    ISubstratumHelperService mISubstratumHelperService = new ISubstratumHelperService.Stub() {
+    ISubstratumHelperService service = new ISubstratumHelperService.Stub() {
         @Override
         public void applyBootAnimation() {
             if (!isAuthorized(Binder.getCallingUid())) return;
@@ -94,7 +93,7 @@ public class SubstratumHelperService extends Service {
         }
 
         private boolean isAuthorized(int uid) {
-            return Process.SYSTEM_UID == uid;
+            return "android.uid.system:1000".equals(getPackageManager().getNameForUid(uid));
         }
 
         private boolean copyDir(File src, File dst) {
@@ -120,6 +119,6 @@ public class SubstratumHelperService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return mISubstratumHelperService.asBinder();
+        return service.asBinder();
     }
 }
