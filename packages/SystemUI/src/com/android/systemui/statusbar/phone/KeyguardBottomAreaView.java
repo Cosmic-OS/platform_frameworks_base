@@ -272,6 +272,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         mAssistManager = Dependency.get(AssistManager.class);
         mLockIcon.setAccessibilityController(mAccessibilityController);
         updateLeftAffordance();
+        updateRightAffordance();
     }
 
     @Override
@@ -363,7 +364,8 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         IconState state = mRightButton.getIcon();
         mRightAffordanceView.setVisibility(!mDozing && state.isVisible ? View.VISIBLE : View.GONE);
         if (state.isVisible) {
-            mRightAffordanceView.setImageDrawable(state.drawable, state.tint);
+            mRightAffordanceView.setImageDrawable(state.drawable, state.tint,
+                    state.isDefaultButton ? false : true);
             mRightAffordanceView.setContentDescription(state.contentDescription);
         }
     }
@@ -381,6 +383,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         mUserSetupComplete = userSetupComplete;
         updateCameraVisibility();
         updateLeftAffordanceIcon();
+        updateRightAffordanceIcon();
     }
 
     private Intent getCameraIntent() {
@@ -420,7 +423,8 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         IconState state = mLeftButton.getIcon();
         mLeftAffordanceView.setVisibility(!mDozing && state.isVisible ? View.VISIBLE : View.GONE);
         if (state.isVisible) {
-            mLeftAffordanceView.setImageDrawable(state.drawable, state.tint);
+            mLeftAffordanceView.setImageDrawable(state.drawable, state.tint,
+                    state.isDefaultButton ? false : true);
             mLeftAffordanceView.setContentDescription(state.contentDescription);
         }
     }
@@ -826,14 +830,15 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
 
     public void onKeyguardShowingChanged() {
         updateLeftAffordance();
+        updateRightAffordance();
         inflateCameraPreview();
     }
 
     private void setRightButton(IntentButton button) {
         mRightButton = button;
-        updateRightAffordanceIcon();
         updateCameraVisibility();
         inflateCameraPreview();
+        updateRightAffordance();
     }
 
     private void setLeftButton(IntentButton button) {
@@ -850,6 +855,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
 
         updateCameraVisibility();
         updateLeftAffordanceIcon();
+        updateRightAffordanceIcon();
 
         if (dozing) {
             mLockIcon.setVisibility(INVISIBLE);
