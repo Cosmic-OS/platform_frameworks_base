@@ -144,4 +144,7 @@
     <!-- VPN -->
     <string name="status_bar_vpn">VPN</string>
 
+    <!-- Roaming -->
+    <string name="status_bar_roaming">Roaming</string>
+
 </resources>
