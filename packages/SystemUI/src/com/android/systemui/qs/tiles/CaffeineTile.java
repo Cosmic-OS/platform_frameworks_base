@@ -49,7 +49,6 @@ public class CaffeineTile extends QSTileImpl<BooleanState> {
     private CountDownTimer mCountdownTimer = null;
     public long mLastClickTime = -1;
     private final Receiver mReceiver = new Receiver();
-    private boolean mListening;
 
     public CaffeineTile(QSHost host) {
         super(host);
@@ -61,6 +60,10 @@ public class CaffeineTile extends QSTileImpl<BooleanState> {
     @Override
     public BooleanState newTileState() {
         return new BooleanState();
+    }
+
+    @Override
+    public void handleSetListening(boolean listening) {
     }
 
     @Override
@@ -81,10 +84,6 @@ public class CaffeineTile extends QSTileImpl<BooleanState> {
     @Override
     public int getMetricsCategory() {
         return MetricsEvent.GALAXY;
-    }
-
-    @Override
-    public void setListening(boolean listening) {
     }
 
     @Override
