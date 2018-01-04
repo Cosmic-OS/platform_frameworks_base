@@ -5054,7 +5054,14 @@ public final class Settings {
          */
         public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
 
+        /**
+         * Whether to play notification sound and vibration if screen is on
+         * @hide
+         */
+        public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
+
         /** End of Cosmic-OS system settings**/
+
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
