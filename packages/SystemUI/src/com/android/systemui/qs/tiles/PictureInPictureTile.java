@@ -22,7 +22,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 
-import com.android.internal.util.nitrogen.NitrogenUtils;
+import com.android.internal.util.cosmic.CosmicUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
@@ -38,7 +38,7 @@ public class PictureInPictureTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.EXTENSIONS;
+        return MetricsEvent.GALAXY;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class PictureInPictureTile extends QSTileImpl<BooleanState> {
     @Override
     public void handleClick() {
         mHost.collapsePanels();
-        NitrogenUtils.sendKeycode(171);
+        CosmicUtils.sendKeycode(171);
     }
 
     @Override

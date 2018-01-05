@@ -25,6 +25,9 @@
     <!-- Content description for Accessibility on locked tasks in recents -->
     <string name="task_locked_desc">Unlock %1$s. Currently locked</string>
 
+    <!-- PiP Tile -->
+    <string name="quick_settings_pip_label">PiP</string>
+
     <!-- Caffeine QS Tile -->
     <string name="quick_settings_caffeine_label">Caffeine</string>
     <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
