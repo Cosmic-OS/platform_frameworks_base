@@ -126,7 +126,8 @@ public class LocaleTile extends QSTileImpl<State> {
         state.label = mLocaleList.get(0).getDisplayLanguage();
     }
 
-    public void setListening(boolean listening) {
+    @Override
+    public void handleSetListening(boolean listening) {
         if (mListening == listening) return;
         mListening = listening;
         if (listening) {
