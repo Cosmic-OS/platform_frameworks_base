@@ -56,7 +56,8 @@ public class ScreenrecordTile extends QSTileImpl<BooleanState> {
         return new BooleanState();
     }
 
-    public void setListening(boolean listening) {
+    @Override
+    public void handleSetListening(boolean listening) {
         if (mListening == listening) return;
         mListening = listening;
     }

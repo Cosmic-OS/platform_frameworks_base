@@ -73,7 +73,7 @@ public class NotificationChannels extends SystemUI {
                 new NotificationChannel(
                         SCREENRECORDS,
                         context.getString(R.string.notification_channel_screenrecord),
-                        NotificationManager.IMPORTANCE_LOW))),
+                        NotificationManager.IMPORTANCE_LOW),
                 batteryChannel
         ));
 
