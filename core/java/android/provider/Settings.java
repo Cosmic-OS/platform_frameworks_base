@@ -5412,6 +5412,12 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_ALBUM_ART_FILTER = "lockscreen_album_art_filter";
 
+        /**
+         * Unlock keystore with fingerprint after reboot
+         * @hide
+         */
+        public static final String FP_UNLOCK_KEYSTORE = "fp_unlock_keystore";
+
         /** End of Cosmic-OS system settings**/
 
         /**
