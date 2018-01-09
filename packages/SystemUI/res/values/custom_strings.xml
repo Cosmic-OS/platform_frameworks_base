@@ -147,4 +147,7 @@
     <!-- Roaming -->
     <string name="status_bar_roaming">Roaming</string>
 
+    <!-- Battery saver tile -->
+    <string name="battery_saver_qs_tile_fully_charged">Fully Charged</string>
+
 </resources>
