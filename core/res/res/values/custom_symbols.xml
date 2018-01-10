@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
    Copyright (C) 2017-2019 Cosmic-OS Project
 
@@ -70,4 +71,6 @@
     <!-- Whether device supports internal audio recording -->
     <java-symbol type="bool" name="config_hasInternalAudioRecordingSupport" />
 
+    <!-- Vendor mismatched fingerprint warning -->
+    <java-symbol type="integer" name="config_flashlightProximityTimeout" />
 </resources>
