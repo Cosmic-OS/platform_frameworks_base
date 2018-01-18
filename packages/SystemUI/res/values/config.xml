@@ -171,7 +171,7 @@
     <integer name="recents_auto_advance_duration">300</integer>
 
     <!-- The animation duration for subsequent scrolling the stack to a particular item. -->
-    <integer name="recents_subsequent_auto_advance_duration">1000</integer>
+    <integer name="recents_subsequent_auto_advance_duration">750</integer>
 
     <!-- The delay to enforce between each alt-tab key press. -->
     <integer name="recents_alt_tab_key_delay">100</integer>
