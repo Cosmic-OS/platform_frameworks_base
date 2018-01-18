@@ -4995,6 +4995,14 @@ public final class Settings {
          */
         public static final String NIGHT_BRIGHTNESS_VALUE = "night_brightness_value";
 
+        /**
+         * Force an Ambient notification when a new media track is being played
+         * 0 - disabled
+         * 1 - show track info within normal Ambient Display and force a new Ambient clean layout when skipping tracks
+         * @hide
+         */
+        public static final String FORCE_AMBIENT_FOR_MEDIA = "force_ambient_for_media";
+
         /** End of Cosmic-OS system settings**/
 
         /**

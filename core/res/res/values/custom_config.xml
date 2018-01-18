@@ -288,4 +288,7 @@
     <!-- In call notification vibration strength -->
     <integer name="config_in_call_notification_vibration_strength">30</integer>
 
+    <!-- Ambient display music ticker -->
+    <bool name="config_canForceDozeNotifications">true</bool>
+
 </resources>
