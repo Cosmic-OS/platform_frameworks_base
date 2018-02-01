@@ -4239,13 +4239,13 @@ public final class Settings {
         public static final String VOLUME_WAKE_SCREEN = "volume_wake_screen";
 
         /**
-         * 0 - Automatic (Wallpaper based)
-         * 1 - Light
-         * 2 - Dark
-         * 3 - Black
+         * 0 - wallpaper based
+         * 1 - force Light
+         * 2 - force Dark
+         * 3 - force Black
          * @hide
          */
-        public static final String DEVICE_THEME = "device_theme";
+        public static final String SYSTEM_THEME_STYLE = "system_theme_style";
 
         /**
          * Whether to show the IME switcher in the status bar
