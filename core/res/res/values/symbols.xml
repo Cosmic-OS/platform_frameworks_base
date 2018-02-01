@@ -3161,4 +3161,6 @@
   <!-- cpu boost for PanelView fling -->
   <java-symbol type="bool" name="config_enableCpuBoostForPanelViewFling" />
   <java-symbol type="array" name="panelview_flingboost_param_value" />
+
+  <java-symbol type="bool" name="config_canForceDozeNotifications" />
 </resources>
