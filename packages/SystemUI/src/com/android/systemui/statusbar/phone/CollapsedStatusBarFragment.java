@@ -281,7 +281,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate, true);
-        animateHide(mCenterClockLayout, animate);
+        animateHide(mCenterClockLayout, animate, true);
         if (mShowLogo == 2) {
             animateHide(mCOSMICLogoRight, animate, false);
         }
@@ -297,7 +297,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate, true);
-        animateHide(mCenterClockLayout, animate);
+        animateHide(mCenterClockLayout, animate, true);
         if (mShowLogo == 1) {
             animateHide(mCOSMICLogo, animate, false);
         }
