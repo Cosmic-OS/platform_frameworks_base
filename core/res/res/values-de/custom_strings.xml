@@ -37,10 +37,10 @@
     <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_toggleNavigationEditor">Erlaube Zugriff auf den NavBar-Editor</string>
     <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permdesc_toggleNavigationEditor">Erlaubt einer App, auf den Editor für die Navigationsleiste zuzugreifen.</string>
+    <string name="permdesc_toggleNavigationEditor">Erlaubt einer App, auf den Editor fÃ¼r die Navigationsleiste zuzugreifen.</string>
 
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_fakePackageSignature">Verschleiere Paketsignatur</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permdesc_fakePackageSignature">Erlaubt der App vorzugeben, eine andere App zu sein.Bösartige Apps könnten dies benutzen, um an private App-Daten zu gelangen. Diese Genehmigung mit Bedacht verwenden!</string>
+    <string name="permdesc_fakePackageSignature">Erlaubt der App vorzugeben, eine andere App zu sein.BÃ¶sartige Apps kÃ¶nnten dies benutzen, um an private App-Daten zu gelangen. Diese Genehmigung mit Bedacht verwenden!</string>
 </resources>
