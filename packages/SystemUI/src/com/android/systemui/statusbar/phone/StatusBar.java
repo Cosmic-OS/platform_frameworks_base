@@ -671,7 +671,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             super.onMetadataChanged(metadata);
             if (DEBUG_MEDIA) Log.v(TAG, "DEBUG_MEDIA: onMetadataChanged: " + metadata);
             mMediaMetadata = metadata;
-            updateMediaMetaData(true, true)
+            updateMediaMetaData(true, true);
 
             if (mNavigationBar != null) {
                 setMediaPlaying();
@@ -728,6 +728,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     tick(entry.notification, true, true, mMediaMetadata);
                     break;
                 }
+            }
+        }
+    }
 
     private void tickTrackInfo(MediaController mc) {
         ArrayList<Entry> activeNotifications = mNotificationData.getAllNotifications();
