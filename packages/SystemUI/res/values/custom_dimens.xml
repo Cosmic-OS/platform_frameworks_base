@@ -51,4 +51,6 @@
     <!-- Custom Carrier Label -->
     <dimen name="status_bar_carrier_height">14dp</dimen>
 
+    <!-- Status bar clock -->
+    <dimen name="status_bar_left_clock_end_padding">5dp</dimen>
 </resources>
