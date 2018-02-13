@@ -1047,7 +1047,8 @@ public final class BatteryService extends SystemService {
         public void updateLightsLocked() {
             // mBatteryProps could be null on startup (called by SettingsObserver)
             if (mBatteryProps == null) {
-                Slog.w(TAG, "updateLightsLocked: mBatteryProps is null; skipping");
+                if (DEBUG) {
+                Slog.w(TAG, "updateLightsLocked: mBatteryProps is null; skipping");}
                 return;
             }
             final int level = mBatteryProps.batteryLevel;
