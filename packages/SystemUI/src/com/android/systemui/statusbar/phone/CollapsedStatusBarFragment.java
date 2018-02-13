@@ -329,7 +329,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateHide(mCOSMICLogo, animate, false);
         }
         if (((Clock)mLeftClock).isEnabled()) {
-            animateHide(mLeftClock, animate);
+            animateHide(mLeftClock, animate, true);
         }
     }
 
