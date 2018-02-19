@@ -92,15 +92,22 @@
     <string name="screenrecord_notif_title">Registra schermo</string>
     <!-- Screenrecord notification action: Stop -->
     <string name="screenrecord_notif_stop">Ferma</string>
+    <string name="screenrecord_notif_completed">Schermo registrato con successo</string>
+    <string name="screenrecord_notif_duration">Totale:</string>
     <!-- Screenrecord notification action: show/hide pointer -->
     <string name="screenrecord_notif_pointer_on">Mostra indicatore</string>
     <string name="screenrecord_notif_pointer_off">Nascondi indicatore</string>
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Impossibile registrare lo schermo</string>
     <string name="notification_channel_screenrecord">Registra schermo</string>
+    <string name="screenrecord_hide_hint">Nascondi suggerimento</string>
+    <string name="screenrecord_show_hint">Visualizza suggerimento</string>
 
     <!-- Screenrecord Tile -->
     <string name="quick_settings_screenrecord">Registra schermo</string>
+    <string name="quick_settings_screenrecord_lq_label">Registra schermo 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Registra schermo 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Registra schermo 720p+</string>
 
     <!-- Language toggle tile -->
     <string name="quick_settings_locale_label">Lingua</string>
@@ -119,4 +126,16 @@
     <string name="accessibility_quick_settings_hwkeys_on">Tasti HW attivati</string>
     <string name="accessibility_quick_settings_hwkeys_off">Tasti HW disattivati</string>
     <string name="quick_settings_hwkeys_label">Tasti HW</string>
+ 
+    <!-- Lockscreen tuner -->    
+    <string name="lockscreen_default">Predefinito</string>
+    <string name="lockscreen_hidden">Nessuno</string>
+
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Scorri dall\'icona per avviare</string>
+
+     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - La notifica sarà posticipata per 1 minuto.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Le notifiche saranno posticipate per <xliff:g id="number">%d</xliff:g> minuti.</string>
+
 </resources>
