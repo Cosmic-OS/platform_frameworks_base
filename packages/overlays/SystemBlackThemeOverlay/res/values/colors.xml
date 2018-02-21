@@ -40,4 +40,6 @@
     <color name="notification_snooze_text">@*android:color/theme_text1</color>
     <color name="notification_text_color1">@*android:color/theme_text1</color>
 
+    <!-- QS edit page background color -->
+    <color name="qs_edit_item_decoration_bg">@*android:color/black</color>
 </resources>
