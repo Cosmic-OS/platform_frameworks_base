@@ -68,12 +68,15 @@
     <!-- Whether device has dash charging support -->
     <java-symbol type="bool" name="config_hasDashCharger" />
 
-  <!-- framework instrumentation and AppProtect features -->
-  <java-symbol type="string" name="config_optionalPackageVerifierName" />
-  <java-symbol type="integer" name="config_sms_authorization_timeout_ms" />
-  <java-symbol type="bool" name="config_sms_authorization_enabled" />
+    <!-- framework instrumentation and AppProtect features -->
+    <java-symbol type="string" name="config_optionalPackageVerifierName" />
+    <java-symbol type="integer" name="config_sms_authorization_timeout_ms" />
+    <java-symbol type="bool" name="config_sms_authorization_enabled" />
 
     <!-- Whether notify fingerprint client of successful cancelled authentication -->
     <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
+
+    <!-- Whether device has turbo power charging support -->
+    <java-symbol type="bool" name="config_hasTurboPowerCharger" />
 
 </resources>
