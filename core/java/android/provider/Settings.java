@@ -4552,6 +4552,22 @@ public final class Settings {
 
         /**
          * Whether to display the 4g or lte network icon in the statusbar
+         * Hold current font name and name of the originating package Uses "|" as a delimiter
+         *
+         * @hide
+         */
+        public static final String FONT_INFO = "font_info";
+
+        /**
+         * Hold list of installed font provider packages. Uses "|" as a delimiter
+         *
+         * @hide
+         */
+        public static final String FONT_PACKAGES = "font_packages";
+
+        /**
+         * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
+         *
          * @hide
          */
         public static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
