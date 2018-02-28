@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?> 
+2<?xml version="1.0" encoding="utf-8"?> 
 <!-- 
 /** 
  * Copyright (c) 2017, The Cosmic-OS Project 
@@ -119,10 +119,6 @@
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_dash_charging_time">Dash Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> until full)</string>
     <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
-
-    <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]--> 
-    <string name="keyguard_indication_turbo_power_time">TurboPower connected (<xliff:g id="charging_time_left">%s</xliff:g> until full)</string> 
-    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower connected</string>
 
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
