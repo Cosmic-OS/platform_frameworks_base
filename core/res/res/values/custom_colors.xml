@@ -46,4 +46,7 @@
     <color name="notification_guts_bg_color">#eeeeee</color>
     <color name="notification_snooze_text">#dd000000</color>
 
+    <!-- Updater snackbar text color -->
+    <color name="updater_snackbar_text_color">@android:color/white</color>
+
 </resources>
