@@ -155,7 +155,7 @@ public final class BatteryService extends SystemService {
 
     private boolean mTurboPower;
     private boolean mHasTurboPower;
-    private boolean mLasTurboPower;
+    private boolean mLastTurboPower;
 
     private long mDischargeStartTime;
     private int mDischargeStartLevel;
