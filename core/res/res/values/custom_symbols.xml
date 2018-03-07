@@ -83,4 +83,7 @@
     platform signatures, specifically for use on devices with a vendor partition. -->
     <java-symbol type="array" name="config_vendorPlatformSignatures" />
 
+    <!-- Forcefully tint notification icon text -->
+    <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
+
 </resources>
