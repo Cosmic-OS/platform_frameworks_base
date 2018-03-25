@@ -111,6 +111,7 @@
             android:focusable="true"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/accessibility_quick_settings_expand"
+            android:tint="?android:attr/colorForeground"
             android:padding="14dp" />
     </LinearLayout>
 
