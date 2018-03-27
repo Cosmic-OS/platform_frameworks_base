@@ -23,6 +23,9 @@
     <!-- Resolver -->
     <color name="resolver_list_bg">@android:color/white</color>
 
+    <!-- Settings icon tint color -->
+    <color name="settings_icon_tint_color">#737373</color>
+
     <!-- Notification info -->
     <color name="notification_info_button_text">@color/accent_device_default_light</color>
 
