@@ -4904,7 +4904,7 @@ public class Notification implements Parcelable
                 color = mSecondaryTextColor;
             } else {
                 color = NotificationColorUtil.resolveContrastColor(mThemeContext, mN.color,
-                        background, isDark);
+                        background);
             }
             if (Color.alpha(color) < 255) {
                 // alpha doesn't go well for color filters, so let's blend it manually
