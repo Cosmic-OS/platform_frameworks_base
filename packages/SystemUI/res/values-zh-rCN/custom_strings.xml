@@ -35,7 +35,7 @@
 
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">截图</string>
-    <string name="quick_settings_region_screenshot_label">截图部分区域</string>
+    <string name="quick_settings_region_screenshot_label">部分截图</string>
 
     <string name="statusbar_items_title">状态栏图标</string>
 
@@ -94,13 +94,19 @@
     <string name="screenrecord_notif_stop">停止</string>
     <!-- Screenrecord notification action: show/hide pointer -->
     <string name="screenrecord_notif_pointer_on">显示指针</string>
-    <string name="screenrecord_notif_pointer_off">隐藏指针</string>
+    <string name="screenrecord_notif_pointer_off">隐藏指针</string>   
+    <!-- Screenrecord notification action: show/hide hint -->
+    <string name="screenrecord_notif_hint_on">显示提示</string>
+    <string name="screenrecord_notif_hint_off">隐藏提示</string>
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">无法录制屏幕</string>
     <string name="notification_channel_screenrecord">录制的屏幕</string>
 
     <!-- Screenrecord Tile -->
-    <string name="quick_settings_screenrecord">屏幕录制</string>
+    <string name="quick_settings_screenrecord_label">屏幕录制</string>
+    <string name="quick_settings_screenrecord_lq_label">屏幕录制480p</string>
+    <string name="quick_settings_screenrecord_mq_label">屏幕录制720p</string>
+    <string name="quick_settings_screenrecord_hq_label">屏幕录制720p+</string>
 
     <!-- Language toggle tile -->
     <string name="quick_settings_locale_label">语言</string>
