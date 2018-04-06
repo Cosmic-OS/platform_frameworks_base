@@ -86,4 +86,7 @@
     <!-- Forcefully tint notification icon text -->
     <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
 
+    <!-- Path to fast charging status file to detect whether an oem fast charger is active -->
+    <java-symbol type="array" name="config_oemFastChargerStatusPaths" />
+
 </resources>
