@@ -104,9 +104,9 @@
 
     <!-- Screenrecord Tile -->
     <string name="quick_settings_screenrecord_label">屏幕录制</string>
-    <string name="quick_settings_screenrecord_lq_label">屏幕录制480p</string>
-    <string name="quick_settings_screenrecord_mq_label">屏幕录制720p</string>
-    <string name="quick_settings_screenrecord_hq_label">屏幕录制720p+</string>
+    <string name="quick_settings_screenrecord_lq_label">录屏480p</string>
+    <string name="quick_settings_screenrecord_mq_label">录屏720p</string>
+    <string name="quick_settings_screenrecord_hq_label">录屏720p+</string>
 
     <!-- Language toggle tile -->
     <string name="quick_settings_locale_label">语言</string>
@@ -122,7 +122,7 @@
     <string name="keyguard_plugged_in_dash_charging">快速充电</string>
 
     <!-- HW Keys Tile -->
-    <string name="accessibility_quick_settings_hwkeys_on">开启实体按键</string>
-    <string name="accessibility_quick_settings_hwkeys_off">关闭实体按键</string>
+    <string name="accessibility_quick_settings_hwkeys_on">实体按键</string>
+    <string name="accessibility_quick_settings_hwkeys_off">实体按键</string>
     <string name="quick_settings_hwkeys_label">实体按键</string>
 </resources>
