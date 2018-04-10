@@ -868,6 +868,12 @@ public final class DefaultPermissionGrantPolicy {
             mPermissionGrantedCallback.onDefaultRuntimePermissionsGranted(userId);
         }
 
+        // Pixel Wallpaper
+        PackageParser.Package pixelwallsPackage = getDefaultProviderAuthorityPackage("com.google.android.apps.wallpaper", userId);
+        if (pixelwallsPackage != null) {
+            grantRuntimePermissions(pixelwallsPackage, STORAGE_PERMISSIONS, true, userId);
+        }
+
         // Mediascanner
         PackageParser.Package mediascannerPackage = getDefaultProviderAuthorityPackage(
                 "com.android.providers.media.MediaProvider", userId);
