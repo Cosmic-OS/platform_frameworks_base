@@ -851,6 +851,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Maps global key codes to the components that will handle them.
     private GlobalKeyManager mGlobalKeyManager;
 
+    // Fingerprint Gesture key handler.
+    private FingerprintKeyHandler mFPKeyHandler;
+
     // Fallback actions by key code.
     private final SparseArray<KeyCharacterMap.FallbackAction> mFallbackActions =
             new SparseArray<KeyCharacterMap.FallbackAction>();
@@ -2369,6 +2372,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         mWindowManagerInternal.registerAppTransitionListener(
                 mStatusBarController.getAppTransitionListener());
+
+        boolean supportsFPGestures = context.getResources().
+                getBoolean(com.android.internal.R.bool.config_supportsFPGestures);
+        boolean supportsFPNavigation = context.getResources().
+                getBoolean(com.android.internal.R.bool.config_supportsFPNavigation);
+        if (supportsFPGestures || supportsFPNavigation) {
+            mFPKeyHandler = new FingerprintKeyHandler(mContext);
+        }
+
         mWindowManagerInternal.registerAppTransitionListener(new AppTransitionListener() {
             @Override
             public int onAppTransitionStartingLocked(int transit, IBinder openToken,
@@ -6469,6 +6481,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return 0;
         }
 
+        if (interactive) {
+            if (mFPKeyHandler != null && mFPKeyHandler.handleKeyEvent(event)) {
+                return 0;
+            }
+        }
+
         // Basic policy based on interactive state.
         int result;
         boolean isWakeKey = (policyFlags & WindowManagerPolicy.FLAG_WAKE) != 0
@@ -8034,7 +8052,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         mSystemGestures.systemReady();
         mImmersiveModeConfirmation.systemReady();
-
+        if (mFPKeyHandler != null) {
+            mFPKeyHandler.systemReady();
+        }
         mAutofillManagerInternal = LocalServices.getService(AutofillManagerInternal.class);
     }
 

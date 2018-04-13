@@ -92,4 +92,22 @@
     <!-- Whether the device requires overlays to be in /system/overlay -->
     <java-symbol type="bool" name="config_hasSystemOverlayPath" />
 
+    <!-- Fingerprint Gestures Settings -->
+    <java-symbol type="integer" name="config_fpDoubleTapKeyCode" />
+    <java-symbol type="integer" name="config_fpLongpressKeyCode" />
+    <java-symbol type="integer" name="config_fpSwipeUpKeyCode" />
+    <java-symbol type="integer" name="config_fpSwipeDownKeyCode" />
+    <java-symbol type="integer" name="config_fpSwipeLeftKeyCode" />
+    <java-symbol type="integer" name="config_fpSwipeRightKeyCode" />
+
+    <java-symbol type="integer" name="config_fpDoubleTapDefault" />
+    <java-symbol type="integer" name="config_fpLongpressDefault" />
+    <java-symbol type="integer" name="config_fpSwipeUpDefault" />
+    <java-symbol type="integer" name="config_fpSwipeDownDefault" />
+    <java-symbol type="integer" name="config_fpSwipeLeftDefault" />
+    <java-symbol type="integer" name="config_fpSwipeRightDefault" />
+
+    <!-- Whether the device supports fingerprint gestures -->
+    <java-symbol type="bool" name="config_supportsFPGestures" />
+
 </resources>
