@@ -23,6 +23,4 @@
     <!-- Text when wrong password entered for psk networks -->
     <string name="wifi_auth_password_wrong">Password may be incorrect</string>
 
-    <!-- Text when wrong password entered for psk networks -->
-    <string name="wifi_auth_password_wrong">Password may be incorrect</string>
 </resources>
