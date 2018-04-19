@@ -23,17 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 public class VisualizerViewWrapper {
 
     private static final boolean DEBUG = false;
-
-    private static ArrayList<VisualizerViewWrapper> mExtraVisualizers =
-                new ArrayList<>();
-
-    private static boolean haveFirst = false;
-    private static boolean ignoreExtraEvents = false;
 
     public VisualizerView visualizerView;
 
@@ -41,15 +33,9 @@ public class VisualizerViewWrapper {
     private ViewGroup parent;
     private StateHolder state = new StateHolder();
 
-    private boolean mHandleExtra;
-
     public VisualizerViewWrapper(Context context, ViewGroup parent) {
         this.context = context;
         this.parent = parent;
-        if (!haveFirst) {
-            haveFirst = true;
-            mHandleExtra = true;
-        }
     }
 
     private static void log(String... msg) {
@@ -96,16 +82,10 @@ public class VisualizerViewWrapper {
         }
         state.mPlayingIndependent = playing;
         state.mPlaying = playing;
-        if (mHandleExtra) {
-            for (VisualizerViewWrapper vis : mExtraVisualizers) {
-                vis.setPlaying(playing);
-            }
-        }
         checkState();
     }
 
     private synchronized void setScreenOn(boolean screenOn) {
-        if (!mHandleExtra && ignoreExtraEvents) return;
         log("setScreenOn=" + screenOn);
         state.mScreenOn = screenOn;
         state.mScreenOnInternal = screenOn;
@@ -116,14 +96,12 @@ public class VisualizerViewWrapper {
     }
 
     public synchronized void setKeyguardShowing(boolean showing) {
-        if (!mHandleExtra && ignoreExtraEvents && showing) return;
         log("setKeyguardShowing=" + showing);
         state.mKeyguardVisible = showing;
         checkState();
     }
 
     private synchronized void setVisible(boolean visible) {
-        if (!mHandleExtra && ignoreExtraEvents) return;
         log("setVisible=" + visible);
         state.mVisible = visible;
     }
@@ -135,11 +113,6 @@ public class VisualizerViewWrapper {
         } else {
             state.mColor = Color.TRANSPARENT;
             state.mCurrentBitmap = bitmap;
-        }
-        if (mHandleExtra) {
-            for (VisualizerViewWrapper vis : mExtraVisualizers) {
-                vis.setBitmap(bitmap);
-            }
         }
     }
 
@@ -161,23 +134,15 @@ public class VisualizerViewWrapper {
     }
 
     public synchronized void checkState() {
-        if (!mHandleExtra && ignoreExtraEvents) return;
         if (!state.mHaveInstance && state.mScreenOnInternal
                 && state.mKeyguardVisible && state.mPlaying) {
             if (DEBUG) {
                 log("Current color: " + state.mColor);
                 log("Is bitmap null: " + (state.mCurrentBitmap == null));
             }
-            if (mHandleExtra) {
-                ignoreExtraEvents = true;
-                for (VisualizerViewWrapper vis : mExtraVisualizers) {
-                    vis.setKeyguardShowing(false);
-                    vis.startOrStop(false);
-                }
-            }
             prepare();
             if (!isNull() && !isAttachedToWindow()) {
-                log("Adding to view");
+                log("Adding to lockscreen");
                 parent.addView(visualizerView);
                 for (int i = 0; i < parent.getChildCount(); i++) {
                     if (parent.getChildAt(i) != visualizerView) {
@@ -192,41 +157,24 @@ public class VisualizerViewWrapper {
         } else if (state.mHaveInstance &&
                     (!state.mScreenOnInternal || !state.mKeyguardVisible)) {
             vanish();
-            if (mHandleExtra) {
-                ignoreExtraEvents = false;
-            }
         } else if (state.mHaveInstance && state.mScreenOnInternal &&
                     state.mKeyguardVisible) {
             visualizerView.checkStateChanged();
         }
-        if (mHandleExtra &&
-                !state.mScreenOnInternal && !state.mKeyguardVisible) {
-            for (VisualizerViewWrapper vis : mExtraVisualizers) {
-                vis.checkState();
-            }
-        }
     }
 
     public synchronized void onScreenOn() {
-        if (!mHandleExtra && ignoreExtraEvents) return;
         if (state.mIsAlwaysOn) return;
-        startOrStop(true);
+        setScreenOn(true);
+        checkState();
     }
 
     public synchronized void onScreenOff() {
-        if (!mHandleExtra && ignoreExtraEvents) return;
-        startOrStop(false);
-    }
-
-    public synchronized void startOrStop(boolean start) {
-        if (!mHandleExtra && ignoreExtraEvents && start) return;
-        // setScreenOn because don't wanna change the name now
-        setScreenOn(start);
+        setScreenOn(false);
         checkState();
     }
 
     public synchronized void onAlwaysOn(boolean on) {
-        if (!mHandleExtra && ignoreExtraEvents) return;
         if (on) {
             state.mIsAlwaysOn = true;
             onScreenOff();
@@ -234,10 +182,6 @@ public class VisualizerViewWrapper {
             state.mIsAlwaysOn = false;
             onScreenOn();
         }
-    }
-
-    public static synchronized void addExtraVisualizer(VisualizerViewWrapper vis) {
-        mExtraVisualizers.add(vis);
     }
 
     static final class StateHolder {
