@@ -6490,10 +6490,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return 0;
         }
 
-        if (interactive) {
-            if (mFPKeyHandler != null && mFPKeyHandler.handleKeyEvent(event)) {
-                return 0;
-            }
+        if (mFPKeyHandler != null && mFPKeyHandler.handleKeyEvent(event)) {
+            return 0;
         }
 
         /**
