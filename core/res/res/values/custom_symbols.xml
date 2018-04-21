@@ -93,6 +93,7 @@
     <java-symbol type="bool" name="config_hasSystemOverlayPath" />
 
     <!-- Fingerprint Gestures Settings -->
+    <java-symbol type="integer" name="config_fpSingleTapKeyCode" />
     <java-symbol type="integer" name="config_fpDoubleTapKeyCode" />
     <java-symbol type="integer" name="config_fpLongpressKeyCode" />
     <java-symbol type="integer" name="config_fpSwipeUpKeyCode" />
@@ -100,6 +101,7 @@
     <java-symbol type="integer" name="config_fpSwipeLeftKeyCode" />
     <java-symbol type="integer" name="config_fpSwipeRightKeyCode" />
 
+    <java-symbol type="integer" name="config_fpSingleTapDefault" />
     <java-symbol type="integer" name="config_fpDoubleTapDefault" />
     <java-symbol type="integer" name="config_fpLongpressDefault" />
     <java-symbol type="integer" name="config_fpSwipeUpDefault" />

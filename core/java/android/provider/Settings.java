@@ -4263,6 +4263,12 @@ public final class Settings {
         public static final String BATTERY_SAVER_MODE_COLOR = "battery_save_mode_color";
 
         /**
+         * Controls whether single tap fingerprint gesture is enabled.
+         * @hide
+         */
+        public static final String FINGERPRINT_GESTURES_SINGLE_TAP = "fingerprint_gestures_single_tap";
+
+        /**
          * Controls whether double tap fingerprint gesture is enabled.
          * @hide
          */
@@ -4737,6 +4743,7 @@ public final class Settings {
             STATUSBAR_CLOCK_DATE_DISPLAY,
             STATUSBAR_CLOCK_DATE_STYLE,
             STATUSBAR_CLOCK_DATE_FORMAT,
+            FINGERPRINT_GESTURES_SINGLE_TAP,
             FINGERPRINT_GESTURES_DOUBLE_TAP,
             FINGERPRINT_GESTURES_LONGPRESS,
             FINGERPRINT_GESTURES_SWIPE_UP,
