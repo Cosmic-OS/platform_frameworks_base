@@ -4554,16 +4554,6 @@ public final class Settings {
         public static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
 
         /**
-         * Lockscreen Visualizer
-         *
-         * @hide
-         */
-        public static final String SHOW_LOCKSCREEN_VISUALIZER =
-                                "show_lockscreen_visualizer";
-        public static final int SHOW_LOCKSCREEN_VISUALIZER_DEFAULT = 1;
-
-
-        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4626,8 +4616,7 @@ public final class Settings {
             STATUSBAR_CLOCK_AM_PM_STYLE,
             STATUSBAR_CLOCK_DATE_DISPLAY,
             STATUSBAR_CLOCK_DATE_STYLE,
-            STATUSBAR_CLOCK_DATE_FORMAT,
-            SHOW_LOCKSCREEN_VISUALIZER
+            STATUSBAR_CLOCK_DATE_FORMAT
         };
 
         /**
@@ -4690,7 +4679,6 @@ public final class Settings {
             PUBLIC_SETTINGS.add(HAPTIC_FEEDBACK_ENABLED);
             PUBLIC_SETTINGS.add(SHOW_WEB_SUGGESTIONS);
             PUBLIC_SETTINGS.add(VIBRATE_WHEN_RINGING);
-            PUBLIC_SETTINGS.add(SHOW_LOCKSCREEN_VISUALIZER);
         }
 
         /**
@@ -8114,6 +8102,13 @@ public final class Settings {
          * @hide
          */
         public static final String FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES = "force_authorize_substratum_packages";
+
+        /**
+         * Lockscreen Visualizer
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_VISUALIZER_ENABLED = "lockscreen_visualizer";
 
         /**
          * This are the settings to be backed up.
