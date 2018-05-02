@@ -124,18 +124,18 @@ public class AnimationUtils {
         }
     }
 
-    private static Animation getActivityOpenEnterAnim(){
-      AnimationSet animationSet = new AnimationSet(false);
-      animationSet.setZAdjustment(Animation.ZORDER_TOP);
-      TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.04100001f, Animation.RELATIVE_TO_SELF, 0.0f);
-      translateAnimation.setInterpolator(fastOutSlowIn());
-      translateAnimation.setDuration(425L);
-      animationSet.addAnimation(translateAnimation);
-      ClipRectAnimation clipRectAnimation = new ClipRectAnimation(0.0f, 0.959f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
-      clipRectAnimation.setDuration(425L);
-      clipRectAnimation.setInterpolator(fastOutExtraSlowIn());
-      animationSet.addAnimation(clipRectAnimation);
-      return animationSet;
+    private static Animation getActivityOpenEnterAnim() {
+        AnimationSet animationSet = new AnimationSet(false);
+        animationSet.setZAdjustment(Animation.ZORDER_TOP);
+        TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.04100001f, Animation.RELATIVE_TO_SELF, 0.0f);
+        translateAnimation.setInterpolator(fastOutSlowIn());
+        translateAnimation.setDuration(425L);
+        animationSet.addAnimation(translateAnimation);
+        ClipRectAnimationF clipRectAnimationF = new ClipRectAnimationF(0.0f, 0.959f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+        clipRectAnimationF.setDuration(425L);
+        clipRectAnimationF.setInterpolator(fastOutExtraSlowIn());
+        animationSet.addAnimation(clipRectAnimationF);
+        return animationSet;
     }
 
     private static Animation getActivityOpenExitAnim(){
@@ -166,16 +166,16 @@ public class AnimationUtils {
     }
 
     private static Animation getActivityCloseExitAnim(){
-      AnimationSet animationSet = new AnimationSet(false);
-      TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.04100001f);
-      translateAnimation.setDuration(425L);
-      translateAnimation.setInterpolator(fastOutSlowIn());
-      animationSet.addAnimation(translateAnimation);
-      ClipRectAnimation clipRectAnimation = new ClipRectAnimation(0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.959f, 1.0f, 1.0f);
-      clipRectAnimation.setDuration(425L);
-      clipRectAnimation.setInterpolator(fastOutExtraSlowIn());
-      animationSet.addAnimation(clipRectAnimation);
-      return animationSet;
+        AnimationSet animationSet = new AnimationSet(false);
+        TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.04100001f);
+        translateAnimation.setDuration(425L);
+        translateAnimation.setInterpolator(fastOutSlowIn());
+        animationSet.addAnimation(translateAnimation);
+        ClipRectAnimationF clipRectAnimationF = new ClipRectAnimationF(0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.959f, 1.0f, 1.0f);
+        clipRectAnimationF.setDuration(425L);
+        clipRectAnimationF.setInterpolator(fastOutExtraSlowIn());
+        animationSet.addAnimation(clipRectAnimationF);
+        return animationSet;
     }
 
     private static Animation getTaskOpenEnterAnim(){
