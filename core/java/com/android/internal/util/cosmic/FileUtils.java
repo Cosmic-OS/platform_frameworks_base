@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.aosip;
+package com.android.internal.util.cosmic;
 
 import android.util.Log;
 
