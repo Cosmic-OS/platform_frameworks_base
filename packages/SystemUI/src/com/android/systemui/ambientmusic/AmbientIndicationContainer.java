@@ -1,6 +1,7 @@
 package com.android.systemui.ambientmusic;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -39,6 +40,8 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
     private String mLastInfo;
 
     private boolean mNpInfoAvailable;
+
+    private static final String FONT_FAMILY = "sans-serif-light";
 
     public AmbientIndicationContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -165,6 +168,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
         if (nowPlaying && mInfoAvailable) return;
 
         mInfoToSet = null;
+        Typeface tf = Typeface.create(FONT_FAMILY, Typeface.NORMAL);
 
         // if we are already showing an Ambient Notification with track info,
         // stop the current scrolling and start it delayed again for the next song
@@ -194,6 +198,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
             }
         }
         mText.setText(mInfoToSet);
+        mText.setTypeface(tf);
         mAmbientIndication.setVisibility(shouldShow() ? View.VISIBLE : View.INVISIBLE);
     }
 
