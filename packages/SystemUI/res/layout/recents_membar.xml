@@ -33,6 +33,7 @@
         android:layout_marginStart="14dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="0dp"
+        android:progressTint="@*android:color/accent_device_default_light"
         style="?android:attr/progressBarStyleHorizontal" />
 
     <TextView android:id="@+id/recents_memory_text"
