@@ -5546,9 +5546,15 @@ public final class Settings {
          * @hide
          */
         public static final String LOCK_DATE_FONTS = "lock_date_fonts";
+        
+        /**
+         * Change fonts for the owner info text
+         *
+         * @hide
+         */
+        public static final String LOCK_OWNER_FONTS = "lock_owner_fonts";
 
         /** End of Cosmic-OS system settings**/
-
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
