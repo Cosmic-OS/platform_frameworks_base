@@ -4220,6 +4220,18 @@ public final class Settings {
         public static final String QS_COLUMNS_PORTRAIT = "qs_columns_portrait";
 
         /**
+         * Select which lockscreen date style to display
+         * @hide
+         */
+        public static final String LOCKSCREEN_DATE_SELECTION = "lockscreen_date_selection";
+
+        /**
+         * Select which lockscreen clock style to display
+         * @hide
+         */
+        public static final String LOCKSCREEN_CLOCK_SELECTION = "lockscreen_clock_selection";
+
+        /**
          * How many columns to show in the qs panel when in landscape
          * @hide
          */
