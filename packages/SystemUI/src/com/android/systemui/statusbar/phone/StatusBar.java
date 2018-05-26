@@ -3187,6 +3187,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         return themeInfo != null && themeInfo.isEnabled();
     }
 
+	public boolean isUsingIconTint() {
+        OverlayInfo themeInfo = null;
+        try {
+            themeInfo = mOverlayManager.getOverlayInfo("com.android.system.theme.settingsicontint",
+                    mCurrentUserId);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return themeInfo != null && themeInfo.isEnabled();
+    }
+
     @Nullable
     public View getAmbientIndicationContainer() {
         return mAmbientIndicationContainer;
@@ -5319,6 +5330,18 @@ public class StatusBar extends SystemUI implements DemoMode,
             // Make sure we have the correct navbar/statusbar colors.
             mStatusBarWindowManager.setKeyguardDark(useDarkText);
         }
+
+        int userSettingsIconTint = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.SETTINGS_ICON_TINT, 0, mCurrentUserId);
+        boolean setSettingsIconTint = userSettingsIconTint == 1;
+        if(setSettingsIconTint != isUsingIconTint()) {
+             try {
+                mOverlayManager.setEnabled("com.android.system.theme.settingsicontint",
+                        setSettingsIconTint, mCurrentUserId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change icon tint", e);
+            }
+        }
     }
 
     private void updateDozingState() {
@@ -6541,6 +6564,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SYSTEM_THEME_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SETTINGS_ICON_TINT),
                     false, this, UserHandle.USER_ALL);
         }
 
