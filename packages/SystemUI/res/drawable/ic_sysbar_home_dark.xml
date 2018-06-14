@@ -14,10 +14,10 @@
      limitations under the License.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="28.0dp"
-        android:height="28.0dp"
-        android:viewportWidth="96.0"
-        android:viewportHeight="96.0">
+        android:width="22.0dp"
+        android:height="22.0dp"
+        android:viewportWidth="24"
+        android:viewportHeight="24">
     <path
         android:fillColor="@color/icon_color_home_dark"
         android:pathData="M 48 20 C 63.4639729953 20 76 32.5360270047 76 48 C 76 63.4639729953 63.4639729953 76 48 76 C 32.5360270047 76 20 63.4639729953 20 48 C 20 32.5360270047 32.5360270047 20 48 20 Z" />
