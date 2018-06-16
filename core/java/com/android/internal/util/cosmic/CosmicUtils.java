@@ -17,9 +17,11 @@
 package com.android.internal.util.cosmic;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -41,6 +43,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import com.android.internal.R;
 
+import java.util.List;
 import java.util.Locale;
 
 import java.util.List;
@@ -231,5 +234,22 @@ public class CosmicUtils {
                 }
             }
         }
+    }
+}
+
+    public static ActivityInfo getRunningActivityInfo(Context context) {
+        final ActivityManager am = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        final PackageManager pm = context.getPackageManager();
+
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (tasks != null && !tasks.isEmpty()) {
+            ActivityManager.RunningTaskInfo top = tasks.get(0);
+            try {
+                return pm.getActivityInfo(top.topActivity, 0);
+            } catch (PackageManager.NameNotFoundException e) {
+            }
+        }
+        return null;
     }
 }
