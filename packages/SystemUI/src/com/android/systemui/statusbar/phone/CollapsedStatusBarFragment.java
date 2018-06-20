@@ -159,10 +159,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD),
                     false, this, UserHandle.USER_ALL);
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO),
+                    Settings.System.STATUS_BAR_LOGO),
                     false, this, UserHandle.USER_ALL);
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.getUriFor(Settings.System.STATUS_BAR_SHOW_CARRIER),
+                    Settings.System.STATUS_BAR_SHOW_CARRIER),
                     false, this, UserHandle.USER_ALL);
         }
 
