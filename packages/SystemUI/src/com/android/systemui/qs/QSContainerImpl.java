@@ -50,6 +50,7 @@ import com.android.systemui.R;
 import com.android.systemui.SysUiServiceProvider;
 import com.android.systemui.omni.StatusBarHeaderMachine;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
+import com.android.systemui.Dependency;
 import com.android.systemui.qs.customize.QSCustomizer;
 import com.android.systemui.statusbar.CommandQueue;
 
@@ -125,6 +126,8 @@ public class QSContainerImpl extends FrameLayout implements
         mBackgroundImage = findViewById(R.id.qs_header_image_view);
 		mBackgroundImage.setClipToOutline(true);
         updateResources();
+        mColorExtractor = Dependency.get(SysuiColorExtractor.class);
+//        mColorExtractor.addOnColorsChangedListener(this);
         updateSettings();
         setClickable(true);
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
@@ -213,8 +216,9 @@ public class QSContainerImpl extends FrameLayout implements
                 Settings.System.SYSTEM_THEME_STYLE, 2, ActivityManager.getCurrentUser());
         if (mUserThemeSetting == 0) {
             // The system wallpaper defines if system theme should be light or dark.
-            WallpaperColors systemColors = mColorExtractor
-                    .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
+            WallpaperColors systemColors = null;
+            if (mColorExtractor != null)
+                 systemColors = mColorExtractor.getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
             mUseDarkTheme = systemColors != null
                     && (systemColors.getColorHints() & WallpaperColors.HINT_SUPPORTS_DARK_THEME) != 0;
         } else {
