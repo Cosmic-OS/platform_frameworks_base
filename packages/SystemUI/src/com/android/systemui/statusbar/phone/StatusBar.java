@@ -541,6 +541,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     private boolean mScreenOn;
     private boolean mKeyguardShowingMedia;
 
+    // LS visualizer on Ambient Display
+    private boolean mAmbientVisualizer;
+
     private BroadcastReceiver mWallpaperChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -5054,6 +5057,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             mEntryManager.updateNotifications();
             updateDozingState();
             updateReportRejectedTouchVisibility();
+            if (mAmbientVisualizer && mDozing) {
+                mVisualizerView.setVisible(true);
+            }
         }
         Trace.endSection();
     }
@@ -5463,6 +5469,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FORCE_AMBIENT_FOR_MEDIA),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.Secure.AMBIENT_VISUALIZER_ENABLED),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -5491,6 +5500,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.FORCE_AMBIENT_FOR_MEDIA))) {
                 setForceAmbient();
+            } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.AMBIENT_VISUALIZER_ENABLED))) {
+                setAmbientVis();
             }
         }
 
@@ -5502,6 +5514,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             setFpToDismissNotifications();
             setUseLessBoringHeadsUp();
             setForceAmbient();
+            setAmbientVis();
         }
     }
 
@@ -5580,6 +5593,12 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             ((AmbientIndicationContainer)mAmbientIndicationContainer).setIndication(
                     notificationText, nowPlaying);
         }
+    }
+
+    private void setAmbientVis() {
+        mAmbientVisualizer = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.AMBIENT_VISUALIZER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
     }
 
     private boolean isAmbientContainerAvailable() {
