@@ -5281,6 +5281,16 @@ public final class Settings {
                BOOLEAN_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String USE_BOTTOM_GESTURE_NAVIGATION =
+                "use_bottom_gesture_navigation";
+
+        /** @hide */
+        private static final Validator USE_BOTTOM_GESTURE_NAVIGATION_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Whether to show network traffic indicator in statusbar
          * @hide
          */
@@ -5402,6 +5412,7 @@ public final class Settings {
             STATUSBAR_HIDE_NOTCH,
             STATUS_BAR_BRIGHTNESS_CONTROL,
             VOLUME_KEYS_CONTROL_RING_TONE,
+            USE_BOTTOM_GESTURE_NAVIGATION,
         };
 
         /**
@@ -5596,6 +5607,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_HIDE_NOTCH);
             PRIVATE_SETTINGS.add(STATUS_BAR_BRIGHTNESS_CONTROL);
             PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
+            PRIVATE_SETTINGS.add(USE_BOTTOM_GESTURE_NAVIGATION);
         }
 
         /**
@@ -5757,6 +5769,8 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_HIDE_NOTCH, STATUSBAR_HIDE_NOTCH_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_BRIGHTNESS_CONTROL, STATUS_BAR_BRIGHTNESS_CONTROL_VALIDATOR);
             VALIDATORS.put(VOLUME_KEYS_CONTROL_RING_TONE,VOLUME_KEYS_CONTROL_RING_TONE_VALIDATOR);
+            VALIDATORS.put(USE_BOTTOM_GESTURE_NAVIGATION,
+                    USE_BOTTOM_GESTURE_NAVIGATION_VALIDATOR);
         }
 
         /**
