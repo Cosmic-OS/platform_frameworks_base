@@ -105,4 +105,7 @@
     <string name="ambient_recognition_notification_channel">Recognized Music Notifications</string>
     <string name="ambient_recognition_information">%1$s by %2$s</string>
 
+    <!-- Ambient Display Pixel-Like string -->
+    <string name="ambientmusic_songinfo">%s by %s</string>
+
 </resources>
