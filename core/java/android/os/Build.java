@@ -225,6 +225,20 @@ public class Build {
         }
     }
 
+    /** Various cosmic version information. */
+    public static class COSMIC {
+
+        /**
+         * The platform version for cosmic.
+         */
+        public static final String VERSION = getString("ro.cos.version");
+
+        /**
+         * The platform version code for cosmic.
+         */
+        public static final String VERSION_CODE = getString("ro.cos.version_code");
+    }
+
     /** Various version strings. */
     public static class VERSION {
         /**
