@@ -4931,7 +4931,7 @@ public final class Settings {
          */
         public static final String SCREENSHOT_DEFAULT_MODE = "screenshot_default_mode";
 
-        /** End of Evolution X system settings**/
+        /** End of Cosmic-OS system settings**/
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
