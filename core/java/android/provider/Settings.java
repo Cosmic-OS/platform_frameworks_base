@@ -5828,6 +5828,44 @@ public final class Settings {
         private static final Validator ONE_HAND_MODE_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+
+         * Enable blocking wakelock
+         * @hide
+         */
+        public static final String WAKELOCK_BLOCKING_ENABLED = "wakelock_blocking_enabled";
+
+        /**
+         * List of wakelock blocks selected
+         * @hide
+         */
+        public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
+
+        /**
+        * Custom button brightness value for manual mode
+        * List of alarms blocks selected
+        * @hide
+        */
+       public static final String ALARM_BLOCKING_LIST = "alarm_blocking_list";
+
+       /**
+        * Enable blocking alarm
+        * @hide
+        */
+       public static final String ALARM_BLOCKING_ENABLED = "alarm_blocking_enabled";
+	   
+     /**
+         * Settings for carrier label font size
+         * @hide
+         */
+        public static final String STATUS_BAR_CARRIER_FONT_SIZE = "status_bar_carrier_font_size";
+
+        /**
+         * Custom carrier label font style
+         * @hide
+         */
+        public static final String STATUS_BAR_CARRIER_FONT_STYLE = "status_bar_carrier_font_style";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
