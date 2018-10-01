@@ -5369,6 +5369,18 @@ public final class Settings {
          */
         public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
 
+        /**
+         * Disable dashboard conditions in settings
+         * @hide
+         */
+        public static final String ENABLE_CONDITIONS = "enable_conditions";
+
+        /**
+         * Disable dashboard suggestions in settings
+         * @hide
+         */
+        public static final String ENABLE_SUGGESTIONS = "enable_suggestions";
+
         /** End of Cosmic-OS system settings**/
 
         /**
