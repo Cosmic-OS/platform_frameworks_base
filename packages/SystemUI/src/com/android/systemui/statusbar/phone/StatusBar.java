@@ -354,9 +354,32 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
 
     private static final String[] QS_TILE_THEMES = {
         "com.android.systemui.qstile.default", // 0
-        "com.android.systemui.qstile.circletrim", // 1
-        "com.android.systemui.qstile.dualtonecircletrim", // 2
-        "com.android.systemui.qstile.squircletrim", // 3
+        "com.android.systemui.qstile.circlegradient", // 1
+        "com.android.systemui.qstile.circletrim", // 2
+        "com.android.systemui.qstile.cookie", // 3
+        "com.android.systemui.qstile.dottedcircle", // 4
+        "com.android.systemui.qstile.dualtonecircle", // 5
+        "com.android.systemui.qstile.dualtonecircletrim", // 6
+        "com.android.systemui.qstile.ink", // 7
+        "com.android.systemui.qstile.inkdrop", // 8
+        "com.android.systemui.qstile.mountain", // 9
+        "com.android.systemui.qstile.ninja", // 10
+        "com.android.systemui.qstile.oreo", // 11
+        "com.android.systemui.qstile.oreocircletrim", // 12
+        "com.android.systemui.qstile.oreosquircletrim", // 13
+        "com.android.systemui.qstile.pokesign", // 14
+        "com.android.systemui.qstile.squaremedo", // 15
+        "com.android.systemui.qstile.squircle", // 16
+        "com.android.systemui.qstile.squircletrim", // 17
+        "com.android.systemui.qstile.teardrop", // 18
+        "com.android.systemui.qstile.wavey", // 19
+        "com.android.systemui.qstile.square", // 20
+        "com.android.systemui.qstile.hexagon", // 21
+        "com.android.systemui.qstile.diamond", // 22
+        "com.android.systemui.qstile.star", // 23
+        "com.android.systemui.qstile.gear", // 24
+        "com.android.systemui.qstile.badge", // 25
+        "com.android.systemui.qstile.badgetwo", // 26
     };
 
     /** If true, the system is in the half-boot-to-decryption-screen state.
