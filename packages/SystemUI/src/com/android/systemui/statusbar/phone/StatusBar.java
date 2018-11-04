@@ -6096,6 +6096,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_PANEL_BG_USE_WALL),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.PULSE_APPS_BLACKLIST),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -6155,6 +6158,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                 updateCorners();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_WALL))) {
                 updateQSPanel();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.PULSE_APPS_BLACKLIST))) {
+                setPulseBlacklist();
             }
         }
 
@@ -6173,6 +6179,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             updateLockscreenFilter();
             updateKeyguardStatusSettings();
             updateCorners();
+            setPulseBlacklist();
         }
     }
 
@@ -6293,6 +6300,12 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                 Settings.System.LOCKSCREEN_ALBUM_ART_FILTER, 0,
                 UserHandle.USER_CURRENT);
       }
+
+    private void setPulseBlacklist() {
+        String blacklist = Settings.System.getStringForUser(mContext.getContentResolver(),
+                Settings.System.PULSE_APPS_BLACKLIST, UserHandle.USER_CURRENT);
+        getMediaManager().setPulseBlacklist(blacklist);
+    }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
         @Override
