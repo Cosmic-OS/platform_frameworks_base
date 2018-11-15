@@ -390,6 +390,22 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         "com.android.systemui.qsheader.accent", // 3
         "com.android.systemui.qsheader.transparent", // 4
     };
+	
+	// Switch themes
+    private static final String[] SWITCH_THEMES = {
+        "com.android.system.switch.stock", // 0
+        "com.android.system.switch.md2", // 1
+        "com.android.system.switch.oneplus", // 2
+        "com.android.system.switch.one", // 3
+        "com.android.system.switch.two", // 4
+        "com.android.system.switch.three", // 5
+        "com.android.system.switch.four", // 6
+        "com.android.system.switch.five", // 7
+        "com.android.system.switch.six", // 8
+        "com.android.system.switch.seven", // 9
+        "com.android.system.switch.eight", // 10
+        "com.android.system.switch.nine", // 11
+    };
 		
     /** If true, the system is in the half-boot-to-decryption-screen state.
      * Prudently disable QS and notifications.  */
@@ -4399,6 +4415,13 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         updateQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), qsHeaderStyle);
     }
 	
+	// Switch themes
+	public void updateSwitchStyle() {
+        int switchStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SWITCH_STYLE, 2, mLockscreenUserManager.getCurrentUserId());
+        updateSwitchStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), switchStyle);
+    }
+	
     /**
      * Switches theme from light to dark and vice-versa.
      */
@@ -4516,6 +4539,10 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         stockQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 	
+	// Switch themes
+	public void stockSwitchStyle() {
+        stockSwitchStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
     private void updateDozingState() {
         Trace.traceCounter(Trace.TRACE_TAG_APP, "dozing", mDozing ? 1 : 0);
         Trace.beginSection("StatusBar#updateDozingState");
@@ -5232,6 +5259,31 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         }
     }
 	
+	public static void updateSwitchStyle(IOverlayManager om, int userId, int switchStyle) {
+        if (switchStyle == 2) {
+            stockSwitchStyle(om, userId);
+        } else {
+            try {
+                om.setEnabled(SWITCH_THEMES[switchStyle],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change switch theme", e);
+            }
+        }
+    }
+
+    public static void stockSwitchStyle(IOverlayManager om, int userId) {
+        for (int i = 0; i < SWITCH_THEMES.length; i++) {
+            String switchtheme = SWITCH_THEMES[i];
+            try {
+                om.setEnabled(switchtheme,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+	
     public int getWakefulnessState() {
         return mWakefulnessLifecycle.getWakefulness();
     }
@@ -5860,8 +5912,11 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_STYLE),
                     false, this, UserHandle.USER_ALL);
-			resolver.registerContentObserver(Settings.System.getUriFor(
+		    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_STYLE),
+                    false, this, UserHandle.USER_ALL);
+		    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SWITCH_STYLE),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -5909,10 +5964,14 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                 Settings.System.QS_TILE_STYLE))) {
                 stockTileStyle();
                 updateTileStyle();
-			} else if (uri.equals(Settings.System.getUriFor(
+		} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_STYLE))) {
                 stockQSHeaderStyle();
                 updateQSHeaderStyle();
+		} else if (uri.equals(Settings.System.getUriFor(
+                Settings.System.SWITCH_STYLE))) {
+                stockSwitchStyle();
+                updateSwitchStyle();
             }
         }
 
