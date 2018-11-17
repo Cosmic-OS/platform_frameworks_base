@@ -1,4 +1,23 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (C) 2019 Cosmic-OS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
     <!-- Custom fonts -->
     <style name="TextAppearancePreference">
         <item name="textSize">@dimen/text_size_subhead_material</item>
@@ -9,14 +28,30 @@
         <item name="textSize">@dimen/text_size_body_2_material</item>
         <item name="fontFamily">@string/config_headlineFontFamilyMedium</item>
         <item name="textColor">?attr/textColorPrimary</item>
-    </style>
+	</style>
+
     <style name="TextAppearanceTitle">
         <item name="textSize">@dimen/text_size_title_material</item>
         <item name="fontFamily">@string/config_headlineFontFamilyMedium</item>
         <item name="textColor">?attr/textColorPrimary</item>
+	</style>
+
+     <!-- Custom styles -->
+    <style name="CustomThemeDeviceDefaultDialogAlert" parent="@*android:style/Theme.DeviceDefault.Light.Dialog.Alert" />
+
+    <style name="GlobalActionsAnimation">
+        <item name="windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="windowExitAnimation">@anim/slide_out_down</item>
     </style>
 
-    <!-- Custom styles -->
-    <style name="CustomThemeDeviceDefaultDialogAlert" parent="@*android:style/Theme.DeviceDefault.Light.Dialog.Alert" />
+    <style name="GlobalActionsAnimationTop">
+        <item name="windowEnterAnimation">@anim/slide_in_down</item>
+        <item name="windowExitAnimation">@anim/slide_out_up</item>
+    </style>
+
+    <style name="GlobalActionsAnimationEnter">
+        <item name="windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="windowExitAnimation">@anim/dialog_exit</item>
+    </style>
 
 </resources>
