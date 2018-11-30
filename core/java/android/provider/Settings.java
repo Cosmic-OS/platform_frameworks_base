@@ -5576,6 +5576,17 @@ public final class Settings {
          */
         public static final String CHARGING_ANIMATION = "charging_animation";
 
+       /**
+         * Settings dashboard icon style
+         * @hide
+         */
+        public static final String THEMING_SETTINGS_DASHBOARD_ICONS =
+                "theming_settings_dashboard_icons";
+
+        /** @hide */
+        public static final Validator THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
         /** End of Cosmic-OS system settings**/
 
         /**
@@ -5658,6 +5669,8 @@ public final class Settings {
             DOZE_ON_CHARGE,
             STATUS_BAR_LOGO,
             QS_PANEL_BG_ALPHA,
+            USE_BOTTOM_GESTURE_NAVIGATION,
+            THEMING_SETTINGS_DASHBOARD_ICONS,
         };
 
         /**
@@ -5860,7 +5873,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_PANEL_BG_ALPHA);
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_STATUS_BAR);
             PRIVATE_SETTINGS.add(QS_TILE_STYLE);
-			PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
+	    PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
+            PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
         }
 
         /**
@@ -6031,6 +6045,7 @@ public final class Settings {
             VALIDATORS.put(DOZE_ON_CHARGE, DOZE_ON_CHARGE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO, STATUS_BAR_LOGO_VALIDATOR);
             VALIDATORS.put(QS_PANEL_BG_ALPHA, QS_PANEL_BG_ALPHA_VALIDATOR);
+            VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
         }
 
         /**
