@@ -5023,10 +5023,10 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String OMNI_QS_QUICKBAR_COLUMNS = "qs_quickbar_columns";
+        public static final String QS_QUICKBAR_COLUMNS = "qs_quickbar_columns";
 
         /** @hide */
-        private static final Validator OMNI_QS_QUICKBAR_COLUMNS_VALIDATOR =
+        private static final Validator QS_QUICKBAR_COLUMNS_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
 
         /** End of Cosmic-OS system settings**/
@@ -5092,7 +5092,7 @@ public final class Settings {
             HAPTIC_FEEDBACK_INTENSITY,
             DISPLAY_COLOR_MODE,
             NOTIFICATION_LIGHT_PULSE,
-            OMNI_QS_QUICKBAR_COLUMNS,
+            QS_QUICKBAR_COLUMNS,
         };
 
         /**
@@ -5272,7 +5272,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_LAYOUT_COLUMNS);
             PRIVATE_SETTINGS.add(QS_LAYOUT_COLUMNS_LANDSCAPE);
             PRIVATE_SETTINGS.add(QS_TILE_HIDE_TITLE);
-            PRIVATE_SETTINGS.add(OMNI_QS_QUICKBAR_COLUMNS);
+            PRIVATE_SETTINGS.add(QS_QUICKBAR_COLUMNS);
         }
 
         /**
@@ -5420,7 +5420,7 @@ public final class Settings {
             VALIDATORS.put(SWIPE_TO_SCREENSHOT, SWIPE_TO_SCREENSHOT_VALIDATOR);
             VALIDATORS.put(THEME_AUTOMATIC_TIME_IS_NIGHT, THEME_AUTOMATIC_TIME_IS_NIGHT_VALIDATOR);
             VALIDATORS.put(THEME_DARK_STYLE, THEME_DARK_STYLE_VALIDATOR);
-            VALIDATORS.put(OMNI_QS_QUICKBAR_COLUMNS, OMNI_QS_QUICKBAR_COLUMNS_VALIDATOR);
+            VALIDATORS.put(QS_QUICKBAR_COLUMNS, QS_QUICKBAR_COLUMNS_VALIDATOR);
         }
 
         /**
