@@ -127,7 +127,6 @@ public class QSContainerImpl extends FrameLayout implements
 		mBackgroundImage.setClipToOutline(true);
         updateResources();
         mColorExtractor = Dependency.get(SysuiColorExtractor.class);
-//        mColorExtractor.addOnColorsChangedListener(this);
         updateSettings();
         setClickable(true);
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
@@ -185,8 +184,11 @@ public class QSContainerImpl extends FrameLayout implements
             getContext().getContentResolver().registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_PANEL_BG_USE_FW), false,
                     this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.Secure
+                    .getUriFor(Settings.Secure.THEME_MODE), false,
+                    this, UserHandle.USER_ALL);
             getContext().getContentResolver().registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.SYSTEM_THEME_STYLE), false,
+                    .getUriFor(Settings.System.THEME_DARK_STYLE), false,
                     this, UserHandle.USER_ALL);
         }
 
@@ -212,8 +214,10 @@ public class QSContainerImpl extends FrameLayout implements
         mQsBackGroundColorWall = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_PANEL_BG_COLOR_WALL, Color.WHITE,
                 UserHandle.USER_CURRENT);
-        mUserThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SYSTEM_THEME_STYLE, 2, ActivityManager.getCurrentUser());
+        mUserThemeSetting = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.THEME_MODE, 0, ActivityManager.getCurrentUser());
+        boolean blackTheme = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.THEME_DARK_STYLE, 0, ActivityManager.getCurrentUser()) == 1;
         if (mUserThemeSetting == 0) {
             // The system wallpaper defines if system theme should be light or dark.
             WallpaperColors systemColors = null;
@@ -223,7 +227,10 @@ public class QSContainerImpl extends FrameLayout implements
                     && (systemColors.getColorHints() & WallpaperColors.HINT_SUPPORTS_DARK_THEME) != 0;
         } else {
             mUseDarkTheme = mUserThemeSetting == 2;
-            mUseBlackTheme = mUserThemeSetting == 3;
+            mUseBlackTheme = blackTheme && mUseDarkTheme;
+            // Make sure we turn off dark theme if we plan using black
+            if (mUseBlackTheme)
+                mUseDarkTheme = false;
         }
         mCurrentColor = mSetQsFromWall ? mQsBackGroundColorWall : mQsBackGroundColor;
         setQsBackground();
@@ -486,9 +493,9 @@ public class QSContainerImpl extends FrameLayout implements
         } else {
             // Only set black qs for black themes
             if (mUseBlackTheme)
-                    qstheme = qsthemeBlack;
+                qstheme = qsthemeBlack;
             else
-                    qstheme = qsthemeDark;
+                qstheme = qsthemeDark;
             try {
                 mOverlayManager.setEnabled(qstheme, isColorDark(mCurrentColor), ActivityManager.getCurrentUser());
             } catch (RemoteException e) {
