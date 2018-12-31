@@ -5462,6 +5462,12 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_INFO = "lockscreen_info";
 
+        /**
+         * Select which lockscreen clock style to display
+         * @hide
+         */
+        public static final String LOCKSCREEN_CLOCK_SELECTION = "lockscreen_clock_selection";
+
         /** End of Cosmic-OS system settings**/
 
         /**
