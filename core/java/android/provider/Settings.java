@@ -4942,7 +4942,7 @@ public final class Settings {
          * @hide
          */
         public static final String SCREENRECORD_QUALITY_MODE = "screenrecord_quality_mode";
-        
+
         /**
          * Whether to wake the display when plugging or unplugging the charger
          *
@@ -4973,7 +4973,7 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
-     
+
          /**
          * Whether the phone vibrates on call connect
          * @hide
@@ -5497,7 +5497,7 @@ public final class Settings {
 
         /** @hide */
         public static final Validator LOCKSCREEN_CLOCK_SELECTION_VALIDATOR =
-                new SettingsValidators.InclusiveIntegerRangeValidator(0, 15);
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 17);
 
         /**
          * Change fonts for the system lockscreen clock widget
@@ -5573,7 +5573,7 @@ public final class Settings {
          * @hide
          */
         public static final String LOCK_DATE_FONTS = "lock_date_fonts";
-        
+
         /**
          * Select which lockscreen date style to display
          * @hide
@@ -5757,10 +5757,10 @@ public final class Settings {
          */
         public static final String TOAST_ANIMATION = "toast_animation";
 
-        /**  
+        /**
          * AOKP Custom System Animations
          * @hide
-         */  
+         */
         public static final String[] ACTIVITY_ANIMATION_CONTROLS = new String[] {
                 "activity_open",
                 "activity_close",
@@ -5773,7 +5773,7 @@ public final class Settings {
                 "wallpaper_intra_open",
                 "wallpaper_intra_close",
                 "task_open_behind",
-        };  
+        };
         public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
 
         /**
@@ -5817,7 +5817,7 @@ public final class Settings {
          * @hide
          */
         public static final String FORCE_EXPANDED_NOTIFICATIONS = "force_expanded_notifications";
-		
+
          /**
          * enable or disable single handed mode
          * @hide
@@ -5852,7 +5852,7 @@ public final class Settings {
         * @hide
         */
        public static final String ALARM_BLOCKING_ENABLED = "alarm_blocking_enabled";
-	   
+
      /**
          * Settings for carrier label font size
          * @hide
@@ -6379,7 +6379,7 @@ public final class Settings {
             VALIDATORS.put(STATUS_BAR_LOGO, STATUS_BAR_LOGO_VALIDATOR);
             VALIDATORS.put(QS_PANEL_BG_ALPHA, QS_PANEL_BG_ALPHA_VALIDATOR);
             VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
-            VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER, STATUS_BAR_CUSTOM_HEADER_VALIDATOR);   
+            VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER, STATUS_BAR_CUSTOM_HEADER_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_SHADOW, STATUS_BAR_CUSTOM_HEADER_SHADOW_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_DAYLIGHT_HEADER_PACK, STATUS_BAR_DAYLIGHT_HEADER_PACK_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_PROVIDER, STATUS_BAR_CUSTOM_HEADER_PROVIDER_VALIDATOR);
@@ -10782,7 +10782,7 @@ public final class Settings {
         public static final String CHARGING_VIBRATION_ENABLED = "charging_vibration_enabled";
 
         private static final Validator CHARGING_VIBRATION_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
-    
+
         /**
          * Ringtone for battery charge level warning.
          * @hide

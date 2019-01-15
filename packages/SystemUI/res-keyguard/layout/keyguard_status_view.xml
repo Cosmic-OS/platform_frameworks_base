@@ -96,16 +96,27 @@
                 app:custom_hand_minute="@drawable/spidey_clock_hand_minute"
                 app:custom_clock_dial_ambient="@drawable/spidey_clock_dial_ambient"/>
           <com.android.keyguard.clocks.CustomAnalogClock
-                      android:id="@+id/spectrum_clock_view"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="center_horizontal"
-                      android:layout_centerHorizontal="true"
-                      android:layout_alignParentTop="true"
-                      app:custom_dial="@drawable/spectrum_clock_dial"
-                      app:custom_hand_hour="@drawable/spectrum_clock_hand_hour"
-                      app:custom_hand_minute="@drawable/spectrum_clock_hand_minute"
-                      app:custom_clock_dial_ambient="@drawable/spectrum_clock_dial_ambient"/>
+                android:id="@+id/spectrum_clock_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                app:custom_dial="@drawable/spectrum_clock_dial"
+                app:custom_hand_hour="@drawable/spectrum_clock_hand_hour"
+                app:custom_hand_minute="@drawable/spectrum_clock_hand_minute"
+                app:custom_clock_dial_ambient="@drawable/spectrum_clock_dial_ambient"/>
+          <com.android.keyguard.clocks.CustomAnalogClock
+                android:id="@+id/sneeky_clock_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                app:custom_dial="@drawable/sneeky_clock_dial"
+                app:custom_hand_hour="@drawable/sneeky_clock_hand_hour"
+                app:custom_hand_minute="@drawable/sneeky_clock_hand_minute"
+                app:custom_clock_dial_ambient="@drawable/sneeky_clock_dial_ambient"/>
             <View
                 android:id="@+id/clock_separator"
                 android:layout_width="@dimen/widget_separator_width"
