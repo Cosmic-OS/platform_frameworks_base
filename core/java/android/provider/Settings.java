@@ -5497,7 +5497,7 @@ public final class Settings {
 
         /** @hide */
         public static final Validator LOCKSCREEN_CLOCK_SELECTION_VALIDATOR =
-                new SettingsValidators.InclusiveIntegerRangeValidator(0, 14);
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 15);
 
         /**
          * Change fonts for the system lockscreen clock widget
