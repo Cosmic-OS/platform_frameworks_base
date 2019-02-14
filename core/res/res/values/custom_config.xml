@@ -306,4 +306,7 @@
     <string name="config_SmartChargingSupspendValue" translatable="false">0</string>
     <string name="config_SmartChargingResumeValue" translatable="false">1</string>
 
+    <!-- Whether to enable OP5/T cam hack -->
+    <bool name="config_enableOPcamhack">false</bool>
+
 </resources>

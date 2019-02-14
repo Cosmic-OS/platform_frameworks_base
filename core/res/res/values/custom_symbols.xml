@@ -335,4 +335,7 @@
     <java-symbol type="anim" name="inv_app_in" />
     <java-symbol type="anim" name="inv_app_out" />
 
+    <!-- Whether to enable OP5/T cam hack -->
+    <java-symbol type="bool" name="config_enableOPcamhack" />
+
 </resources>
