@@ -344,4 +344,7 @@
     <!-- sensor block -->
     <java-symbol type="array" name="config_blockPackagesSensorDrain" />
 
+    <!-- Show Vendor mismatch warning -->
+    <java-symbol type="bool" name="config_show_vendor_mismatch_message" />
+
 </resources>
