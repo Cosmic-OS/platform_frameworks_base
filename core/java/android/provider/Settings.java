@@ -5560,6 +5560,16 @@ public final class Settings {
          */
         public static final String LOCK_OWNER_FONTS = "lock_owner_fonts";
 
+       /**
+         * @hide
+         */
+        public static final String SMART_CHARGING = "smart_charging";
+
+        /**
+         * @hide
+         */
+        public static final String SMART_CHARGING_LEVEL = "smart_charging_level";
+
         /** End of Cosmic-OS system settings**/
 
         /**
