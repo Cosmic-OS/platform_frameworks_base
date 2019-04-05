@@ -344,4 +344,7 @@
     <!-- Show Vendor mismatch warning -->
     <java-symbol type="bool" name="config_show_vendor_mismatch_message" />
 
+    <!-- In-display Fingerprint -->
+    <java-symbol type="bool" name="config_supportsInDisplayFingerprint" />
+
 </resources>
