@@ -204,4 +204,7 @@
     <string name="dlg_cancel" translatable="false">@android:string/cancel</string>
     <string name="kill">Kill App</string>
 
+    <!-- AOD media indication -->
+    <string name="music_controls_no_title">No title</string>
+
 </resources>

@@ -17,6 +17,7 @@ package com.android.systemui.statusbar;
 
 import android.app.Notification;
 import android.content.Context;
+import android.graphics.drawable.Icon;
 import android.media.MediaMetadata;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
@@ -55,7 +56,7 @@ public class NotificationMediaManager implements Dumpable {
     private MediaController mMediaController;
     private String mMediaNotificationKey;
     private MediaMetadata mMediaMetadata;
-    private MediaUpdateListener mListener;
+    private List<MediaUpdateListener> mListeners = new ArrayList<>();
 
     private String mNowPlayingNotificationKey;
 
@@ -135,6 +136,17 @@ public class NotificationMediaManager implements Dumpable {
 
     public MediaMetadata getMediaMetadata() {
         return mMediaMetadata;
+    }
+
+    public Icon getMediaIcon() {
+        if (mMediaNotificationKey == null) return null;
+
+        synchronized (mEntryManager.getNotificationData()) {
+            NotificationData.Entry mediaNotification = mEntryManager
+                    .getNotificationData().get(mMediaNotificationKey);
+            if (mediaNotification == null || mediaNotification.expandedIcon == null) return null;
+            return mediaNotification.expandedIcon.getSourceIcon();
+        }
     }
 
     public void findAndUpdateMediaNotifications() {
@@ -282,6 +294,14 @@ public class NotificationMediaManager implements Dumpable {
         pw.println();
     }
 
+    public void addCallback(MediaUpdateListener listener) {
+        mListeners.add(listener);
+    }
+
+    public boolean isPlaybackActive() {
+        return isPlaybackActive(getMediaControllerPlaybackState(mMediaController));
+    }
+
     private boolean isPlaybackActive(int state) {
         return state != PlaybackState.STATE_STOPPED && state != PlaybackState.STATE_ERROR
                 && state != PlaybackState.STATE_NONE;
@@ -356,15 +376,11 @@ public class NotificationMediaManager implements Dumpable {
                 mEntryManager.setEntryToRefresh(null);
                 setMediaNotificationText(null, false);
             }
-
-            if (mListener != null) {
-                mListener.onMediaUpdated(true);
-            }
         } else {
             mEntryManager.setEntryToRefresh(null);
             setMediaNotificationText(null, false);
-            if (mListener != null) {
-                mListener.onMediaUpdated(false);
+            for (MediaUpdateListener listener : mListeners) {
+                listener.onMediaUpdated(true);
             }
         }
     }
