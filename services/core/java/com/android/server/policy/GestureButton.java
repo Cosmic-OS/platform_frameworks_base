@@ -44,8 +44,8 @@ import android.view.WindowManagerPolicyConstants.PointerEventListener;
 import android.view.inputmethod.InputMethodManagerInternal;
 
 import com.android.internal.R;
-import com.android.internal.util.lotus.LotusUtils;
-import com.android.internal.util.lotus.TaskUtils;
+import com.android.internal.util.cosmic.CosmicUtils;
+import com.android.internal.util.cosmic.TaskUtils;
 import com.android.server.LocalServices;
 
 public class GestureButton implements PointerEventListener {
@@ -277,7 +277,7 @@ public class GestureButton implements PointerEventListener {
     }
 
     private void triggerGestureVirtualKeypress(int keyCode) {
-        LotusUtils.sendKeycode(keyCode);
+        CosmicUtils.sendKeycode(keyCode);
     }
 
     void navigationBarPosition(int displayWidth, int displayHeight, int displayRotation) {
