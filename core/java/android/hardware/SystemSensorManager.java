@@ -175,7 +175,16 @@ public class SystemSensorManager extends SensorManager {
             } else if (sensor.getType() == Sensor. TYPE_ACCELEROMETER) {
                 String pkgName = mContext.getPackageName();
                 String opPkgName = mContext.getOpPackageName();
-                if(  opPkgName.equals("com.google.android.gms" ) ) {
+                if(opPkgName.equals("com.google.android.gms") || opPkgName.equals("com.spotify.music")) {
+                    Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " +
+                           "accelerometer sensor");
+                    Log.w(TAG,"Here :", new Throwable());
+                    return true;
+                }
+            } else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+                String pkgName = mContext.getPackageName();
+                String opPkgName = mContext.getOpPackageName();
+                if(opPkgName.equals("com.google.android.gms") || opPkgName.equals("com.spotify.music")) {
                     Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " +
                            "accelerometer sensor");
                     Log.w(TAG,"Here :", new Throwable());
@@ -261,7 +270,16 @@ public class SystemSensorManager extends SensorManager {
             } else if (sensor.getType() == Sensor. TYPE_ACCELEROMETER) {
                 String pkgName = mContext.getPackageName();
                 String opPkgName = mContext.getOpPackageName();
-                if(  opPkgName.equals("com.google.android.gms" ) ) {
+                if(opPkgName.equals("com.google.android.gms") || opPkgName.equals("com.spotify.music")) {
+                    Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " +
+                           "accelerometer sensor");
+                    Log.w(TAG,"Here :", new Throwable());
+                    return true;
+                }
+            } else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+                String pkgName = mContext.getPackageName();
+                String opPkgName = mContext.getOpPackageName();
+                if(opPkgName.equals("com.google.android.gms") || opPkgName.equals("com.spotify.music")) {
                     Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " +
                            "accelerometer sensor");
                     Log.w(TAG,"Here :", new Throwable());
