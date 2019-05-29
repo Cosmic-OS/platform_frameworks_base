@@ -437,7 +437,7 @@ public class KeyguardStatusView extends GridLayout implements
 
             final ContentResolver resolver = mContext.getContentResolver();
             boolean mClockSelection = Settings.System.getIntForUser(resolver,
-                    Settings.System.LOCKSCREEN_CLOCK_SELECTION, 0, UserHandle.USER_CURRENT) == 9;
+                    Settings.System.LOCKSCREEN_CLOCK_SELECTION, 0, UserHandle.USER_CURRENT) == 14;
 
             // If text style clock, align the textView to start else keep it center.
             if (mClockSelection) {
