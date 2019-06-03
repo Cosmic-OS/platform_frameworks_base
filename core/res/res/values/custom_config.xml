@@ -322,6 +322,8 @@
       <item>org.telegram.messenger</item>
       <item>org.telegram.messenger.plus</item>
       <item>com.snapchat.android</item>
+      <item>com.google.android.gms</item>
+      <item>com.spotify.music</item>
 	</string-array>
 
 </resources>

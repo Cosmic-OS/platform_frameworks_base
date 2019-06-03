@@ -164,31 +164,38 @@ public class SystemSensorManager extends SensorManager {
                 + "the sensor listeners size has exceeded the maximum limit "
                 + MAX_LISTENER_COUNT);
         }
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SENSOR_BLOCK, 0) == 1) {
-            if (sensor.getType() == Sensor.TYPE_SIGNIFICANT_MOTION) {
+        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SENSOR_BLOCK, 0) == 1)
+        {
+            if (sensor.getType() == Sensor.TYPE_SIGNIFICANT_MOTION)
+            {
                 String pkgName = mContext.getPackageName();
-                Log.w(TAG, "Preventing " + pkgName + " from draining battery using " +
-                       "significant motion sensor");
-                Log.w(TAG,"Here :", new Throwable());
+                Log.w(TAG, "Preventing " + pkgName + " from draining battery using " + "significant motion sensor");
                 return true;
-            } else if (sensor.getType() == Sensor. TYPE_ACCELEROMETER) {
+            }
+            else if (sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+            {
                 String pkgName = mContext.getPackageName();
                 String opPkgName = mContext.getOpPackageName();
-                if(opPkgName.equals("com.google.android.gms") || opPkgName.equals("com.spotify.music")) {
-                    Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " +
-                           "accelerometer sensor");
-                    Log.w(TAG,"Here :", new Throwable());
-                    return true;
+                for (String blockedPkgName : mContext.getResources().getStringArray(com.android.internal.R.array.config_blockPackagesSensorDrain))
+                {
+                    if(opPkgName.equals(blockedPkgName))
+                    {
+                        Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " + "accelerometer sensor");
+                        return true;
+                    }
                 }
-            } else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+            }
+            else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION)
+            {
                 String pkgName = mContext.getPackageName();
                 String opPkgName = mContext.getOpPackageName();
-                if(opPkgName.equals("com.google.android.gms") || opPkgName.equals("com.spotify.music")) {
-                    Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " +
-                           "accelerometer sensor");
-                    Log.w(TAG,"Here :", new Throwable());
-                    return true;
+                for (String blockedPkgName : mContext.getResources().getStringArray(com.android.internal.R.array.config_blockPackagesSensorDrain))
+                {
+                    if(opPkgName.equals(blockedPkgName))
+                    {
+                        Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " + " linear accelerometer sensor");
+                        return true;
+                    }
                 }
             }
         }
@@ -259,31 +266,38 @@ public class SystemSensorManager extends SensorManager {
                     + MAX_LISTENER_COUNT);
         }
 
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SENSOR_BLOCK, 0) == 1) {
-            if (sensor.getType() == Sensor.TYPE_SIGNIFICANT_MOTION) {
+        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SENSOR_BLOCK, 0) == 1)
+        {
+            if (sensor.getType() == Sensor.TYPE_SIGNIFICANT_MOTION)
+            {
                 String pkgName = mContext.getPackageName();
-                Log.w(TAG, "Preventing " + pkgName + " from draining battery using " +
-                       "significant motion sensor");
-                Log.w(TAG,"Here :", new Throwable());
+                Log.w(TAG, "Preventing " + pkgName + " from draining battery using " + "significant motion sensor");
                 return true;
-            } else if (sensor.getType() == Sensor. TYPE_ACCELEROMETER) {
+            }
+            else if (sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+            {
                 String pkgName = mContext.getPackageName();
                 String opPkgName = mContext.getOpPackageName();
-                if(opPkgName.equals("com.google.android.gms") || opPkgName.equals("com.spotify.music")) {
-                    Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " +
-                           "accelerometer sensor");
-                    Log.w(TAG,"Here :", new Throwable());
-                    return true;
+                for (String blockedPkgName : mContext.getResources().getStringArray(com.android.internal.R.array.config_blockPackagesSensorDrain))
+                {
+                    if(opPkgName.equals(blockedPkgName))
+                    {
+                        Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " + "accelerometer sensor");
+                        return true;
+                    }
                 }
-            } else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+            }
+            else if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION)
+            {
                 String pkgName = mContext.getPackageName();
                 String opPkgName = mContext.getOpPackageName();
-                if(opPkgName.equals("com.google.android.gms") || opPkgName.equals("com.spotify.music")) {
-                    Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " +
-                           "accelerometer sensor");
-                    Log.w(TAG,"Here :", new Throwable());
-                    return true;
+                for (String blockedPkgName : mContext.getResources().getStringArray(com.android.internal.R.array.config_blockPackagesSensorDrain))
+                {
+                    if(opPkgName.equals(blockedPkgName))
+                    {
+                        Log.w(TAG, "Preventing " + pkgName + "(" + opPkgName +") from draining battery using " + " linear accelerometer sensor");
+                        return true;
+                    }
                 }
             }
         }
