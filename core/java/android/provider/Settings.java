@@ -5570,6 +5570,12 @@ public final class Settings {
          */
         public static final String SMART_CHARGING_LEVEL = "smart_charging_level";
 
+       /**
+         * Whether to show charging animation
+         * @hide
+         */
+        public static final String CHARGING_ANIMATION = "charging_animation";
+
         /** End of Cosmic-OS system settings**/
 
         /**
