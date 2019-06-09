@@ -5496,11 +5496,16 @@ public final class Settings {
          * @hide
          */
         public static final String QS_HEADER_STYLE = "qs_header_style";
-		
+
 		/**
          * @hide
          */
         public static final String SWITCH_STYLE = "switch_style";
+
+        /**
+         * @hide
+         */
+        public static final String SHOW_BATTERY_ESTIMATE = "show_battery_estimate";
 
         /** End of Cosmic-OS system settings**/
 
