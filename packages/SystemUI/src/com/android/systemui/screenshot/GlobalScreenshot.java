@@ -165,7 +165,7 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
                 // now remove all special chars from the app name
                 appNameString = appNameString.replaceAll("[\\\\/:*?\"<>|\\s]+", "_");
 
-                mImageFileName = String.format(SCREENSHOT_FILE_NAME_TEMPLATE_APPNAME, imageDate, appNameString);
+                mImageFileName = String.format(SCREENSHOT_FILE_NAME_TEMPLATE_APPNAME, appNameString, imageDate);
             }
         }
 
@@ -669,7 +669,7 @@ class GlobalScreenshot {
                         view.setVisibility(View.GONE);
                         mWindowManager.removeView(mScreenshotLayout);
                         final Rect rect = view.getSelectionRect();
-                        if (rect != null && rect.width() != 0 && rect.height() != 0) {
+                        if (rect != null && !rect.isEmpty()) {
                             // Need mScreenshotLayout to handle it after the view disappears
                             mScreenshotLayout.post(new Runnable() {
                                 public void run() {
@@ -1003,7 +1003,6 @@ class GlobalScreenshot {
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             final Uri uri = Uri.parse(intent.getStringExtra(SCREENSHOT_URI_ID));
             nm.cancel(SystemMessage.NOTE_GLOBAL_SCREENSHOT);
-            Toast.makeText(context, R.string.delete_screenshot_toast, Toast.LENGTH_SHORT).show();
 
             // And delete the image from the media store
             new DeleteImageInBackgroundTask(context).execute(uri);
