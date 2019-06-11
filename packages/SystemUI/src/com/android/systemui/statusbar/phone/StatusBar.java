@@ -380,6 +380,11 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         "com.android.systemui.qstile.gear", // 24
         "com.android.systemui.qstile.badge", // 25
         "com.android.systemui.qstile.badgetwo", // 26
+		"com.android.systemui.qstile.neonlike", // 27
+        "com.android.systemui.qstile.oos", // 28
+        "com.android.systemui.qstile.triangles", // 29
+        "com.android.systemui.qstile.divided", // 30
+        "com.android.systemui.qstile.cosmos", // 31
     };
 
 // QS header themes
