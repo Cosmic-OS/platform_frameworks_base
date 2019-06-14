@@ -264,4 +264,6 @@
   <java-symbol type="string" name="config_SmartChargingSupspendValue" />
   <java-symbol type="string" name="config_SmartChargingResumeValue" />
 
+    <!-- Custom styles -->
+    <java-symbol type="style" name="CustomThemeDeviceDefaultDialogAlert" />
 </resources>
