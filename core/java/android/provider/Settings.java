@@ -5760,6 +5760,14 @@ public final class Settings {
         private static final Validator STATUS_BAR_FILE_HEADER_IMAGE_VALIDATOR =
                 ANY_STRING_VALIDATOR;
 
+
+        /**
+         * Gaming Mode master switch
+         *
+         * @hide
+         */
+        public static final String GAMING_MODE_MASTER_SWITCH = "gaming_mode_master_switch";
+
         /**
          * Whether to enable gaming mode or not
          *
