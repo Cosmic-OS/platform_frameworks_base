@@ -546,7 +546,7 @@ public class KeyguardStatusView extends GridLayout implements
                 mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
                 mClockView.setLineSpacing(0,1f);
-			        	mSpideyClockView.setVisibility(View.GONE);
+		mSpideyClockView.setVisibility(View.GONE);
                 mSneekyClockView.setVisibility(View.GONE);
                 mSpectrumClockView.setVisibility(View.GONE);
                 mCustomClockView.setVisibility(View.GONE);
@@ -568,7 +568,7 @@ public class KeyguardStatusView extends GridLayout implements
                 mClockView.setLineSpacing(0,1f);
                 mSneekyClockView.setVisibility(View.GONE);
                 mSpectrumClockView.setVisibility(View.GONE);
-			         	mSpideyClockView.setVisibility(View.GONE);
+		mSpideyClockView.setVisibility(View.GONE);
                 mCustomClockView.setVisibility(View.GONE);
                 mTextClock.setVisibility(View.GONE);
                 mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
@@ -607,7 +607,7 @@ public class KeyguardStatusView extends GridLayout implements
                 getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
                 mClockView.setLineSpacing(0,1f);
                 mSpectrumClockView.setVisibility(View.GONE);
-				        mSpideyClockView.setVisibility(View.GONE);
+	        mSpideyClockView.setVisibility(View.GONE);
                 mSneekyClockView.setVisibility(View.GONE);
                 mCustomClockView.setVisibility(View.GONE);
                 mTextClock.setVisibility(View.GONE);
@@ -828,10 +828,14 @@ public class KeyguardStatusView extends GridLayout implements
                 mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
                 mClockView.setLineSpacing(0,1f);
-                mSneekyClockView.setVisibility(View.GONE);
                 mSpectrumClockView.setVisibility(View.GONE);
                 mCustomClockView.setVisibility(View.GONE);
+                mSneekyClockView.setVisibility(View.GONE);
+                mClockView.setVisibility(View.GONE);
                 mTextClock.setVisibility(View.GONE);
+                mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+        getResources().getDimensionPixelSize(R.dimen.widget_clock_normal_clock_padding),
+        getResources().getDisplayMetrics()),0,0);
                 break;
                 case 16: // spectrum analog
                 mSpectrumClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
@@ -844,12 +848,16 @@ public class KeyguardStatusView extends GridLayout implements
                 mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
                 mClockView.setLineSpacing(0,1f);
-                mSneekyClockView.setVisibility(View.GONE);
-                mSpideyClockView.setVisibility(View.GONE);
                 mCustomClockView.setVisibility(View.GONE);
+                mSpideyClockView.setVisibility(View.GONE);
+                mSneekyClockView.setVisibility(View.GONE);
+                mClockView.setVisibility(View.GONE);
                 mTextClock.setVisibility(View.GONE);
+                mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+        getResources().getDimensionPixelSize(R.dimen.widget_clock_normal_clock_padding),
+        getResources().getDisplayMetrics()),0,0);
                 break;
-                case 17: // spectrum analog
+                case 17: // sneeky analog
                 mSneekyClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
                        View.GONE) : View.VISIBLE);
                 mClockView.setBackgroundResource(0);
@@ -860,10 +868,14 @@ public class KeyguardStatusView extends GridLayout implements
                 mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
                 mClockView.setLineSpacing(0,1f);
-                mSpideyClockView.setVisibility(View.GONE);
                 mSpectrumClockView.setVisibility(View.GONE);
+                mSpideyClockView.setVisibility(View.GONE);
                 mCustomClockView.setVisibility(View.GONE);
+                mClockView.setVisibility(View.GONE);
                 mTextClock.setVisibility(View.GONE);
+                mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+        getResources().getDimensionPixelSize(R.dimen.widget_clock_normal_clock_padding),
+        getResources().getDisplayMetrics()),0,0);
 
         }
     }
