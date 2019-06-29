@@ -6505,5 +6505,9 @@ message MetricsEvent {
     // CustomSettings constant
     CUSTOM_SETTINGS = 1554;
 
+    // Cosmic-OS constants
+    GALAXY = 1555;
+    COSMIC_SETTINGS = 1556;
+
   }
 }
