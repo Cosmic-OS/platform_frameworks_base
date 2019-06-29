@@ -37,11 +37,6 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
         super(host);
         mRegion = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.SCREENSHOT_DEFAULT_MODE, 0, UserHandle.USER_CURRENT) == 1;
-
-    private boolean mRegion = false;
-
-    public ScreenshotTile(QSHost host) {
-        super(host);
     }
 
     @Override
