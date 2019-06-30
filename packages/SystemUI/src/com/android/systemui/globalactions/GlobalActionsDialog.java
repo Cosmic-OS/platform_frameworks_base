@@ -95,7 +95,7 @@ import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.util.cosmic.CosmicUtils;
 import com.android.internal.util.EmergencyAffordanceManager;
-import com.android.internal.util.lotus.ImageHelper;
+import com.android.internal.util.cosmic.ImageHelper;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.Dependency;

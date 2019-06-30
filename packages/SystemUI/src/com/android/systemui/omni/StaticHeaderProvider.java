@@ -35,7 +35,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 import com.android.systemui.R;
-import com.android.internal.util.lotus.LotusUtils;
+import com.android.internal.util.cosmic.CosmicUtils;
 
 public class StaticHeaderProvider implements
         StatusBarHeaderMachine.IStatusBarHeaderProvider {
@@ -103,7 +103,7 @@ public class StaticHeaderProvider implements
         if (mRes == null) {
             return null;
         }
-        if (!LotusUtils.isPackageAvailable(mPackageName, mContext)) {
+        if (!CosmicUtils.isPackageAvailable(mPackageName, mContext)) {
             Log.w(TAG, "Header pack image " + mImage + " no longer available");
             return null;
         }

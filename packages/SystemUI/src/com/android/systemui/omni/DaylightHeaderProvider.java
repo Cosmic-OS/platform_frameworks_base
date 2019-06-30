@@ -51,7 +51,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.android.systemui.R;
-import com.android.internal.util.lotus.LotusUtils;
+import com.android.internal.util.cosmic.CosmicUtils;
 
 public class DaylightHeaderProvider implements
         StatusBarHeaderMachine.IStatusBarHeaderProvider {
@@ -373,7 +373,7 @@ public class DaylightHeaderProvider implements
 
     @Override
     public Drawable getCurrent(final Calendar now) {
-        if (!LotusUtils.isPackageAvailable(mPackageName, mContext)) {
+        if (!CosmicUtils.isPackageAvailable(mPackageName, mContext)) {
             Log.w(TAG, "Header pack no longer available - loading default " + mPackageName);
             loadDefaultHeaderPackage();
         }
