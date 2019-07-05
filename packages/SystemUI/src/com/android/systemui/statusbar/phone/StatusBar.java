@@ -579,6 +579,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
 
     private SmartPackageMonitor mPackageMonitor;
     private FlashlightController mFlashlightController;
+	
+	private boolean mHeadsUpDisabled, mGamingModeActivated;
 
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
@@ -6116,6 +6118,12 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.PULSE_APPS_BLACKLIST),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.GAMING_MODE_ACTIVE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.GAMING_MODE_HEADSUP_TOGGLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -6178,6 +6186,10 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.PULSE_APPS_BLACKLIST))) {
                 setPulseBlacklist();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.GAMING_MODE_ACTIVE)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.GAMING_MODE_HEADSUP_TOGGLE))) {
+                updateGamingPeekMode();
             }
         }
 
@@ -6197,6 +6209,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             updateKeyguardStatusSettings();
             updateCorners();
             setPulseBlacklist();
+            updateGamingPeekMode();
         }
     }
 
@@ -6302,10 +6315,18 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     Settings.System.HEADS_UP_STOPLIST_VALUES);
         splitAndAddToArrayList(mStoplist, stopString, "\\|");
     }
-     private void setHeadsUpBlacklist() {
+    private void setHeadsUpBlacklist() {
         final String blackString = Settings.System.getString(mContext.getContentResolver(),
                     Settings.System.HEADS_UP_BLACKLIST_VALUES);
         splitAndAddToArrayList(mBlacklist, blackString, "\\|");
+    }
+
+    private void updateGamingPeekMode() {
+        mGamingModeActivated = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.GAMING_MODE_ACTIVE, 1) == 1;
+        mHeadsUpDisabled = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.GAMING_MODE_HEADSUP_TOGGLE, 1) == 1;
+        mEntryManager.setGamingPeekMode(mGamingModeActivated && mHeadsUpDisabled);
     }
 
     private boolean isAmbientContainerAvailable() {
