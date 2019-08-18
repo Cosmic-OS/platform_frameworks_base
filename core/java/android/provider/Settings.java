@@ -4417,10 +4417,11 @@ public final class Settings {
          * @hide
          */
         public static final String CUSTOM_BUTTON_EXTRA_KEY_MAPPING = "button_extra_mapping";
+        public static final String BUTTON_EXTRA_KEY_MAPPING = "button_extra_mapping";
 
         /** @hide */
-        private static final Validator CUSTOM_BUTTON_EXTRA_KEY_MAPPING_VALIDATOR =
-                ANY_STRING_VALIDATOR;
+        private static final Validator CUSTOM_BUTTON_EXTRA_KEY_MAPPING_VALIDATOR = ANY_STRING_VALIDATOR;
+        private static final Validator BUTTON_EXTRA_KEY_MAPPING_VALIDATOR = ANY_STRING_VALIDATOR;
 
         /**
          * Enable proxi check for wake keys - must be implemented in a device
@@ -4428,31 +4429,33 @@ public final class Settings {
          * @hide
          */
         public static final String CUSTOM_DEVICE_PROXI_CHECK_ENABLED = "device_proxi_check_enabled";
+        public static final String DEVICE_PROXI_CHECK_ENABLED = "device_proxi_check_enabled";
 
         /** @hide */
-        private static final Validator CUSTOM_DEVICE_PROXI_CHECK_ENABLED_VALIDATOR =
-                BOOLEAN_VALIDATOR;
+        private static final Validator CUSTOM_DEVICE_PROXI_CHECK_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+        private static final Validator DEVICE_PROXI_CHECK_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * Enable Gesture Haptic feedback
          * KeyHandler
          * @hide
          */
-        public static final String CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED =
-                "device_gesture_feedback_enabled";
+        public static final String CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED = "device_gesture_feedback_enabled";
+        public static final String DEVICE_GESTURE_FEEDBACK_ENABLED = "device_gesture_feedback_enabled";
 
         /** @hide */
-        private static final Validator CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR =
-                BOOLEAN_VALIDATOR;
+        private static final Validator CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+        private static final Validator DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * @hide
          */
         public static final String CUSTOM_DEVICE_FEATURE_SETTINGS = "device_feature_settings";
+        public static final String DEVICE_FEATURE_SETTINGS = "device_feature_settings";
 
         /** @hide */
-        private static final Validator CUSTOM_DEVICE_FEATURE_SETTINGS_VALIDATOR =
-                ANY_STRING_VALIDATOR;
+        private static final Validator CUSTOM_DEVICE_FEATURE_SETTINGS_VALIDATOR = ANY_STRING_VALIDATOR;
+        private static final Validator DEVICE_FEATURE_SETTINGS_VALIDATOR = ANY_STRING_VALIDATOR;
 
         /**
          * Weather lockscreen temperature scale
@@ -6269,6 +6272,10 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CUSTOM_DEVICE_PROXI_CHECK_ENABLED);
             PRIVATE_SETTINGS.add(CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED);
             PRIVATE_SETTINGS.add(CUSTOM_DEVICE_FEATURE_SETTINGS);
+            PRIVATE_SETTINGS.add(BUTTON_EXTRA_KEY_MAPPING);
+            PRIVATE_SETTINGS.add(DEVICE_PROXI_CHECK_ENABLED);
+            PRIVATE_SETTINGS.add(DEVICE_GESTURE_FEEDBACK_ENABLED);
+            PRIVATE_SETTINGS.add(DEVICE_FEATURE_SETTINGS);
             PRIVATE_SETTINGS.add(FACE_AUTO_UNLOCK);
             PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_HIDDEN);
             PRIVATE_SETTINGS.add(FORCE_FULLSCREEN_CUTOUT_APPS);
@@ -6456,6 +6463,10 @@ public final class Settings {
             VALIDATORS.put(CUSTOM_DEVICE_PROXI_CHECK_ENABLED, CUSTOM_DEVICE_PROXI_CHECK_ENABLED_VALIDATOR);
             VALIDATORS.put(CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED, CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR);
             VALIDATORS.put(CUSTOM_DEVICE_FEATURE_SETTINGS, CUSTOM_DEVICE_FEATURE_SETTINGS_VALIDATOR);
+            VALIDATORS.put(BUTTON_EXTRA_KEY_MAPPING, BUTTON_EXTRA_KEY_MAPPING_VALIDATOR);
+            VALIDATORS.put(DEVICE_PROXI_CHECK_ENABLED, DEVICE_PROXI_CHECK_ENABLED_VALIDATOR);
+            VALIDATORS.put(DEVICE_GESTURE_FEEDBACK_ENABLED, DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR);
+            VALIDATORS.put(DEVICE_FEATURE_SETTINGS, DEVICE_FEATURE_SETTINGS_VALIDATOR);
             VALIDATORS.put(WEATHER_LOCKSCREEN_UNIT, WEATHER_LOCKSCREEN_UNIT_VALIDATOR);
             VALIDATORS.put(FACE_AUTO_UNLOCK, FACE_AUTO_UNLOCK_VALIDATOR);
             VALIDATORS.put(DISPLAY_CUTOUT_HIDDEN, DISPLAY_CUTOUT_HIDDEN_VALIDATOR);
