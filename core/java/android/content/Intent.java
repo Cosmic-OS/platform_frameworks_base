@@ -2912,6 +2912,21 @@ public class Intent implements Parcelable, Cloneable {
             = "android.intent.action.CUSTOM_CARRIER_LABEL";
 
     /**
+     * Broadcast action: Camera satus Changed
+     * @hide
+     */
+    public static final String ACTION_CAMERA_STATUS_CHANGED =
+            "android.intent.action.CAMERA_STATUS_CHANGED";
+
+    /**
+     * This field is part of the intent {@link #ACTION_CAMERA_STATUS_CHANGED}.
+     * Intent extra field for the state of changed camera state
+     * @hide
+     */
+    public static final String EXTRA_CAMERA_STATE =
+            "android.intent.extra.CAMERA_STATE";
+
+    /**
      * Broadcast Action: Some content providers have parts of their namespace
      * where they publish new events or items that the user may be especially
      * interested in. For these things, they may broadcast this action when the
