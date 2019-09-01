@@ -309,9 +309,6 @@
     <!-- Whether to enable OP5/T cam hack -->
     <bool name="config_enableOPcamhack">false</bool>
 
-    <!-- Whether to show a custom view for FOD -->
-    <bool name="config_needCustomFODView">false</bool>
-
 	<!-- Any package that has one of the package names defined below will be prevented
          from using specific sensors in order to stop battery drain -->
 	<string-array name="config_blockPackagesSensorDrain">

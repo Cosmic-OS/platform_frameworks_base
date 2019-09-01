@@ -179,8 +179,6 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     private boolean mIsPowerCameraGesture;
     private String mPreviousSource;
 
-    private boolean mDisplayFODView;
-
     public KeyguardBottomAreaView(Context context) {
         this(context, null);
     }
@@ -249,16 +247,8 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         mEnterpriseDisclosure = findViewById(
                 R.id.keyguard_indication_enterprise_disclosure);
         mIndicationText = findViewById(R.id.keyguard_indication_text);
-        mDisplayFODView = getResources()
-                .getBoolean(com.android.internal.R.bool.config_needCustomFODView);
-
-        if (mDisplayFODView) {
-            mIndicationBottomMargin = getResources().getDimensionPixelSize(
-                  R.dimen.op_keyguard_indication_margin_bottom);
-        } else {
-            mIndicationBottomMargin = getResources().getDimensionPixelSize(
-                  R.dimen.keyguard_indication_margin_bottom);
-        }
+        mIndicationBottomMargin = getResources().getDimensionPixelSize(
+                R.dimen.keyguard_indication_margin_bottom);
         mIndicationBottomMarginAmbient = getResources().getDimensionPixelSize(
                 R.dimen.keyguard_indication_margin_bottom_ambient);
         mBurnInYOffset = getResources().getDimensionPixelSize(
@@ -333,13 +323,8 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     	Typeface tf = Typeface.create(FONT_FAMILY, Typeface.ITALIC);
-        if (mDisplayFODView) {
-            mIndicationBottomMargin = getResources().getDimensionPixelSize(
-                  R.dimen.op_keyguard_indication_margin_bottom);
-        } else {
-            mIndicationBottomMargin = getResources().getDimensionPixelSize(
-                  R.dimen.keyguard_indication_margin_bottom);
-        }
+        mIndicationBottomMargin = getResources().getDimensionPixelSize(
+                R.dimen.keyguard_indication_margin_bottom);
         mIndicationBottomMarginAmbient = getResources().getDimensionPixelSize(
                 R.dimen.keyguard_indication_margin_bottom_ambient);
         mBurnInYOffset = getResources().getDimensionPixelSize(
