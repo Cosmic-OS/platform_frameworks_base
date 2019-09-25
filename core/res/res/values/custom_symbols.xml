@@ -344,9 +344,6 @@
     <!-- Show Vendor mismatch warning -->
     <java-symbol type="bool" name="config_show_vendor_mismatch_message" />
 
-    <!-- In-display Fingerprint -->
-    <java-symbol type="bool" name="config_supportsInDisplayFingerprint" />
-
     <!-- Whether device supports internal audio recording -->
     <java-symbol type="bool" name="config_hasInternalAudioRecordingSupport" />
 </resources>
