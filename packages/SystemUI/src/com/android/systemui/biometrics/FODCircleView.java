@@ -77,7 +77,6 @@ public class FODCircleView extends ImageView implements OnTouchListener {
     private boolean mIsPulsing;
     private boolean mIsScreenOn;
     private boolean mIsViewAdded;
-    private boolean mIsRemoving;
 
     private Handler mHandler;
 
@@ -133,11 +132,20 @@ public class FODCircleView extends ImageView implements OnTouchListener {
                     mWakeLock.release();
                 }
             }
-
             if (mIsViewAdded) {
                 resetPosition();
                 invalidate();
             }
+        }
+
+        @Override
+        public void onPulsing(boolean pulsing) {
+            super.onPulsing(pulsing);
+            mIsPulsing = pulsing;
+	    if (mIsPulsing) {
+                mIsDreaming = false;
+	    }
+            mIsInsideCircle = false;
         }
 
         @Override
@@ -275,7 +283,7 @@ public class FODCircleView extends ImageView implements OnTouchListener {
         // the HAL is expected (if supported) to set the screen brightness
         // to maximum / minimum immediately when called
         if (mIsInsideCircle) {
-            if (mIsDreaming) {
+            if (mIsDreaming || mIsPulsing) {
                 setAlpha(1.0f);
             }
             if (!mIsPressed) {
@@ -290,7 +298,7 @@ public class FODCircleView extends ImageView implements OnTouchListener {
                 mIsPressed = true;
             }
         } else {
-            setAlpha(mIsDreaming ? 0.5f : 1.0f);
+            setAlpha(mIsDreaming ? (mIsPulsing ? 1.0f : 0.8f) : 1.0f);
             if (mIsPressed) {
                 IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
                 if (daemon != null) {
@@ -301,11 +309,6 @@ public class FODCircleView extends ImageView implements OnTouchListener {
                     }
                 }
                 mIsPressed = false;
-            }
-
-            if (mIsRemoving) {
-                mIsRemoving = false;
-                mWindowManager.removeView(this);
             }
         }
     }
@@ -398,12 +401,6 @@ public class FODCircleView extends ImageView implements OnTouchListener {
     }
 
     public void show() {
-        if (mIsRemoving) {
-            // Last removal hasn't been finished yet
-            mIsRemoving = false;
-            mWindowManager.removeView(this);
-        }
-
         if (mIsViewAdded) {
             return;
         }
@@ -421,8 +418,9 @@ public class FODCircleView extends ImageView implements OnTouchListener {
         mParams.setTitle("Fingerprint on display");
         mParams.packageName = "android";
         mParams.type = WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY;
-        mParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+        mParams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM |
                 WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND |
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         mParams.gravity = Gravity.TOP | Gravity.LEFT;
@@ -443,8 +441,8 @@ public class FODCircleView extends ImageView implements OnTouchListener {
 
         mIsInsideCircle = false;
         mIsViewAdded = false;
-        // Postpone removal to next re-layout to avoid blinking
-        mIsRemoving = true;
+        mWindowManager.removeView(this);
+        mIsPressed = false;
         setDim(false);
         invalidate();
     }
