@@ -34,9 +34,6 @@
     <dimen name="qs_page_indicator_margin_bottom">12dp</dimen>
     <dimen name="qs_paged_tile_layout_padding_bottom">4dp</dimen>
 
-    <!-- Ambient indication -->
-    <dimen name="ambient_indication_margin_bottom">12.0dip</dimen>
-
     <!-- QS tile height -->
     <dimen name="qs_tile_height_wo_label">48dp</dimen>
 
