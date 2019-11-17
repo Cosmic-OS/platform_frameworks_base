@@ -94,7 +94,6 @@
     <java-symbol type="bool" name="config_show_network_generation" />
 
     <!-- Battery Light customisation -->
-    <java-symbol type="bool" name="config_intrusiveBatteryLed" />
     <java-symbol type="bool" name="config_multiColorBatteryLed" />
     <java-symbol type="bool" name="config_ledCanPulse" />
 
