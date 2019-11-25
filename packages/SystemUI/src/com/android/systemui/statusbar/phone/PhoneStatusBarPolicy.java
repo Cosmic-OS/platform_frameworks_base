@@ -716,15 +716,19 @@ public class PhoneStatusBarPolicy
 
     private void updateHotspotIcon() {
         int generation = mWifiManager.getSoftApWifiGeneration();
-        if (generation == WifiManager.WIFI_GENERATION_6) {
-            mIconController.setIcon(mSlotHotspot, R.drawable.stat_sys_wifi_6_hotspot,
-                mContext.getString(R.string.accessibility_status_bar_hotspot));
-        } else if (generation == WifiManager.WIFI_GENERATION_5) {
-            mIconController.setIcon(mSlotHotspot, R.drawable.stat_sys_wifi_5_hotspot,
-                mContext.getString(R.string.accessibility_status_bar_hotspot));
-        } else if (generation == WifiManager.WIFI_GENERATION_4) {
-            mIconController.setIcon(mSlotHotspot, R.drawable.stat_sys_wifi_4_hotspot,
-                mContext.getString(R.string.accessibility_status_bar_hotspot));
+        boolean useNetworkNum = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_show_network_generation);
+        if (useNetworkNum) {
+            if (generation == WifiManager.WIFI_GENERATION_6) {
+                mIconController.setIcon(mSlotHotspot, R.drawable.stat_sys_wifi_6_hotspot,
+                   mContext.getString(R.string.accessibility_status_bar_hotspot));
+            } else if (generation == WifiManager.WIFI_GENERATION_5) {
+                mIconController.setIcon(mSlotHotspot, R.drawable.stat_sys_wifi_5_hotspot,
+                    mContext.getString(R.string.accessibility_status_bar_hotspot));
+            } else if (generation == WifiManager.WIFI_GENERATION_4) {
+                mIconController.setIcon(mSlotHotspot, R.drawable.stat_sys_wifi_4_hotspot,
+                    mContext.getString(R.string.accessibility_status_bar_hotspot));
+            }
         } else {
             mIconController.setIcon(mSlotHotspot, R.drawable.stat_sys_hotspot,
                 mContext.getString(R.string.accessibility_status_bar_hotspot));

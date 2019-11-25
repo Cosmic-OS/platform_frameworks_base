@@ -353,25 +353,31 @@ public class Utils {
      * @param level The number of bars to show (0-4)
      * @throws IllegalArgumentException if an invalid RSSI level is given.
      */
-    public static int getWifiIconResource(int level, int generation, boolean isReady) {
+    public static int getWifiIconResource(int level, int generation, boolean isReady, Context context) {
         if (level < 0 || level >= WIFI_PIE.length) {
             throw new IllegalArgumentException("No Wifi icon found for level: " + level);
         }
 
-        switch (generation) {
-            case 4:
-                return WIFI_4_PIE[level];
-            case 5:
-                if (isReady) {
+        boolean useNetworkNum = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_show_network_generation);
+        if (useNetworkNum) {
+            switch (generation) {
+                case 4:
+                    return WIFI_4_PIE[level];
+                case 5:
+                    if (isReady) {
+                        return WIFI_6_PIE[level];
+                    } else {
+                        return WIFI_5_PIE[level];
+                    }
+                case 6:
                     return WIFI_6_PIE[level];
-                } else {
-                    return WIFI_5_PIE[level];
-                }
-            case 6:
-                return WIFI_6_PIE[level];
-            default:
-                return WIFI_PIE[level];
-       }
+                default:
+                    return WIFI_PIE[level];
+           }
+        } else {
+            return WIFI_PIE[level];
+        }
     }
 
     public static int getDefaultStorageManagerDaysToRetain(Resources resources) {

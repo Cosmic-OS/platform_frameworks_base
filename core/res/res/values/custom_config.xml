@@ -86,4 +86,7 @@
         <item>bootloader</item>
     </string-array>
 
+    <!-- Whether to show WiFi/Hotspot generation number -->
+    <bool name="config_show_network_generation">false</bool>
+
 </resources>

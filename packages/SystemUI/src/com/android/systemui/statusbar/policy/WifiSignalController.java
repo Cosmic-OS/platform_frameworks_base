@@ -142,12 +142,18 @@ public class WifiSignalController extends
 
 
     private void updateIconGroup() {
-	if (mCurrentState.wifiGenerationVersion == 4) {
-            mCurrentState.iconGroup = mWifi4IconGroup;
-        } else if (mCurrentState.wifiGenerationVersion == 5) {
-            mCurrentState.iconGroup = mCurrentState.isReady ? mWifi6IconGroup : mWifi5IconGroup;
-        } else if (mCurrentState.wifiGenerationVersion == 6) {
-            mCurrentState.iconGroup = mWifi6IconGroup;
+        boolean useNetworkNum = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_show_network_generation);
+        if (useNetworkNum) {
+            if (mCurrentState.wifiGenerationVersion == 4) {
+                mCurrentState.iconGroup = mWifi4IconGroup;
+            } else if (mCurrentState.wifiGenerationVersion == 5) {
+                mCurrentState.iconGroup = mCurrentState.isReady ? mWifi6IconGroup : mWifi5IconGroup;
+            } else if (mCurrentState.wifiGenerationVersion == 6) {
+                mCurrentState.iconGroup = mWifi6IconGroup;
+            } else {
+                mCurrentState.iconGroup = mDefaultWifiIconGroup;
+            }
         } else {
             mCurrentState.iconGroup = mDefaultWifiIconGroup;
         }
