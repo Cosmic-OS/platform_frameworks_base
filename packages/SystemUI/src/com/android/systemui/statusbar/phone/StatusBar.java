@@ -1733,21 +1733,29 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
-            /*resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.XXX),
-                    false, this, UserHandle.USER_ALL);*/
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.EDGE_GESTURE_Y_DEAD_ZONE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-            /*if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.XXX))) {
-                doXXX();
-            }*/
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.EDGE_GESTURE_Y_DEAD_ZONE))) {
+                setEdgeGestureDeadZone();
         }
 
         public void update() {
-            //doXXX();
+            setEdgeGestureDeadZone();
+        }
+    }
+
+    private void setEdgeGestureDeadZone() {
+        if (getNavigationBarView() != null) {
+            int mode = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.EDGE_GESTURE_Y_DEAD_ZONE, 0,
+                UserHandle.USER_CURRENT);
+            getNavigationBarView().setEdgeGestureDeadZone(mode);
         }
     }
 
