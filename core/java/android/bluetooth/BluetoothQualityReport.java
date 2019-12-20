@@ -35,6 +35,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -1117,6 +1118,10 @@ public final class BluetoothQualityReport implements Parcelable {
         private int mSprIntrMiss;
         private int mPlcFillCount;
         private int mPlcDiscardCount;
+        private int mMissedInstanceCount;
+        private int mTxRetransmitSlotCount;
+        private int mRxRetransmitSlotCount;
+        private int mGoodRxFrameCount;
 
         private BqrVsScoChoppy(byte[] rawData, int offset) {
             if (rawData == null || rawData.length <= offset) {
@@ -1141,6 +1146,14 @@ public final class BluetoothQualityReport implements Parcelable {
             mSprIntrMiss = bqrBuf.getShort() & 0xFFFF;
             mPlcFillCount = bqrBuf.getShort() & 0xFFFF;
             mPlcDiscardCount = bqrBuf.getShort() & 0xFFFF;
+            try {
+                mMissedInstanceCount = bqrBuf.getShort() & 0xFFFF;
+                mTxRetransmitSlotCount = bqrBuf.getShort() & 0xFFFF;
+                mRxRetransmitSlotCount = bqrBuf.getShort() & 0xFFFF;
+                mGoodRxFrameCount = bqrBuf.getShort() & 0xFFFF;
+            } catch (BufferUnderflowException e) {
+                Log.v(TAG, "some fields are not contained");
+            }
         }
 
         private BqrVsScoChoppy(Parcel in) {
@@ -1158,6 +1171,10 @@ public final class BluetoothQualityReport implements Parcelable {
             mSprIntrMiss = in.readInt();
             mPlcFillCount = in.readInt();
             mPlcDiscardCount = in.readInt();
+            mMissedInstanceCount = in.readInt();
+            mTxRetransmitSlotCount = in.readInt();
+            mRxRetransmitSlotCount = in.readInt();
+            mGoodRxFrameCount = in.readInt();
         }
 
         /**
@@ -1284,6 +1301,38 @@ public final class BluetoothQualityReport implements Parcelable {
             return mPlcDiscardCount;
         }
 
+        /**
+         * Get the count of sco instances missed.
+         * @return the count of sco instances missed.
+         */
+        public int getMissedInstanceCount() {
+            return mMissedInstanceCount;
+        }
+
+        /**
+         * Get the count of slots for Tx retransmission.
+         * @return the count of slots for Tx retransmission.
+         */
+        public int getTxRetransmitSlotCount() {
+            return mTxRetransmitSlotCount;
+        }
+
+        /**
+         * Get the count of slots for Rx retransmission.
+         * @return the count of slots for Rx retransmission.
+         */
+        public int getRxRetransmitSlotCount() {
+            return mRxRetransmitSlotCount;
+        }
+
+        /**
+         * Get the count of Rx good packets
+         * @return the count of Rx good packets.
+         */
+        public int getGoodRxFrameCount() {
+            return mGoodRxFrameCount;
+        }
+
         public int describeContents() {
             return 0;
         }
@@ -1304,6 +1353,10 @@ public final class BluetoothQualityReport implements Parcelable {
             dest.writeInt(mSprIntrMiss);
             dest.writeInt(mPlcFillCount);
             dest.writeInt(mPlcDiscardCount);
+            dest.writeInt(mMissedInstanceCount);
+            dest.writeInt(mTxRetransmitSlotCount);
+            dest.writeInt(mRxRetransmitSlotCount);
+            dest.writeInt(mGoodRxFrameCount);
         }
 
         @Override
@@ -1326,6 +1379,11 @@ public final class BluetoothQualityReport implements Parcelable {
                  + ", mSprIntrMiss: " + mSprIntrMiss
                  + ", mPlcFillCount: " + mPlcFillCount
                  + ", mPlcDiscardCount: " + mPlcDiscardCount
+                 + ", mMissedInstanceCount: " + mMissedInstanceCount
+                 + ", mTxRetransmitSlotCount: " + mTxRetransmitSlotCount
+                 + ",\n"
+                 + "    mRxRetransmitSlotCount: " + mRxRetransmitSlotCount
+                 + ", mGoodRxFrameCount: " + mGoodRxFrameCount
                  + "\n  }";
 
             return str;

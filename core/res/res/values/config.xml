@@ -129,7 +129,7 @@
     <bool name="config_sendAudioBecomingNoisy">true</bool>
 
     <!-- Whether Hearing Aid profile is supported -->
-    <bool name="config_hearing_aid_profile_supported">false</bool>
+    <bool name="config_hearing_aid_profile_supported">true</bool>
 
     <!-- Flag to disable all transition animations -->
     <bool name="config_disableTransitionAnimation">false</bool>
@@ -555,6 +555,9 @@
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">false</bool>
 
+    <!-- Boolean to provide support to keep wifi5 symbol for 8SS supported device and 11ax AP -->
+    <bool translateble="false" name="config_wifi_report_he_ready">true</bool>
+
     <!-- Maximum number of concurrent WiFi interfaces in AP mode -->
     <integer translatable="false" name="config_wifi_max_ap_interfaces">1</integer>
 
@@ -727,6 +730,9 @@
 
     <!-- Wifi driver supports Automatic channel selection (ACS) for softap -->
     <bool translatable="false" name="config_wifi_softap_acs_supported">false</bool>
+
+    <!-- Wifi driver Automatic channel selection (ACS) for softap excludes dfs channels -->
+    <bool translatable="false" name="config_wifi_softap_acs_should_exclude_dfs">false</bool>
 
     <!-- Channel list restriction to Automatic channel selection (ACS) for softap. If the device
          doesn't want to restrict channels this should be empty. Value is a comma separated channel

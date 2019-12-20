@@ -257,7 +257,7 @@ public class AccessPoint implements Comparable<AccessPoint> {
     private int mRssi = UNREACHABLE_RSSI;
 
     private int mWifiGeneration = WIFI_GENERATION_LEGACY;
-    private boolean mTwtSupport = false;
+    private boolean mHe8ssCapableAp = false;
     private boolean mVhtMax8SpatialStreamsSupport = false;
 
     private WifiInfo mInfo;
@@ -962,7 +962,7 @@ public class AccessPoint implements Comparable<AccessPoint> {
         int currBssidMaxCapability;
         int scanResultsMinCapability = MAX_CAPABLE_BSSID;
 
-        mTwtSupport = false;
+        mHe8ssCapableAp = false;
         mVhtMax8SpatialStreamsSupport = false;
         for (ScanResult result : mScanResults) {
             currBssidMaxCapability = getMaxCapability(result);
@@ -991,8 +991,8 @@ public class AccessPoint implements Comparable<AccessPoint> {
         return mWifiGeneration;
     }
 
-    public boolean isTwtSupported() {
-        return mTwtSupport;
+    public boolean isHe8ssCapableAp() {
+        return mHe8ssCapableAp;
     }
 
     public boolean isVhtMax8SpatialStreamsSupported() {
@@ -1568,10 +1568,10 @@ public class AccessPoint implements Comparable<AccessPoint> {
                 update(config); // Notifies the AccessPointListener of the change
             }
             if (mWifiGeneration != info.getWifiGeneration() ||
-                mTwtSupport != info.isTwtSupported() ||
+                mHe8ssCapableAp != info.isHe8ssCapableAp() ||
                 mVhtMax8SpatialStreamsSupport != info.isVhtMax8SpatialStreamsSupported()) {
                 mWifiGeneration = info.getWifiGeneration();
-                mTwtSupport = info.isTwtSupported();
+                mHe8ssCapableAp = info.isHe8ssCapableAp();
                 mVhtMax8SpatialStreamsSupport = info.isVhtMax8SpatialStreamsSupported();
                 updated = true;
             }

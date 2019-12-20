@@ -75,7 +75,7 @@ public class AccessPointPreference extends Preference {
     private Drawable mBadge;
     private int mLevel;
     private int mWifiGeneration;
-    private boolean mTwtSupport;
+    private boolean mHe8ssCapableAp;
     private boolean mVhtMax8SpatialStreamsSupport;
     private CharSequence mContentDescription;
     private int mDefaultIconResId;
@@ -242,19 +242,19 @@ public class AccessPointPreference extends Preference {
         int wifiSpeed = mAccessPoint.getSpeed();
         int wifiGeneration = mAccessPoint.getWifiGeneration();
         boolean vhtMax8SpatialStreamsSupport = mAccessPoint.isVhtMax8SpatialStreamsSupported();
-        boolean twtSupport = mAccessPoint.isTwtSupported();
+        boolean he8ssCapableAp = mAccessPoint.isHe8ssCapableAp();
 
         if (level != mLevel ||
             wifiSpeed != mWifiSpeed ||
             wifiGeneration != mWifiGeneration ||
             mVhtMax8SpatialStreamsSupport != vhtMax8SpatialStreamsSupport ||
-            mTwtSupport != twtSupport) {
+            mHe8ssCapableAp != he8ssCapableAp) {
             mLevel = level;
             mWifiSpeed = wifiSpeed;
             mWifiGeneration = wifiGeneration;
             mVhtMax8SpatialStreamsSupport = vhtMax8SpatialStreamsSupport;
-            mTwtSupport = twtSupport;
-            updateIcon(mLevel, mWifiGeneration, mVhtMax8SpatialStreamsSupport &&  mTwtSupport, context);
+            mHe8ssCapableAp = he8ssCapableAp;
+            updateIcon(mLevel, mWifiGeneration, mVhtMax8SpatialStreamsSupport &&  mHe8ssCapableAp, context);
             notifyChanged();
         }
 

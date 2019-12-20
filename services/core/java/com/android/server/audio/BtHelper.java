@@ -559,7 +559,6 @@ public class BtHelper {
         mScoAudioState = SCO_STATE_INACTIVE;
         broadcastScoConnectionState(AudioManager.SCO_AUDIO_STATE_DISCONNECTED);
         mScoClientDevices.clear();
-        AudioSystem.setParameters("A2dpSuspended=false");
         mDeviceBroker.setBluetoothScoOn(false, "resetBluetoothSco");
     }
 

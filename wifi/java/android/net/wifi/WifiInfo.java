@@ -217,8 +217,7 @@ public class WifiInfo implements Parcelable {
 
     private boolean mVhtMax8SpatialStreamsSupport;
 
-    private boolean mTwtSupport;
-
+    private boolean mHe8ssCapableAp;
 
     /** @hide */
     @UnsupportedAppUsage
@@ -251,7 +250,7 @@ public class WifiInfo implements Parcelable {
         setFQDN(null);
         setProviderFriendlyName(null);
         setWifiGeneration(-1);
-        setTwtSupport(false);
+        setHe8ssCapableAp(false);
         setVhtMax8SpatialStreamsSupport(false);
         txBad = 0;
         txSuccess = 0;
@@ -291,7 +290,7 @@ public class WifiInfo implements Parcelable {
             mProviderFriendlyName = source.mProviderFriendlyName;
             mWifiGeneration = source.mWifiGeneration;
             mVhtMax8SpatialStreamsSupport = source.mVhtMax8SpatialStreamsSupport;
-            mTwtSupport = source.mTwtSupport;
+            mHe8ssCapableAp = source.mHe8ssCapableAp;
             txBad = source.txBad;
             txRetries = source.txRetries;
             txSuccess = source.txSuccess;
@@ -694,13 +693,13 @@ public class WifiInfo implements Parcelable {
     }
 
     /** @hide */
-    public void setTwtSupport(boolean twtSupport) {
-        mTwtSupport = twtSupport;
+    public void setHe8ssCapableAp(boolean he8ssCapableAp) {
+        mHe8ssCapableAp = he8ssCapableAp;
     }
 
     /** @hide */
-    public boolean isTwtSupported() {
-        return mTwtSupport;
+    public boolean isHe8ssCapableAp() {
+        return mHe8ssCapableAp;
     }
 
     /** {@hide} */
@@ -725,7 +724,7 @@ public class WifiInfo implements Parcelable {
                 .append(", Supplicant state: ")
                 .append(mSupplicantState == null ? none : mSupplicantState)
                 .append(", Wifi Generation: ").append(mWifiGeneration)
-                .append(", TWT support: ").append(mTwtSupport)
+                .append(", HE Eight Max VHT Spatial Streams Support: ").append(mHe8ssCapableAp)
                 .append(", Eight Max VHT Spatial streams support: ").append(mVhtMax8SpatialStreamsSupport)
                 .append(", RSSI: ").append(mRssi)
                 .append(", Link speed: ").append(mLinkSpeed).append(LINK_SPEED_UNITS)
@@ -784,7 +783,7 @@ public class WifiInfo implements Parcelable {
         dest.writeString(mProviderFriendlyName);
         dest.writeInt(mWifiGeneration);
         dest.writeInt(mVhtMax8SpatialStreamsSupport ? 1 : 0);
-        dest.writeInt(mTwtSupport ? 1 : 0);
+        dest.writeInt(mHe8ssCapableAp ? 1 : 0);
     }
 
     /** Implement the Parcelable interface {@hide} */
@@ -828,7 +827,7 @@ public class WifiInfo implements Parcelable {
                 info.mProviderFriendlyName = in.readString();
                 info.mWifiGeneration = in.readInt();
                 info.mVhtMax8SpatialStreamsSupport = in.readInt() != 0;
-                info.mTwtSupport = in.readInt() != 0;
+                info.mHe8ssCapableAp = in.readInt() != 0;
                 return info;
             }
 

@@ -166,7 +166,7 @@ public class WifiSignalController extends
         mCurrentState.statusLabel = mWifiTracker.statusLabel;
         mCurrentState.wifiGenerationVersion = mWifiTracker.wifiGeneration;
         mCurrentState.isReady = (mWifiTracker.vhtMax8SpatialStreamsSupport
-                                    && mWifiTracker.twtSupport);
+                                    && mWifiTracker.he8ssCapableAp);
         updateIconGroup();
         notifyListenersIfNecessary();
     }
