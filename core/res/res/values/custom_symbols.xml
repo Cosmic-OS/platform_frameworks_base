@@ -62,9 +62,6 @@
     <!-- Whether notify fingerprint client of successful cancelled authentication -->
     <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
 
-    <!-- Leds -->
-    <java-symbol type="bool" name="config_intrusiveBatteryLed" />
-
     <!-- Whether to send camera status intent -->
     <java-symbol type="bool" name="config_sendCameraStatusIntent" />
 
