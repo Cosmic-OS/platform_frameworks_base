@@ -322,9 +322,4 @@ public class KeyguardUpdateMonitorCallback {
      */
     public void onLogoutEnabledChanged() { }
 
-    /**
-     * Called when a pulsing is received.
-     */
-    public void onPulsing(boolean pulsing) { }
-
 }
