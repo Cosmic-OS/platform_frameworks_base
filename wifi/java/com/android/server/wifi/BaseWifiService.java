@@ -555,6 +555,6 @@ public class BaseWifiService extends IWifiManager.Stub {
 
     @Override
     public int getSoftApWifiGeneration() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 }
