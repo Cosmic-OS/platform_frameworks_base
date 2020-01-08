@@ -38,6 +38,8 @@ import android.net.DhcpInfo;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.net.LinkProperties;
+import android.net.NetworkInfo;
 import android.net.wifi.hotspot2.IProvisioningCallback;
 import android.net.wifi.hotspot2.OsuProvider;
 import android.net.wifi.hotspot2.PasspointConfiguration;
@@ -5285,4 +5287,241 @@ public class WifiManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /* QTI specific changes - START */
+
+    /**
+     * Wifi Identity shared : used by WifiConfiguration
+     * @hide
+     */
+    public static final int STA_SHARED = 0;
+
+    /**
+     * Wifi Identity Primary
+     * @hide
+     */
+    public static final int STA_PRIMARY = 1;
+
+    /**
+     * Wifi Identity Secondary
+     * @hide
+     */
+    public static final int STA_SECONDARY = 2;
+
+
+    /**
+     * Enable/Disable wifi on #staId interface
+     * @hide
+     */
+    public boolean setWifiEnabled(int staId, boolean enabled) {
+        try {
+            return mService.setWifiEnabled2(mContext.getOpPackageName(), staId, enabled);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Disassociate from the currently active access point with staId.
+     * @hide
+     */
+    public boolean disconnect(int staId) {
+        try {
+            return mService.disconnect2(staId, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Return dynamic information about the current Wi-Fi connection with wifiIdentiy.
+     * @hide
+     */
+    public WifiInfo getConnectionInfo(int staId) {
+        try {
+            return mService.getConnectionInfo2(staId, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Reconnect to the currently active access point, even if we are already
+     * connected. This may result in the asynchronous delivery of state
+     * change events.
+     * @return {@code true} if the operation succeeded
+     * @hide
+     */
+    public boolean reassociate(int staId) {
+        try {
+            return mService.reassociate2(staId, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Allow a previously configured network to be associated with. If
+     * <code>attemptConnect</code> is true, an attempt to connect to the selected
+     * network is initiated on interface with staId. This may result in the
+     * asynchronous delivery of state change events.
+     *
+     * @param staId the ID of the interface.
+     * @param netId the ID of the network as returned by {@link #addNetwork} or {@link
+     *        #getConfiguredNetworks}.
+     * @param attemptConnect The way to select a particular network to connect to is specify
+     *        {@code true} for this parameter.
+     * @return {@code true} if the operation succeeded
+     * @hide
+     */
+    public boolean enableNetwork(int staId, int netId, boolean attemptConnect) {
+        try {
+            return mService.enableNetwork2(staId, netId, attemptConnect, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Return a list of all the networks configured for the current foreground
+     * user.
+     * @hide
+     */
+    @RequiresPermission(allOf = {ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE})
+    public List<WifiConfiguration> getConfiguredNetworks(int staId) {
+        try {
+            ParceledListSlice<WifiConfiguration> parceledList =
+                    mService.getConfiguredNetworks2(staId, mContext.getOpPackageName());
+            if (parceledList == null) {
+                return Collections.emptyList();
+            }
+            return parceledList.getList();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Base class for WifiNotification callbacks
+     * @hide
+     */
+    public interface WifiNotificationCallback {
+        public abstract void onStateChanged(int state);
+
+        public abstract void onRssiChanged(int rssi);
+
+        public abstract void onLinkConfigurationChanged(LinkProperties lp);
+
+        public abstract void onNetworkStateChanged(NetworkInfo netInfo);
+    }
+
+    /**
+     * Callback proxy for WifiNotification objects
+     * @hide
+     */
+    private class WifiNotificationCallbackProxy extends IWifiNotificationCallback.Stub {
+        private final Handler mHandler;
+        private final WifiNotificationCallback mCallback;
+
+        WifiNotificationCallbackProxy(Looper looper, WifiNotificationCallback callback) {
+            mHandler = new Handler(looper);
+            mCallback = callback;
+        }
+
+        @Override
+        public void onStateChanged(int newState) {
+            if (mVerboseLoggingEnabled) {
+                Log.v(TAG, "WifiNotificationCallbackProxy: onWifiStateChanged:"
+                        + "newState=" + newState);
+            }
+            mHandler.post(() -> {
+                mCallback.onStateChanged(newState);
+            });
+        }
+
+        @Override
+        public void onRssiChanged(int rssi) {
+            if (mVerboseLoggingEnabled) {
+                Log.v(TAG, "WifiNotificationCallbackProxy: onRssiChanged:"
+                        + "rssi=" + rssi);
+            }
+            mHandler.post(() -> {
+                mCallback.onRssiChanged(rssi);
+            });
+        }
+
+        @Override
+        public void onLinkConfigurationChanged(LinkProperties lp) {
+            if (mVerboseLoggingEnabled) {
+                Log.v(TAG, "WifiNotificationCallbackProxy: onLinkConfiurationChanged:"
+                        + "LinkProperties=" + lp);
+            }
+            mHandler.post(() -> {
+                mCallback.onLinkConfigurationChanged(lp);
+            });
+        }
+
+        @Override
+        public void onNetworkStateChanged(NetworkInfo netInfo) {
+            if (mVerboseLoggingEnabled) {
+                Log.v(TAG, "WifiNotificationCallbackProxy: onNetworkStateChanged:"
+                        + "NetworkInfo=" + netInfo);
+            }
+            mHandler.post(() -> {
+                mCallback.onNetworkStateChanged(netInfo);
+            });
+        }
+    }
+
+    /**
+     * Registers a callback for wifi notification.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    public void registerForWifiNotification(int staId, @NonNull WifiNotificationCallback callback,
+                                     @Nullable Handler handler) {
+        if (callback == null) throw new IllegalArgumentException("callback cannot be null");
+        Log.v(TAG, "registerForWifiNotification: identity=" + staId  + ", callback=" + callback + ", handler=" + handler);
+
+        Looper looper = (handler == null) ? mContext.getMainLooper() : handler.getLooper();
+
+        Binder binder = new Binder();
+        try {
+            mService.registerForWifiNotification(staId, binder,
+                new WifiNotificationCallbackProxy(looper, callback),
+                callback.hashCode());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Allow callers to unregister a previously registered callback.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    public void unregisterForWifiNotification(int staId, @NonNull WifiNotificationCallback callback) {
+        if (callback == null) throw new IllegalArgumentException("callback cannot be null");
+        Log.v(TAG, "unregisterForWifiNotification: identity=" + staId + ", callback=" + callback);
+
+        try {
+            mService.unregisterForWifiNotification(staId, callback.hashCode());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get the number of stations supported.
+     * @hide
+     */
+    public int getNumConcurrentStaSupported() {
+        try {
+            return mService.getNumConcurrentStaSupported();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /* QTI specific changes - END */
 }

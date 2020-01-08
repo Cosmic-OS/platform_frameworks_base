@@ -576,10 +576,18 @@ public class WifiTracker implements LifecycleObserver, OnStart, OnStop, OnDestro
             final List<NetworkKey> scoresToRequest = new ArrayList<>();
 
             for (Map.Entry<String, List<ScanResult>> entry : scanResultsByApKey.entrySet()) {
+                boolean isOweTransition = false;
+                boolean isSaeTransition = false;
                 for (ScanResult result : entry.getValue()) {
                     NetworkKey key = NetworkKey.createFromScanResult(result);
                     if (key != null && !mRequestedScores.contains(key)) {
                         scoresToRequest.add(key);
+                    }
+                    if (AccessPoint.checkForOweTransitionMode(result)) {
+                        isOweTransition = true;
+                    }
+                    if (AccessPoint.checkForSaeTransitionMode(result)) {
+                        isSaeTransition = true;
                     }
                 }
 
@@ -587,7 +595,13 @@ public class WifiTracker implements LifecycleObserver, OnStart, OnStop, OnDestro
                         getCachedOrCreate(entry.getValue(), cachedAccessPoints);
 
                 // Update the matching config if there is one, to populate saved network info
-                accessPoint.update(configsByKey.get(entry.getKey()));
+                // For OWE/SAE transition mode, if no OWE/SAE configuration found,
+                // fallback to associate OPEN/PSK configuraion.
+                WifiConfiguration matching = configsByKey.get(entry.getKey());
+                if ((isOweTransition || isSaeTransition) && matching == null) {
+                    matching = configsByKey.get(accessPoint.getFallbackKey());
+                }
+                accessPoint.update(matching);
 
                 accessPoints.add(accessPoint);
             }

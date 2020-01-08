@@ -708,7 +708,7 @@ public class CarrierTextController {
         int networkType = getNetworkType(sub.getSubscriptionId());
         String networkClass = networkClassToString(TelephonyManager.getNetworkClass(networkType));
 
-        String fiveGNetworkClass = get5GNetworkClass(sub);
+        String fiveGNetworkClass = get5GNetworkClass(sub, networkType);
         if ( fiveGNetworkClass != null ) {
             networkClass = fiveGNetworkClass;
         }
@@ -783,7 +783,11 @@ public class CarrierTextController {
         return originalString;
     }
 
-    private String get5GNetworkClass(SubscriptionInfo sub) {
+    private String get5GNetworkClass(SubscriptionInfo sub, int networkType) {
+        if ( networkType == TelephonyManager.NETWORK_TYPE_NR ) {
+            return mContext.getResources().getString(R.string.data_connection_5g);
+        }
+
         int slotIndex = sub.getSimSlotIndex();
         int subId = sub.getSubscriptionId();
 

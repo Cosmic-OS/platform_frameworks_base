@@ -27,6 +27,7 @@ import android.net.Network;
 import android.net.wifi.IDppCallback;
 import android.net.wifi.INetworkRequestMatchCallback;
 import android.net.wifi.ISoftApCallback;
+import android.net.wifi.IWifiNotificationCallback;
 import android.net.wifi.ITrafficStateCallback;
 import android.net.wifi.IOnWifiUsabilityStatsListener;
 import android.net.wifi.PasspointManagementObjectDefinition;
@@ -250,4 +251,24 @@ interface IWifiManager
     void updateWifiUsabilityScore(int seqNum, int score, int predictionHorizonSec);
 
     int getSoftApWifiGeneration();
+
+    /* QTI vendor APIs for DUAL STA support */
+
+    boolean setWifiEnabled2(String packageName, int staId, boolean enable);
+
+    boolean disconnect2(int staId, String packageName);
+
+    WifiInfo getConnectionInfo2(int staId, String callingPackage);
+
+    boolean reassociate2(int staId, String packageName);
+
+    boolean enableNetwork2(int staId, int netId, boolean disableOthers, String packageName);
+
+    ParceledListSlice getConfiguredNetworks2(int staId, String packageName);
+
+    void registerForWifiNotification(int staId, in IBinder binder, in IWifiNotificationCallback callback, int callbackIdentifier);
+
+    void unregisterForWifiNotification(int staId, int callbackIdentifier);
+
+    int getNumConcurrentStaSupported();
 }

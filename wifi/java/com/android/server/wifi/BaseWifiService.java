@@ -26,6 +26,7 @@ import android.net.wifi.INetworkRequestMatchCallback;
 import android.net.wifi.IOnWifiUsabilityStatsListener;
 import android.net.wifi.ISoftApCallback;
 import android.net.wifi.ITrafficStateCallback;
+import android.net.wifi.IWifiNotificationCallback;
 import android.net.wifi.IWifiManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiActivityEnergyInfo;
@@ -556,5 +557,52 @@ public class BaseWifiService extends IWifiManager.Stub {
     @Override
     public int getSoftApWifiGeneration() {
         return 0;
+    }
+
+    /* QTI Vendor Dual STA support APIs */
+
+    @Override
+    public boolean setWifiEnabled2(String packageName, int staId, boolean enable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean disconnect2(int staId, String packageName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public WifiInfo getConnectionInfo2(int staId, String callingPackage) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean reassociate2(int staId, String packageName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean enableNetwork2(int staId, int netId, boolean disableOthers, String packageName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ParceledListSlice getConfiguredNetworks2(int staId, String packageName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void registerForWifiNotification(int staId, IBinder binder, IWifiNotificationCallback callback, int callbackIdentifier) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void unregisterForWifiNotification(int staId, int callbackIdentifier) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getNumConcurrentStaSupported() {
+        throw new UnsupportedOperationException();
     }
 }

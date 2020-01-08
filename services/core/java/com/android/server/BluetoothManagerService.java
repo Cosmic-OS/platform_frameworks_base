@@ -302,7 +302,6 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                                         mContext.getPackageName(), false);
                                 mBluetooth.onBrEdrDown();
                                 mEnable = false;
-                                mEnableExternal = false;
                             }
                         } catch (RemoteException e) {
                             Slog.e(TAG, "Unable to call onBrEdrDown", e);

@@ -129,7 +129,7 @@
     <bool name="config_sendAudioBecomingNoisy">true</bool>
 
     <!-- Whether Hearing Aid profile is supported -->
-    <bool name="config_hearing_aid_profile_supported">true</bool>
+    <bool name="config_hearing_aid_profile_supported">false</bool>
 
     <!-- Flag to disable all transition animations -->
     <bool name="config_disableTransitionAnimation">false</bool>
@@ -757,6 +757,9 @@
 
     <!-- Indicates that wifi link probing is supported on this device -->
     <bool translatable="false" name="config_wifi_link_probing_supported">false</bool>
+
+    <!-- Wifi framework supports secondary sta supported -->
+    <bool translatable="false" name="config_wifi_framework_secondary_sta_supported">false</bool>
 
     <!-- Flag indicating whether we should enable the automatic brightness.
          Software implementation will be used if config_hardware_auto_brightness_available is not set -->
