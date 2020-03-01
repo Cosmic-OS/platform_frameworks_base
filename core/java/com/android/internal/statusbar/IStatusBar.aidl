@@ -181,4 +181,5 @@ oneway interface IStatusBar
      * Cosmic
      */
     void toggleCameraFlash();
+    void killForegroundApp();
 }

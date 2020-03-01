@@ -121,4 +121,5 @@ interface IStatusBarService
      * Cosmic
      */
     void toggleCameraFlash();
+    void killForegroundApp();
 }

@@ -26,4 +26,8 @@
     <string name="screenrecord_low_quality_label">Low quality</string>
     <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
     <string name="global_action_screenshot_cust">"Screen/Rec"</string>
+
+    <!-- App-kill API -->
+    <string name="recents_app_killed">App killed</string>
+    <string name="nope_cant_kill">Launcher cannot be killed</string>
 </resources>
