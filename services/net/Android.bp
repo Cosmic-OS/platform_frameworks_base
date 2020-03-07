@@ -20,6 +20,7 @@ aidl_interface {
         "1",
         "2",
         "3",
+        "5",
     ],
 }
 
@@ -34,6 +35,7 @@ aidl_interface {
         "java/android/net/INetworkStackConnector.aidl",
         "java/android/net/INetworkStackStatusCallback.aidl",
         "java/android/net/InitialConfigurationParcelable.aidl",
+        "java/android/net/Layer2PacketParcelable.aidl",
         "java/android/net/NattKeepalivePacketDataParcelable.aidl",
         "java/android/net/PrivateDnsConfigParcel.aidl",
         "java/android/net/ProvisioningConfigurationParcelable.aidl",
@@ -58,6 +60,7 @@ aidl_interface {
         "1",
         "2",
         "3",
+        "5",
     ],
 }
 
@@ -68,7 +71,7 @@ java_library_static {
         "dnsresolver_aidl_interface-V2-java",
         "ipmemorystore-client",
         "netd_aidl_interface-V2-java",
-        "networkstack-aidl-interfaces-V3-java",
+        "networkstack-aidl-interfaces-V5-java",
     ],
 }
 
@@ -81,7 +84,7 @@ java_library_static {
         "java/android/net/ipmemorystore/**/*.java",
     ],
     static_libs: [
-        "ipmemorystore-aidl-interfaces-V3-java",
+        "ipmemorystore-aidl-interfaces-V5-java",
     ],
 }
 

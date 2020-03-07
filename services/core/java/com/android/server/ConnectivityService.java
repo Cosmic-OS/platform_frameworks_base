@@ -2847,6 +2847,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         @Override
+        public void notifyProbeStatusChanged(int probesCompleted, int probesSucceeded) {
+            // This method has been implemented in R, Q device doesn't have this method
+            // yet, this informational message comes from networkstack, which doesn't rely
+            // on the specific implementation.
+        }
+
+        @Override
         public void showProvisioningNotification(String action, String packageName) {
             final Intent intent = new Intent(action);
             intent.setPackage(packageName);
