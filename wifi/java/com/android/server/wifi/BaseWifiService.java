@@ -605,4 +605,24 @@ public class BaseWifiService extends IWifiManager.Stub {
     public int getNumConcurrentStaSupported() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean isWhitelistNetworkRoamingFeatureEnabled() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void enableWhitelistNetworkRoamingFeature(boolean enable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isUnsavedNetworkLinkingFeatureEnabled() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void enableUnsavedNetworkLinkingFeature(boolean enable) {
+        throw new UnsupportedOperationException();
+    }
 }

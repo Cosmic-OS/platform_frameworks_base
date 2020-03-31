@@ -47,4 +47,16 @@
     <!-- Content description of the data connection type 5G stand alone. [CHAR LIMIT=NONE] -->
     <string name="data_connection_5g_sa" translate="false">5GSA</string>
 
+    <!--
+    The customization for last puk prompt
+    The format of array item:
+    MCCMNC:customized string
+    Example:
+        <string-array name="kg_wrong_puk_code_message_list">
+            <item>46000:SIM is unusable. Contact ...</item>
+            <item>46001:SIM is unusable. Contact ...</item>
+        </string-array>
+    -->
+    <string-array name="kg_wrong_puk_code_message_list"></string-array>
+
 </resources>

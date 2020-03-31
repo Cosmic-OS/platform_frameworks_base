@@ -134,6 +134,7 @@ import android.view.accessibility.AccessibilityManager;
 import android.widget.Toast;
 
 import com.android.internal.annotations.GuardedBy;
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.Preconditions;
 import com.android.internal.util.XmlUtils;
@@ -204,6 +205,13 @@ public class AudioService extends IAudioService.Stub
     private static final int UNMUTE_STREAM_DELAY = 350;
 
     /**
+     * Delay before disconnecting a device that would cause BECOMING_NOISY intent to be sent,
+     * to give a chance to applications to pause.
+     */
+    @VisibleForTesting
+    public static final int BECOMING_NOISY_DELAY_MS = 1000;
+
+    /**
      * Only used in the result from {@link #checkForRingerModeChange(int, int, int)}
      */
     private static final int FLAG_ADJUST_VOLUME = 1;
@@ -270,7 +278,6 @@ public class AudioService extends IAudioService.Stub
     private static final int MSG_OBSERVE_DEVICES_FOR_ALL_STREAMS = 27;
     private static final int MSG_HDMI_VOLUME_CHECK = 28;
     private static final int MSG_PLAYBACK_CONFIG_CHANGE = 29;
-    private static final int MSG_ACCESSORY_PLUG_MEDIA_MUTE = 30;
     // start of messages handled under wakelock
     //   these messages can only be queued, i.e. sent with queueMsgUnderWakeLock(),
     //   and not with sendMsg(..., ..., SENDMSG_QUEUE, ...)
@@ -4167,7 +4174,9 @@ public class AudioService extends IAudioService.Stub
                 || adjust == AudioManager.ADJUST_TOGGLE_MUTE;
     }
 
-    /*package*/ boolean isInCommunication() {
+    /** only public for mocking/spying, do not call outside of AudioService */
+    @VisibleForTesting
+    public boolean isInCommunication() {
         boolean IsInCall = false;
 
         TelecomManager telecomManager =
@@ -4336,7 +4345,9 @@ public class AudioService extends IAudioService.Stub
         return false;
     }
 
-    /*package*/ int getDeviceForStream(int stream) {
+    /** only public for mocking/spying, do not call outside of AudioService */
+    @VisibleForTesting
+    public int getDeviceForStream(int stream) {
         int device = getDevicesForStream(stream);
         if ((device & (device - 1)) != 0) {
             // Multiple device selection is either:
@@ -4381,7 +4392,9 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
-    /*package*/ void postObserveDevicesForAllStreams() {
+    /** only public for mocking/spying, do not call outside of AudioService */
+    @VisibleForTesting
+    public void postObserveDevicesForAllStreams() {
         sendMsg(mAudioHandler,
                 MSG_OBSERVE_DEVICES_FOR_ALL_STREAMS,
                 SENDMSG_QUEUE, 0 /*arg1*/, 0 /*arg2*/, null /*obj*/,
@@ -4513,13 +4526,10 @@ public class AudioService extends IAudioService.Stub
             AudioSystem.DEVICE_OUT_ALL_USB |
             AudioSystem.DEVICE_OUT_HDMI;
 
-    /*package*/ void postAccessoryPlugMediaUnmute(int newDevice) {
+    /** only public for mocking/spying, do not call outside of AudioService */
+    @VisibleForTesting
+    public void postAccessoryPlugMediaUnmute(int newDevice) {
         sendMsg(mAudioHandler, MSG_ACCESSORY_PLUG_MEDIA_UNMUTE, SENDMSG_QUEUE,
-                newDevice, 0, null, 0);
-    }
-
-    /*package*/ void postAccessoryPlugMediaMute(int newDevice) {
-        sendMsg(mAudioHandler, MSG_ACCESSORY_PLUG_MEDIA_MUTE, SENDMSG_QUEUE,
                 newDevice, 0, null, 0);
     }
 
@@ -4539,24 +4549,6 @@ public class AudioService extends IAudioService.Stub
                         newDevice, AudioSystem.getOutputDeviceName(newDevice)));
             }
             mStreamStates[AudioSystem.STREAM_MUSIC].mute(false);
-        }
-    }
-
-    private void onAccessoryPlugMediaMute(int newDevice) {
-
-       if (DEBUG_VOL) {
-            Log.i(TAG, String.format("onAccessoryPlugMediaMute newDevice=%d [%s]",
-                    newDevice, AudioSystem.getOutputDeviceName(newDevice)));
-       }
-        if (mNm.getZenMode() != Settings.Global.ZEN_MODE_NO_INTERRUPTIONS
-                && (newDevice & DEVICE_MEDIA_UNMUTED_ON_PLUG) != 0
-                && !mStreamStates[AudioSystem.STREAM_MUSIC].mIsMuted
-                && (newDevice & AudioSystem.getDevicesForStream(AudioSystem.STREAM_MUSIC)) != 0) {
-            if (DEBUG_VOL) {
-                Log.i(TAG, String.format(" onAccessoryPlugMediaMute muting device=%d [%s]",
-                        newDevice, AudioSystem.getOutputDeviceName(newDevice)));
-            }
-            mStreamStates[AudioSystem.STREAM_MUSIC].mute(true);
         }
     }
 
@@ -5086,7 +5078,9 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
-    /*package*/ void postSetVolumeIndexOnDevice(int streamType, int vssVolIndex, int device,
+    /** only public for mocking/spying, do not call outside of AudioService */
+    @VisibleForTesting
+    public void postSetVolumeIndexOnDevice(int streamType, int vssVolIndex, int device,
                                                 String caller) {
         sendMsg(mAudioHandler,
                 MSG_SET_DEVICE_STREAM_VOLUME,
@@ -5535,10 +5529,6 @@ public class AudioService extends IAudioService.Stub
                     onAccessoryPlugMediaUnmute(msg.arg1);
                     break;
 
-                case MSG_ACCESSORY_PLUG_MEDIA_MUTE:
-                    onAccessoryPlugMediaMute(msg.arg1);
-                    break;
-
                 case MSG_PERSIST_MUSIC_ACTIVE_MS:
                     final int musicActiveMs = msg.arg1;
                     Settings.Secure.putIntForUser(mContentResolver,
@@ -5673,15 +5663,19 @@ public class AudioService extends IAudioService.Stub
 
     /**
      * @return true if there is currently a registered dynamic mixing policy that affects media
+     * and is not a render + loopback policy
      */
-    /*package*/ boolean hasMediaDynamicPolicy() {
+    // only public for mocking/spying
+    @VisibleForTesting
+    public boolean hasMediaDynamicPolicy() {
         synchronized (mAudioPolicies) {
             if (mAudioPolicies.isEmpty()) {
                 return false;
             }
             final Collection<AudioPolicyProxy> appColl = mAudioPolicies.values();
             for (AudioPolicyProxy app : appColl) {
-                if (app.hasMixAffectingUsage(AudioAttributes.USAGE_MEDIA)) {
+                if (app.hasMixAffectingUsage(AudioAttributes.USAGE_MEDIA,
+                        AudioMix.ROUTE_FLAG_LOOP_BACK_RENDER)) {
                     return true;
                 }
             }
@@ -6005,7 +5999,9 @@ public class AudioService extends IAudioService.Stub
         return mMediaFocusControl.getFocusRampTimeMs(focusGain, attr);
     }
 
-    /*package*/ boolean hasAudioFocusUsers() {
+    /** only public for mocking/spying, do not call outside of AudioService */
+    @VisibleForTesting
+    public boolean hasAudioFocusUsers() {
         return mMediaFocusControl.hasAudioFocusUsers();
     }
 
@@ -7443,9 +7439,10 @@ public class AudioService extends IAudioService.Stub
             Binder.restoreCallingIdentity(identity);
         }
 
-        boolean hasMixAffectingUsage(int usage) {
+        boolean hasMixAffectingUsage(int usage, int excludedFlags) {
             for (AudioMix mix : mMixes) {
-                if (mix.isAffectingUsage(usage)) {
+                if (mix.isAffectingUsage(usage)
+                        && ((mix.getRouteFlags() & excludedFlags) != excludedFlags)) {
                     return true;
                 }
             }

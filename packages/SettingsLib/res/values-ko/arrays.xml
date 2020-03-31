@@ -84,6 +84,8 @@
     <item msgid="5254942598247222737">"<xliff:g id="QUALCOMM">Qualcomm®</xliff:g> <xliff:g id="APTX">aptX™</xliff:g> 오디오"</item>
     <item msgid="2091430979086738145">"<xliff:g id="QUALCOMM">Qualcomm®</xliff:g> <xliff:g id="APTX_HD">aptX™ HD</xliff:g> 오디오"</item>
     <item msgid="6751080638867012696">"LDAC"</item>
+    <item msgid="8711430979086781450">"<xliff:g id="QUALCOMM">Qualcomm®</xliff:g> <xliff:g id="APTX_ADAPTIVE">aptX™ Adaptive</xliff:g> 오디오"</item>
+    <item msgid="6486050771049225">"<xliff:g id="QUALCOMM">Qualcomm®</xliff:g> <xliff:g id="APTX_TWSP">aptX™ TWS+</xliff:g> 오디오"</item>
     <item msgid="723675059572222462">"선택사항 코덱 사용 설정"</item>
     <item msgid="3304843301758635896">"선택사항 코덱 사용 중지"</item>
   </string-array>
@@ -228,7 +230,7 @@
   </string-array>
   <string-array name="enable_opengl_traces_entries">
     <item msgid="3191973083884253830">"없음"</item>
-    <item msgid="9089630089455370183">"로그캣"</item>
+    <item msgid="9089630089455370183">"Logcat"</item>
     <item msgid="5397807424362304288">"Systrace(그래픽)"</item>
     <item msgid="1340692776955662664">"glGetError의 스택 호출"</item>
   </string-array>

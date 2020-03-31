@@ -529,9 +529,10 @@ public class DisplayPolicy {
 
                     @Override
                     public void onSwipeFromRight() {
-                        final Region excludedRegion;
+                        final Region excludedRegion = Region.obtain();
                         synchronized (mLock) {
-                            excludedRegion = mDisplayContent.calculateSystemGestureExclusion();
+                            mDisplayContent.calculateSystemGestureExclusion(
+                                    excludedRegion, null /* outUnrestricted */);
                         }
                         final boolean sideAllowed = mNavigationBarAlwaysShowOnSideGesture
                                 || mNavigationBarPosition == NAV_BAR_RIGHT;
@@ -539,13 +540,15 @@ public class DisplayPolicy {
                                 && !mSystemGestures.currentGestureStartedInRegion(excludedRegion)) {
                             requestTransientBars(mNavigationBar);
                         }
+                        excludedRegion.recycle();
                     }
 
                     @Override
                     public void onSwipeFromLeft() {
-                        final Region excludedRegion;
+                        final Region excludedRegion = Region.obtain();
                         synchronized (mLock) {
-                            excludedRegion = mDisplayContent.calculateSystemGestureExclusion();
+                            mDisplayContent.calculateSystemGestureExclusion(
+                                    excludedRegion, null /* outUnrestricted */);
                         }
                         final boolean sideAllowed = mNavigationBarAlwaysShowOnSideGesture
                                 || mNavigationBarPosition == NAV_BAR_LEFT;
@@ -553,6 +556,7 @@ public class DisplayPolicy {
                                 && !mSystemGestures.currentGestureStartedInRegion(excludedRegion)) {
                             requestTransientBars(mNavigationBar);
                         }
+                        excludedRegion.recycle();
                     }
 
                     @Override
@@ -816,6 +820,10 @@ public class DisplayPolicy {
 
     public boolean hasStatusBar() {
         return mHasStatusBar;
+    }
+
+    boolean hasSideGestures() {
+        return mHasNavigationBar && mSideGestureInset > 0;
     }
 
     public boolean navigationBarCanMove() {
@@ -3763,7 +3771,8 @@ public class DisplayPolicy {
         if (mScreenshotHelper != null) {
             mScreenshotHelper.takeScreenshot(screenshotType,
                     mStatusBar != null && mStatusBar.isVisibleLw(),
-                    mNavigationBar != null && mNavigationBar.isVisibleLw(), mHandler);
+                    mNavigationBar != null && mNavigationBar.isVisibleLw(),
+                    mHandler, null /* completionConsumer */);
         }
     }
 

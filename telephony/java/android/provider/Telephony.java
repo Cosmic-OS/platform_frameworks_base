@@ -3970,7 +3970,6 @@ public final class Telephony {
         /**
          * The id of the subscription which received this cell broadcast message.
          * <P>Type: INTEGER</P>
-         * @hide
          */
         public static final String SUB_ID = "sub_id";
 
@@ -4161,7 +4160,6 @@ public final class Telephony {
          * for the alert.
          *
          * <P>Type: INTEGER</P>
-         * @hide
          */
         public static final String MAXIMUM_WAIT_TIME = "maximum_wait_time";
 

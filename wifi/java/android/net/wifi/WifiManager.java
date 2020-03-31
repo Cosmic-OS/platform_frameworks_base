@@ -701,6 +701,14 @@ public class WifiManager {
     public static final int IFACE_IP_MODE_LOCAL_ONLY = 2;
 
     /**
+     * Broadcast intent action indicating that the wifi network settings
+     * had been reset.
+     * @hide
+     */
+    public static final String WIFI_NETWORK_SETTINGS_RESET_ACTION =
+            "android.net.wifi.action.NETWORK_SETTINGS_RESET";
+
+    /**
      * Broadcast intent action indicating that a connection to the supplicant has
      * been established (and it is now possible
      * to perform Wi-Fi operations) or the connection to the supplicant has been
@@ -5522,6 +5530,62 @@ public class WifiManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+     /**
+      * Check whitelist network roaming feature enabled or not.
+      *
+      * @return true if whitelist network roaming feature is enabled.
+      *
+      * @hide no intent to publish
+      */
+      public boolean isWhitelistNetworkRoamingFeatureEnabled() {
+          try {
+              return mService.isWhitelistNetworkRoamingFeatureEnabled();
+          } catch (RemoteException e) {
+              throw e.rethrowFromSystemServer();
+          }
+      }
+
+     /**
+      * Enable/disable whitelist network roaming feature.
+      *
+      * @hide no intent to publish
+      */
+      public void enableWhitelistNetworkRoamingFeature(boolean enable) {
+          try {
+              mService.enableWhitelistNetworkRoamingFeature(enable);
+          } catch (RemoteException e) {
+              throw e.rethrowFromSystemServer();
+          }
+      }
+
+     /**
+      * Check unsaved network linking feature enabled or not.
+      *
+      * @return true if unsaved network linking feature is enabled.
+      *
+      * @hide no intent to publish
+      */
+      public boolean isUnsavedNetworkLinkingFeatureEnabled() {
+          try {
+              return mService.isUnsavedNetworkLinkingFeatureEnabled();
+          } catch (RemoteException e) {
+              throw e.rethrowFromSystemServer();
+          }
+      }
+
+     /**
+      * Enable/disable unsaved network linking feature.
+      *
+      * @hide no intent to publish
+      */
+      public void enableUnsavedNetworkLinkingFeature(boolean enable) {
+          try {
+              mService.enableUnsavedNetworkLinkingFeature(enable);
+          } catch (RemoteException e) {
+              throw e.rethrowFromSystemServer();
+          }
+      }
 
     /* QTI specific changes - END */
 }

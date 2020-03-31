@@ -104,10 +104,7 @@ public class SmsCbMessage implements Parcelable {
     /** Emergency message priority. */
     public static final int MESSAGE_PRIORITY_EMERGENCY = 3;
 
-    /**
-     * ATIS-0700041 Section 5.2.8 WAC Geo-Fencing Maximum Wait Time Table 12.
-     * @hide
-     */
+    /** ATIS-0700041 Section 5.2.8 WAC Geo-Fencing Maximum Wait Time Table 12. */
     public static final int MAXIMUM_WAIT_TIME_NOT_SET = 255;
 
     /** Format of this message (for interpretation of service category values). */
@@ -358,7 +355,6 @@ public class SmsCbMessage implements Parcelable {
     /**
      * Get the Geo-Fencing Maximum Wait Time.
      * @return the time in second.
-     * @hide
      */
     public int getMaximumWaitingTime() {
         return mMaximumWaitTimeSec;

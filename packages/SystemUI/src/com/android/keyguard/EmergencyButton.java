@@ -41,6 +41,7 @@ import com.android.internal.telephony.IccCardConstants.State;
 import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.util.EmergencyDialerConstants;
+import com.android.systemui.R;
 
 /**
  * This class implements a smart emergency button that updates itself based

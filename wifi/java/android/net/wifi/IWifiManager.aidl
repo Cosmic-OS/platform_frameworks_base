@@ -271,4 +271,12 @@ interface IWifiManager
     void unregisterForWifiNotification(int staId, int callbackIdentifier);
 
     int getNumConcurrentStaSupported();
+
+    boolean isWhitelistNetworkRoamingFeatureEnabled();
+
+    void enableWhitelistNetworkRoamingFeature(boolean enable);
+
+    boolean isUnsavedNetworkLinkingFeatureEnabled();
+
+    void enableUnsavedNetworkLinkingFeature(boolean enable);
 }

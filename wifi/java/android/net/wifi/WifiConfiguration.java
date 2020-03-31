@@ -848,6 +848,13 @@ public class WifiConfiguration implements Parcelable {
 
     /**
      * @hide
+     * network ID of linked saved wifi configuration. it is applicable only to
+     * ephemeral networks matching with saved networks.
+     */
+    public int linkedNetworkId;
+
+    /**
+     * @hide
      * The WiFi configuration is considered to have no internet access for purpose of autojoining
      * if there has been a report of it having no internet access, and, it never have had
      * internet access in the past.
@@ -1894,6 +1901,7 @@ public class WifiConfiguration implements Parcelable {
         dppCsign = null;
         oweTransIfaceName = null;
         staId = WifiManager.STA_SHARED;
+        linkedNetworkId = INVALID_NETWORK_ID;
     }
 
     /**
@@ -1950,6 +1958,7 @@ public class WifiConfiguration implements Parcelable {
                 .append(" HIDDEN: ").append(this.hiddenSSID)
                 .append(" PMF: ").append(this.requirePMF)
                 .append(" OWE Transition mode Iface: ").append(this.oweTransIfaceName)
+                .append(" linked network ID: ").append(this.linkedNetworkId)
                 .append('\n');
 
 
@@ -2561,6 +2570,7 @@ public class WifiConfiguration implements Parcelable {
             oweTransIfaceName = source.oweTransIfaceName;
             staId = source.staId;
             lastWpa2FallbackAttemptTime = source.lastWpa2FallbackAttemptTime;
+            linkedNetworkId = source.linkedNetworkId;
         }
     }
 
@@ -2640,6 +2650,7 @@ public class WifiConfiguration implements Parcelable {
         dest.writeString(oweTransIfaceName);
         dest.writeInt(staId);
         dest.writeLong(lastWpa2FallbackAttemptTime);
+        dest.writeInt(linkedNetworkId);
     }
 
     /** Implement the Parcelable interface {@hide} */
@@ -2721,6 +2732,7 @@ public class WifiConfiguration implements Parcelable {
                 config.oweTransIfaceName = in.readString();
                 config.staId = in.readInt();
                 config.lastWpa2FallbackAttemptTime = in.readLong();
+                config.linkedNetworkId = in.readInt();
                 return config;
             }
 
