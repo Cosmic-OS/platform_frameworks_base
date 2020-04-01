@@ -15,11 +15,8 @@
    limitations under the License. -->
 <resources>
 
-    <!-- Allow devices override audio panel location to the left side -->
-    <bool name="config_audioPanelOnLeftSide">false</bool>
-
-    <!-- Max visible notification icons -->
-    <integer name="config_maxVisibleNotificationIcons">4</integer>
-    <integer name="config_maxVisibleNotificationIconsOnLock">5</integer>
+  <!-- Max visible notification icons -->
+  <java-symbol type="integer" name="config_maxVisibleNotificationIcons" />
+  <java-symbol type="integer" name="config_maxVisibleNotificationIconsOnLock" />
 
 </resources>
